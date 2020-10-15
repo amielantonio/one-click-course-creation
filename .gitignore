@@ -1,3 +1,15 @@
+.DS_Store
+.idea
+.quarantine
+.tmb
+.well-known
 
-/vendor/
-/node_modules/
+#ignore node and composer depedency directory
+node_modules/
+vendor/
+
+
+# ignore log files and databases
+*.log
+*.sql
+*.sqlite
