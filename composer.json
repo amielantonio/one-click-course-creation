@@ -1,0 +1,24 @@
+{
+    "name": "shore360/one-click-course-creation",
+    "require-dev": {
+    },
+    "authors": [
+        {
+            "name": "Amiel",
+            "email": "amiel@writerscentre.com.au"
+        }
+    ],
+    "require": {
+        "nesbot/carbon": "^2.41"
+    },
+    "autoload": {
+        "psr-4": {
+            "AWC\\": "lib/"
+        },
+        "classmap" : [
+            "lib/Core/",
+            "start"
+        ]
+    }
+
+}
