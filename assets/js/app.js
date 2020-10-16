@@ -93,18 +93,19 @@
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-eval("/**\n *\n */\n\n__webpack_require__( /*! ./components/access-device */ \"./src/js/components/access-device.js\" );\n\n\n/**\n *\n */\n\n\n( function ($){\n\n  $(function() {\n\n    console.log( 'App Initialized' );\n\n  });\n\n\n})(jQuery);\n\n\n\n\n//# sourceURL=webpack:///./src/js/app.js?");
+eval("/**\r\n *\r\n */\r\n\r\n__webpack_require__( /*! ./components/tabs */ \"./src/js/components/tabs.js\" );\r\n\r\n\r\n/**\r\n *\r\n */\r\n\r\n\r\n( function ($){\r\n\r\n  $(function() {\r\n\r\n    console.log( 'App Initialized' );\r\n\r\n  });\r\n\r\n\r\n})(jQuery);\r\n\r\n\r\n\n\n//# sourceURL=webpack:///./src/js/app.js?");
 
 /***/ }),
 
-/***/ "./src/js/components/access-device.js":
-/*!********************************************!*\
-  !*** ./src/js/components/access-device.js ***!
-  \********************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
+/***/ "./src/js/components/tabs.js":
+/*!***********************************!*\
+  !*** ./src/js/components/tabs.js ***!
+  \***********************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
-eval("alert( 'test' );\n\n\n//# sourceURL=webpack:///./src/js/components/access-device.js?");
+"use strict";
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony default export */ __webpack_exports__[\"default\"] = (function(){\r\n\r\n});\r\n\n\n//# sourceURL=webpack:///./src/js/components/tabs.js?");
 
 /***/ }),
 

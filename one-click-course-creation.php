@@ -63,6 +63,7 @@ final class OneClickCourseCreation {
         $this->defineConstants();
         $this->registerAutoload();
         $this->loadDependencies();
+        add_action('admin_enqueue_scripts', array(__CLASS__, 'scripts'));
 
 
         // Once all dependencies and services has been loaded, install database
@@ -133,12 +134,9 @@ final class OneClickCourseCreation {
 
     public function scripts()
     {
+        wp_enqueue_style('custom-scss', plugins_url('one-click-course-creation') . '/assets/css/app.css');
+        wp_enqueue_script('custom-js-admin', plugins_url('one-click-course-creation') . '/assets/js/app.js');
 
-        echo "test";
-        wp_enqueue_style(
-            'custom-scss',
-            get_template_directory_uri() . '/assets/css/app.css'
-        );
     }
 
 
@@ -158,4 +156,3 @@ final class OneClickCourseCreation {
  */
 OneClickCourseCreation::init();
 
-add_action('admin_enqueue_scripts', array(OneClickCourseCreation::init(), 'scripts'));

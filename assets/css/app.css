@@ -1,13 +1,84 @@
 @import url(https://fonts.googleapis.com/css?family=Open+Sans);@import url(https://fonts.googleapis.com/css?family=Roboto+Slab);@import url(https://fonts.googleapis.com/css?family=Amatic+SC);/* SETTINGS
  * Global variables, brand colours, configs, etc
  */
+input, select, textarea {
+  width: 100%; }
+
+label {
+  width: 100%;
+  font-weight: 600; }
+
+.oc-form-group {
+  margin-bottom: 20px; }
+  .oc-form-group:last-child {
+    margin-bottom: 0; }
+
+.oc-form-control {
+  width: 100%;
+  padding: 10px 15px;
+  max-width: 100% !important; }
+
+.oc-form-control-select {
+  height: 15px;
+  max-width: 100% !important; }
+
+.oc-button-group {
+  display: flex; }
+  .oc-button-group.align-center {
+    align-items: center; }
+  .oc-button-group.justify-center {
+    justify-content: center; }
+  .oc-button-group.justify-right {
+    justify-content: flex-end; }
+  .oc-button-group.justify-between {
+    justify-content: space-between; }
+
+.oc-btn {
+  cursor: pointer;
+  padding: 10px 25px;
+  border: 1px solid #f3f3f3;
+  font-weight: 600;
+  transition: 0.3s all; }
+  .oc-btn.oc-btn--primary {
+    background-color: #00B1CD;
+    border-color: #00B1CD;
+    color: #fff; }
+
 /* COMPONENTS
  * Rich design UI styles, popups, login interface, etc.
  */
-.cohort-progress {
-  display: flex;
-  align-items: center;
-  width: 100%; }
-  .cohort-progress a {
-    padding: 10px;
-    text-decoration: none; }
+/*
+  Cohort Steps user interface
+ */
+* {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box; }
+
+.cohort-tabs {
+  width: 50%;
+  margin-right: 20px; }
+  .cohort-tabs .cohort-progress {
+    display: flex;
+    align-items: center;
+    width: 100%; }
+    .cohort-tabs .cohort-progress li {
+      width: 100%; }
+    .cohort-tabs .cohort-progress a {
+      display: block;
+      padding: 15px;
+      width: 100%;
+      text-decoration: none;
+      background-color: #fff;
+      font-size: 18px;
+      text-align: center;
+      font-weight: 600;
+      transition: 0.3s all; }
+      .cohort-tabs .cohort-progress a:hover {
+        background-color: #00B1CD;
+        color: #fff; }
+  .cohort-tabs .cohort-steps {
+    margin-top: 25px;
+    background-color: #fff;
+    padding: 15px 20px;
+    width: 100%; }

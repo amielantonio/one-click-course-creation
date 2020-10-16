@@ -23,6 +23,8 @@ class MainController extends CoreController{
      */
     public function index()
     {
+
+
         return (new View('steps/steps'))->render();
     }
 

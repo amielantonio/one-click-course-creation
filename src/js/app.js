@@ -2,7 +2,7 @@
  *
  */
 
-require( './components/access-device' );
+require( './components/tabs' );
 
 
 /**

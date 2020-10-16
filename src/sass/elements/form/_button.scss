@@ -1,0 +1,46 @@
+button, input[type="submit"] {
+
+}
+
+.oc-btn {
+
+  cursor: pointer;
+  padding: 10px 25px;
+  border: 1px solid #f3f3f3;
+  font-weight: 600;
+
+  transition: 0.3s all;
+
+  &.oc-btn--primary {
+
+    background-color: $blue;
+    border-color: $blue;
+    color: #fff;
+
+    &:hover {
+
+    }
+  }
+
+  &.oc-btn--secondary {
+
+    &:hover {
+
+    }
+  }
+
+  &.oc-btn--danger {
+    &:hover {
+
+    }
+  }
+
+  &.oc-btn--warning {
+    &:hover {
+
+    }
+  }
+
+}
+
+
