@@ -1,5 +1,13 @@
-.section-table {
-  padding-right: 20px; }
-
-.marco {
-  color: red; }
+@import url(https://fonts.googleapis.com/css?family=Open+Sans);@import url(https://fonts.googleapis.com/css?family=Roboto+Slab);@import url(https://fonts.googleapis.com/css?family=Amatic+SC);/* SETTINGS
+ * Global variables, brand colours, configs, etc
+ */
+/* COMPONENTS
+ * Rich design UI styles, popups, login interface, etc.
+ */
+.cohort-progress {
+  display: flex;
+  align-items: center;
+  width: 100%; }
+  .cohort-progress a {
+    padding: 10px;
+    text-decoration: none; }

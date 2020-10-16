@@ -64,6 +64,7 @@ final class OneClickCourseCreation {
         $this->registerAutoload();
         $this->loadDependencies();
 
+
         // Once all dependencies and services has been loaded, install database
         // and boot up the entire plugin
         $this->boot();
@@ -126,11 +127,21 @@ final class OneClickCourseCreation {
 
         $installer = new \AWC\Helpers\Installer;
 
-
-
         $installer->install();
 
     }
+
+    public function scripts()
+    {
+
+        echo "test";
+        wp_enqueue_style(
+            'custom-scss',
+            get_template_directory_uri() . '/assets/css/app.css'
+        );
+    }
+
+
 
     /**
      *
@@ -146,3 +157,5 @@ final class OneClickCourseCreation {
  * Start the App
  */
 OneClickCourseCreation::init();
+
+add_action('admin_enqueue_scripts', array(OneClickCourseCreation::init(), 'scripts'));

@@ -1,4 +1,16 @@
+/* SETTINGS
+ * Global variables, brand colours, configs, etc
+ */
+@import url('https://fonts.googleapis.com/css?family=Open+Sans');
+@import url('https://fonts.googleapis.com/css?family=Roboto+Slab');
+@import url('https://fonts.googleapis.com/css?family=Amatic+SC');
 
-//Containers
-//--------------------------------------------
-@import "components/containers/containers";
+@import "variables/colours";
+@import "variables/fonts";
+@import "variables/defaults";
+
+
+/* COMPONENTS
+ * Rich design UI styles, popups, login interface, etc.
+ */
+@import "components/tabs/tabs";

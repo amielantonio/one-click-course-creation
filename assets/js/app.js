@@ -93,7 +93,7 @@
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-eval("/**\r\n *\r\n */\r\n\r\n__webpack_require__( /*! ./components/access-device */ \"./src/js/components/access-device.js\" );\r\n\r\n\r\n/**\r\n *\r\n */\r\n\r\n\r\n( function ($){\r\n\r\n  $(function() {\r\n\r\n    console.log( 'App Initialized' );\r\n\r\n  });\r\n\r\n\r\n})(jQuery);\r\n\r\n\r\n\n\n//# sourceURL=webpack:///./src/js/app.js?");
+eval("/**\n *\n */\n\n__webpack_require__( /*! ./components/access-device */ \"./src/js/components/access-device.js\" );\n\n\n/**\n *\n */\n\n\n( function ($){\n\n  $(function() {\n\n    console.log( 'App Initialized' );\n\n  });\n\n\n})(jQuery);\n\n\n\n\n//# sourceURL=webpack:///./src/js/app.js?");
 
 /***/ }),
 
@@ -104,7 +104,7 @@ eval("/**\r\n *\r\n */\r\n\r\n__webpack_require__( /*! ./components/access-devic
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-eval("alert( 'test' );\r\n\n\n//# sourceURL=webpack:///./src/js/components/access-device.js?");
+eval("alert( 'test' );\n\n\n//# sourceURL=webpack:///./src/js/components/access-device.js?");
 
 /***/ }),
 

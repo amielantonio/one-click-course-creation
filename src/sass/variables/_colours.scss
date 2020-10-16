@@ -1,0 +1,21 @@
+//Primary colors
+
+$blue: #00B1CD;
+$red: #FE2F4B;
+$orange: #FA8317;
+$green: #7BA33D;
+$black: #231F20;
+
+//Secondary Colors
+$teal: #33CC9E;
+
+$primary_color_array: (
+        blue: $blue,
+        red: $red,
+        orange: $orange,
+        green: $green,
+);
+
+$secondary_color_array: (
+        teal: $teal
+)
