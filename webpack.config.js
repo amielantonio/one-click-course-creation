@@ -9,7 +9,7 @@ module.exports = {
   entry:  [ './src/js/app.js', './src/sass/app.scss'  ],
 
   output: {
-    filename: 'js/app.js',
+    filename: 'js/one-click-creation.js',
     path: path.resolve(__dirname, 'assets'),
   },
   module:{
@@ -25,7 +25,7 @@ module.exports = {
   },
   plugins: [
     new ExtractTextPlugin({ // define where to save the file
-      filename: 'css/app.css',
+      filename: 'css/one-click-creation.css',
     }),
   ],
 

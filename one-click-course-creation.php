@@ -134,8 +134,8 @@ final class OneClickCourseCreation {
 
     public function scripts()
     {
-        wp_enqueue_style('custom-scss', plugins_url('one-click-course-creation') . '/assets/css/app.css');
-        wp_enqueue_script('custom-js-admin', plugins_url('one-click-course-creation') . '/assets/js/app.js');
+        wp_enqueue_style('custom-scss', plugins_url('one-click-course-creation') . '/assets/css/one-click-creation.css');
+        wp_enqueue_script('custom-js-admin', plugins_url('one-click-course-creation') . '/assets/js/one-click-creation.js');
 
     }
 

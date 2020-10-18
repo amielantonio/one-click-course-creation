@@ -15,7 +15,3 @@
     </select>
 </div>
 
-<div class="oc-button-group align-center justify-between">
-    <button id="previous" class="oc-btn oc-btn--primary">Previous</button>
-    <button id="next" class="oc-btn oc-btn--primary">Next</button>
-</div>

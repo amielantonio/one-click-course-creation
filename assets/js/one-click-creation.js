@@ -105,7 +105,7 @@ eval("/**\r\n *\r\n */\r\n\r\n__webpack_require__( /*! ./components/tabs */ \"./
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony default export */ __webpack_exports__[\"default\"] = (function(){\r\n\r\n});\r\n\n\n//# sourceURL=webpack:///./src/js/components/tabs.js?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"default\", function() { return tabs; });\nfunction tabs() {\r\n    progress();\r\n    steps();\r\n}\r\n\r\nfunction progress() {\r\n    let progressItem = $('.cohort-progress a');\r\n\r\n    progressItem.on('click', function(e){\r\n        e.preventDefault();\r\n\r\n        console.log('test click');\r\n    });\r\n}\r\n\r\nfunction steps() {\r\n\r\n}\r\n\n\n//# sourceURL=webpack:///./src/js/components/tabs.js?");
 
 /***/ }),
 
