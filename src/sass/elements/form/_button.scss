@@ -41,6 +41,11 @@ button, input[type="submit"] {
     }
   }
 
+  &~& {
+    margin-left: 10px;
+  }
+
+
 }
 
 

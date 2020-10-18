@@ -1,0 +1,44 @@
+@mixin spacing-utilities(){
+  $spacing-settings: (
+          "spaces"         : (
+                  "margin"      : "m",
+                  "padding"     : "p"
+          ),
+          "positions"      : (
+                  "top"         : "t",
+                  "bottom"      : "b",
+                  "right"       : "r",
+                  "left"        : "l",
+          )
+
+  );
+
+  @each $space-key, $space in map_get($spacing-settings, "spaces"){
+    @each $position-key, $position in map_get($spacing-settings, "positions"){
+
+      $ctr: 0;
+      @while $ctr <= 120{
+
+        @if $ctr == 0{
+          ._#{$space}-#{$position}--auto{
+            #{$space-key}-#{$position-key}: auto !important;
+          }
+        }
+        @else {
+          ._#{$space}-#{$position}--#{$ctr}{
+            #{$space-key}-#{$position-key}: #{$ctr}px !important;
+          }
+        }
+
+
+
+        $ctr: $ctr + 10;
+      }
+
+
+    }
+  }
+
+}
+
+@include spacing-utilities;

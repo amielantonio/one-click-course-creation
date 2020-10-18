@@ -90,10 +90,11 @@
 /*!***********************!*\
   !*** ./src/js/app.js ***!
   \***********************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
-eval("/**\r\n *\r\n */\r\n\r\n__webpack_require__( /*! ./components/tabs */ \"./src/js/components/tabs.js\" );\r\n\r\n\r\n/**\r\n *\r\n */\r\n\r\n\r\n( function ($){\r\n\r\n  $(function() {\r\n\r\n    console.log( 'App Initialized' );\r\n\r\n  });\r\n\r\n\r\n})(jQuery);\r\n\r\n\r\n\n\n//# sourceURL=webpack:///./src/js/app.js?");
+"use strict";
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _components_tabs__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./components/tabs */ \"./src/js/components/tabs.js\");\n$ = jQuery;\r\n\r\n\r\n/**\r\n *\r\n */\r\n\r\n\r\n( function ($){\r\n\r\n  $(function() {\r\n\r\n    Object(_components_tabs__WEBPACK_IMPORTED_MODULE_0__[\"default\"])();\r\n\r\n    console.log( 'App Initialized' );\r\n\r\n  });\r\n\r\n\r\n})(jQuery);\r\n\r\n\r\n\n\n//# sourceURL=webpack:///./src/js/app.js?");
 
 /***/ }),
 
@@ -105,7 +106,7 @@ eval("/**\r\n *\r\n */\r\n\r\n__webpack_require__( /*! ./components/tabs */ \"./
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"default\", function() { return tabs; });\nfunction tabs() {\r\n    progress();\r\n    steps();\r\n}\r\n\r\nfunction progress() {\r\n    let progressItem = $('.cohort-progress a');\r\n\r\n    progressItem.on('click', function(e){\r\n        e.preventDefault();\r\n\r\n        console.log('test click');\r\n    });\r\n}\r\n\r\nfunction steps() {\r\n\r\n}\r\n\n\n//# sourceURL=webpack:///./src/js/components/tabs.js?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"default\", function() { return tabs; });\nfunction tabs() {\r\n    progress();\r\n    steps();\r\n    buttons();\r\n}\r\n\r\nfunction progress() {\r\n    let progressItem = $('.cohort-progress a');\r\n\r\n    //Defaults\r\n    progressItem.addClass('disabled');\r\n    progressItem.eq(0).removeClass('disabled').addClass('active');\r\n\r\n\r\n    progressItem.on('click', function (e) {\r\n        e.preventDefault();\r\n\r\n\r\n        //Progress behaviour\r\n        progressItem.removeClass('active');\r\n        $(this).removeClass('disabled').addClass('active');\r\n\r\n\r\n    });\r\n}\r\n\r\nfunction steps( $step = 1 ) {\r\n    let steps = $('.cohort-step');\r\n\r\n    let currentStep = $step - 1;\r\n\r\n    steps.addClass('hide');\r\n    steps.eq(currentStep).removeClass('hide');\r\n\r\n\r\n}\r\n\r\n\r\nfunction buttons() {\r\n    let lastSelected = $('.cohort-tabs').data('last-selected');\r\n    let prev = $('#btn-previous');\r\n    let next = $('#btn-next');\r\n\r\n\r\n    if( lastSelected === 1  ) {\r\n        prev.hide();\r\n    }\r\n\r\n    if( lastSelected === $('.cohort-step').length ) {\r\n        next.hide();\r\n    }\r\n}\n\n//# sourceURL=webpack:///./src/js/components/tabs.js?");
 
 /***/ }),
 

@@ -1,9 +1,5 @@
-/**
- *
- */
-
-require( './components/tabs' );
-
+$ = jQuery;
+import tabs from './components/tabs';
 
 /**
  *
@@ -13,6 +9,8 @@ require( './components/tabs' );
 ( function ($){
 
   $(function() {
+
+    tabs();
 
     console.log( 'App Initialized' );
 

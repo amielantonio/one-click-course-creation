@@ -1,0 +1,142 @@
+._text-right {
+  text-align: right;
+}
+
+._text-center {
+  text-align: center;
+}
+
+._text-justify {
+  text-align: justify;
+}
+
+._text-left {
+  text-align: left;
+}
+
+._text-blue {
+  color: $blue;
+}
+
+._text-red {
+  color: $red;
+}
+
+._text-green {
+  color: $green;
+}
+
+._text-orange {
+  color: $orange;
+}
+
+._text-dark {
+  color: #2D2D2D;
+}
+
+._text-light {
+  color: #FFF5F5;
+}
+
+._text-primary {
+  color: $blue;
+}
+
+._text-warning {
+  color: $orange;
+}
+
+._text-danger {
+  color: $red;
+}
+
+._text-success {
+  color: $green;
+}
+
+._text-muted {
+  color: #666;
+}
+
+._h1 {
+  font-size: 2.5em;
+  font-weight: 700;
+}
+
+._h2 {
+  font-size: 2em;
+  font-weight: 700;
+}
+
+._h3 {
+  font-size: 1.75em;
+  font-weight: 700;
+}
+
+._h4 {
+  font-size: 1.5em;
+  font-weight: 700;
+}
+
+._h5 {
+  font-size: 1.25em;
+  font-weight: 700;
+}
+
+._h6 {
+  font-size: 1em;
+  font-weight: 700;
+}
+
+._h1--xl {
+  font-size: 3.25em;
+}
+
+._text-emphasize {
+  font-weight: 700;
+  font-size: 3.25em;
+}
+
+@media only screen and (max-width: 1199px) {
+  ._text-emphasize {
+    font-size: 2.5em;
+  }
+}
+
+@media only screen and (max-width: 575px) {
+  ._text-emphasize {
+    font-size: 2em;
+  }
+}
+
+._font-light {
+  font-weight: 300;
+}
+
+._font-regular {
+  font-weight: 400;
+}
+
+._font-medium {
+  font-weight: 500;
+}
+
+._font-semibold {
+  font-weight: 600;
+}
+
+._font-bold {
+  font-weight: 700;
+}
+
+._font-extrabold {
+  font-weight: 800;
+}
+
+._font-black {
+  font-weight: 900;
+}
+
+._font-italic {
+  font-style: italic;
+}

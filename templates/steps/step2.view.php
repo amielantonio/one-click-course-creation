@@ -1,6 +1,6 @@
 <h3>Module Schedule</h3>
 
-<table>
+<table class="oc-table oc-table-striped" cellpadding="0" cellspacing="0">
     <thead>
     <tr>
         <th>Module</th>
@@ -12,33 +12,33 @@
     <tbody>
     <tr>
         <td>Module 1: Lorem ipsum</td>
-        <td></td>
-        <td></td>
-        <td></td>
+        <td><input type="text" class="oc-form-control"></td>
+        <td><input type="text" class="oc-form-control"></td>
+        <td class="_text-center"><input type="checkbox" class="oc-form-control"></td>
     </tr>
     <tr>
         <td>Module 2: Dolor Sit Amet</td>
-        <td></td>
-        <td></td>
-        <td></td>
+        <td><input type="text" class="oc-form-control"></td>
+        <td><input type="text" class="oc-form-control"></td>
+        <td class="_text-center"><input type="checkbox" class="oc-form-control"></td>
     </tr>
     <tr>
         <td>Module 3: Consectetur</td>
-        <td></td>
-        <td></td>
-        <td></td>
+        <td><input type="text" class="oc-form-control"></td>
+        <td><input type="text" class="oc-form-control"></td>
+        <td class="_text-center"><input type="checkbox" class="oc-form-control"></td>
     </tr>
     <tr>
         <td>Module 4: Bacon Ipsum</td>
-        <td></td>
-        <td></td>
-        <td></td>
+        <td><input type="text" class="oc-form-control"></td>
+        <td><input type="text" class="oc-form-control"></td>
+        <td class="_text-center"><input type="checkbox" class="oc-form-control"></td>
     </tr>
     <tr>
         <td>Module 5: Buffalo tail jerky turkey sausage</td>
-        <td></td>
-        <td></td>
-        <td></td>
+        <td><input type="text" class="oc-form-control"></td>
+        <td><input type="text" class="oc-form-control"></td>
+        <td class="_text-center"><input type="checkbox" class="oc-form-control"></td>
     </tr>
     </tbody>
     <tfoot>

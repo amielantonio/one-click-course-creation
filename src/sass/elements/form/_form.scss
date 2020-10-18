@@ -48,3 +48,24 @@ label {
     justify-content: space-between;
   }
 }
+
+
+.oc-checkbox-row {
+  display: flex;
+  align-items: flex-start;
+  margin: 0 -15px 20px;
+
+
+  .oc-checkbox-row--left {
+    padding: 0 15px;
+  }
+
+  .oc-checkbox-row--right {
+    padding: 0 15px;
+  }
+}
+
+.information {
+  margin: 0 0 20px;
+
+}
