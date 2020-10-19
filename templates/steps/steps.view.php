@@ -1,12 +1,12 @@
-<h1>Setup Classroom</h1>
+<h1 class="_m-b--50">Setup Classroom</h1>
 
 <div class="cohort-tabs" data-last-selected="1">
-    <ul class="cohort-progress">
-        <li><a data-target="#cohort-step1">Select a Course</a></li>
-        <li><a data-target="#cohort-step2">Module Schedules</a></li>
-        <li><a data-target="#cohort-step3">Course Settings</a></li>
-        <li><a data-target="#cohort-step4">Tags</a></li>
-    </ul>
+<!--    <ul class="cohort-progress">-->
+<!--        <li><a data-target="#cohort-step1">Select a Course</a></li>-->
+<!--        <li><a data-target="#cohort-step2">Module Schedules</a></li>-->
+<!--        <li><a data-target="#cohort-step3">Course Settings</a></li>-->
+<!--        <li><a data-target="#cohort-step4">Tags</a></li>-->
+<!--    </ul>-->
 
     <div class="cohort-steps">
         <form action="" method="post">
@@ -26,8 +26,7 @@
     </div>
 
     <div class="cohort-buttons oc-button-group align-center">
-        <button id="btn-previous" class="oc-btn oc-btn--primary" type="button">Previous</button>
-        <button id="btn-next" class="oc-btn oc-btn--primary" type="button">Next</button>
+        <button id="btn-classroom" class="oc-btn oc-btn--primary" type="button">Create Classroom</button>
     </div>
 
 </div>

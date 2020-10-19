@@ -53,15 +53,24 @@
   }
 
   .cohort-steps {
-    margin-top: 25px;
-    background-color: #fff;
-    padding: 15px 20px;
     width: 100%;
-
 
     .hide {
       display: none;
     }
+
+    .cohort-step {
+      margin-bottom: 25px;
+      background-color: #fff;
+      padding: 20px;
+
+      .cohort-title {
+        margin: 0 0 30px;
+      }
+    }
+
+
+
   }
 
   .cohort-buttons {

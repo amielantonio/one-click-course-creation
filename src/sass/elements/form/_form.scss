@@ -7,6 +7,11 @@ label {
   font-weight: 600;
 }
 
+label ~ .oc-form-control,
+label ~ .oc-form-control-select{
+  margin-top: 10px;
+}
+
 
 .oc-form-group {
   margin-bottom: 20px;

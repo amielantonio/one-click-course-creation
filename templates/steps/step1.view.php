@@ -1,3 +1,4 @@
+<h3 class="cohort-title">Select a Course</h3>
 <div class="oc-form-group">
     <label>Course Title</label>
     <input type="text" class="oc-form-control" id="course-title" placeholder="Add New Course Title">

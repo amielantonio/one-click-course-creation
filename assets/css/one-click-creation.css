@@ -8,6 +8,10 @@ label {
   width: 100%;
   font-weight: 600; }
 
+label ~ .oc-form-control,
+label ~ .oc-form-control-select {
+  margin-top: 10px; }
+
 .oc-form-group {
   margin-bottom: 20px; }
   .oc-form-group:last-child {
@@ -124,12 +128,15 @@ table.oc-table-striped {
         background-color: silver;
         color: #594f51; }
   .cohort-tabs .cohort-steps {
-    margin-top: 25px;
-    background-color: #fff;
-    padding: 15px 20px;
     width: 100%; }
     .cohort-tabs .cohort-steps .hide {
       display: none; }
+    .cohort-tabs .cohort-steps .cohort-step {
+      margin-bottom: 25px;
+      background-color: #fff;
+      padding: 20px; }
+      .cohort-tabs .cohort-steps .cohort-step .cohort-title {
+        margin: 0 0 30px; }
   .cohort-tabs .cohort-buttons {
     margin-top: 20px; }
 

@@ -1,4 +1,4 @@
-<h3>Module Schedule</h3>
+<h3 class="cohort-title">Module Schedule</h3>
 
 <table class="oc-table oc-table-striped" cellpadding="0" cellspacing="0">
     <thead>
