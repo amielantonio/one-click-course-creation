@@ -15,6 +15,8 @@ Router::addMenu('One Click Course', 'MainController@index' );
 Router::addSubMenu('One Click Course', 'TheSubmenu', 'MainController@index');
 
 
+Router::addSubMenu('One Click Course','Update', 'MainController@update');
+
 //
 //Router::addChannel( 'post', 'MainController@test', 'test' );
 //Router::addChannel( 'post', 'MainController@index', 'test2' );
