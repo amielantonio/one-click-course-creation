@@ -48,7 +48,7 @@ class MainController extends CoreController{
     public function settings()
     {
 
-        
+
     }
 
 
