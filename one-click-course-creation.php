@@ -148,7 +148,6 @@ final class OneClickCourseCreation {
 
         wp_enqueue_style('datatables-admin', '//cdn.datatables.net/1.10.22/css/jquery.dataTables.min.css', '', '', '');
         wp_enqueue_script('datatables-admin', '//cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js', '', '', '');
-
     }
 
 
