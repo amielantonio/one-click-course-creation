@@ -3,7 +3,7 @@ namespace AWC\Model;
 
 use AWC\Core\CoreModel;
 
-class AccessDevice extends CoreModel {
+class Posts extends CoreModel {
 
     protected $table = "posts";
 

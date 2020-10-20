@@ -137,6 +137,18 @@ final class OneClickCourseCreation {
         wp_enqueue_style('custom-scss', plugins_url('one-click-course-creation') . '/assets/css/one-click-creation.css');
         wp_enqueue_script('custom-js-admin', plugins_url('one-click-course-creation') . '/assets/js/one-click-creation.js');
 
+        wp_enqueue_style('select2-admin', 'https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/css/select2.min.css', '', '', '');
+        wp_enqueue_script('select2-admin', 'https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.min.js', '', '', '');
+
+        wp_enqueue_style('airdatepicker-admin', 'https://cdnjs.cloudflare.com/ajax/libs/air-datepicker/2.2.3/css/datepicker.min.css', '', '', '');
+        wp_enqueue_script('airdatepicker-admin', 'https://cdnjs.cloudflare.com/ajax/libs/air-datepicker/2.2.3/js/datepicker.min.js', '', '', '');
+        wp_enqueue_script('airdatepicker-admin-en', 'https://cdnjs.cloudflare.com/ajax/libs/air-datepicker/2.2.3/js/i18n/datepicker.en.min.js', '', '', '');
+
+        wp_enqueue_script('ckeditor-admin', '//cdn.ckeditor.com/4.14.0/standard/ckeditor.js', '', '', '');
+
+        wp_enqueue_style('datatables-admin', '//cdn.datatables.net/1.10.22/css/jquery.dataTables.min.css', '', '', '');
+        wp_enqueue_script('datatables-admin', '//cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js', '', '', '');
+
     }
 
 
