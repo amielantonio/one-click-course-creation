@@ -3,11 +3,11 @@ namespace AWC\Model;
 
 use AWC\Core\CoreModel;
 
-class AccessDevice extends CoreModel {
+class Classrooms extends CoreModel {
 
-    protected $table = "posts";
+    protected $table = "";
 
-    protected $primary_key = "ID";
+    protected $primary_key = "";
 
     public function __construct()
     {

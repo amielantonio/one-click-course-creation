@@ -1,0 +1,80 @@
+.oc-table-stats .dataTables_length {
+
+
+  label {
+    display: flex;
+    align-items: center;
+
+    select {
+      width: 75px;
+      display: inline-block;
+      margin-left: 10px;
+      margin-right: 10px;
+
+
+      height: calc(1.5em + 0.5rem + 2px);
+      padding: 0.25rem 0.5rem;
+      font-size: 0.7875rem;
+      line-height: 1.5;
+      border-radius: 0.2rem;
+    }
+  }
+}
+
+
+.oc-table-stats .dataTables_filter {
+
+  label {
+    display: flex;
+    align-items: center;
+
+    input {
+      width: 200px;
+      margin-left: 10px !important;
+
+      height: calc(1.5em + 0.5rem + 2px);
+      padding: 0.25rem 0.5rem;
+      font-size: 0.7875rem;
+      line-height: 1.5;
+      border-radius: 0.2rem;
+    }
+  }
+}
+
+.oc-table-stats table thead th,
+.oc-table-stats table tbody td {
+  border: none;
+  color: #868e96;
+  font-size: 12px;
+  border-bottom: 1px solid #e8e9ef !important;
+  padding: 10px 18px !important;
+  text-transform: uppercase;
+
+  text-align: left;
+}
+
+.oc-table-stats table tbody tr:last-child td {
+  border-bottom: 0 !important;
+}
+
+.oc-table-stats table tfoot th {
+  border: none;
+  color: #868e96;
+  font-size: 12px;
+  border-bottom: 1px solid #e8e9ef !important;
+  border-top: 1px solid #e8e9ef !important;
+  padding: .75em 1.25em;
+  text-transform: uppercase;
+
+  text-align: left;
+}
+
+.oc-table-stats table tbody td {
+  color: $black;
+  font-size: 14px;
+}
+
+.oc-table.dataTable {
+  padding-top: 30px !important;
+  padding-bottom: 30px !important;
+}
