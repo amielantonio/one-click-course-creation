@@ -20,5 +20,5 @@ Router::addSubMenu('One Click Classroom Setup', 'Settings', 'MainController@inde
 Router::addSubMenu('One Click Classroom Setup','Update', 'MainController@update');
 
 //
-//Router::addChannel( 'post', 'MainController@test', 'test' );
+Router::addChannel( 'get', 'MainController@test', 'test' );
 //Router::addChannel( 'post', 'MainController@index', 'test2' );
