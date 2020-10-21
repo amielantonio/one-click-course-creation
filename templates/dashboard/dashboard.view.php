@@ -1,3 +1,13 @@
+<!--<form action="?page=one-click-classroom-setup&route=test" method="get">-->
+<form action="<?php echo admin_url( 'admin.php'); ?>" method="get">
+    <input type="hidden" name="page" value="one-click-classroom-setup" />
+    <input type="hidden" name="route" value="test" />
+    <input type="text" name="firstname">
+    <input type="text" name="lastname">
+    <button type="submit">Pass</button>
+</form>
+
+
 <h1 class="_m-b--50">Created Classrooms</h1>
 
 <div class="oc-container">

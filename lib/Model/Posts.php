@@ -12,8 +12,6 @@ class Posts extends CoreModel {
     public function __construct()
     {
         parent::__construct();
-
-        wp_nonce();
     }
 
 }

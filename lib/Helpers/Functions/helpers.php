@@ -22,6 +22,15 @@ if (! function_exists('')) {
     }
 }
 
+if (! function_exists('')) {
+
+
+    function _redirect( $to = null, $status = 302 ) {
+
+    }
+
+}
+
 
 if (! function_exists('')) {
 

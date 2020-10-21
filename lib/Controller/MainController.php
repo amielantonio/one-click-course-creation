@@ -52,9 +52,9 @@ class MainController extends CoreController{
     }
 
 
-    public function view()
+    public function test(Request $request)
     {
-
+        var_dump($request);
     }
 
     public function update()
