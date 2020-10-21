@@ -47,7 +47,8 @@ class MainController extends CoreController{
     public function settings()
     {
 
-
+        return _view('pages/settings');
+//        (new View('page/settings'))->render();
     }
 
 

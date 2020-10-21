@@ -1,18 +1,15 @@
 <?php
 
 
-if (! function_exists('')) {
+if (! function_exists('_view')) {
 
 
-    function view($view = null, $data = []) {
 
-    }
-}
+    function _view($view = null, $data = []) {
 
+        $view = new AWC\Helpers\View($view, $data);
 
-if (! function_exists('')) {
-
-    function route( $name, $parameters = []) {
+        return $view->render();
 
     }
 }
@@ -20,8 +17,16 @@ if (! function_exists('')) {
 
 if (! function_exists('')) {
 
+    function _route( $name, $parameters = []) {
 
-    function resource_path( $path = "" ) {
+    }
+}
+
+
+if (! function_exists('')) {
+
+
+    function _resource_path( $path = "" ) {
 
     }
 }
@@ -29,7 +34,7 @@ if (! function_exists('')) {
 if (! function_exists('')) {
 
 
-    function request( $path = "" ) {
+    function _request( $path = "" ) {
 
     }
 }
@@ -37,7 +42,7 @@ if (! function_exists('')) {
 if (! function_exists('')) {
 
 
-    function wp_nonce(){
+    function _wp_nonce(){
 
     }
 }
@@ -45,7 +50,7 @@ if (! function_exists('')) {
 if (! function_exists('')) {
 
 
-    function wp_nonce_field() {
+    function _wp_nonce_field() {
 
     }
 }
