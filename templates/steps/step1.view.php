@@ -16,3 +16,14 @@
     </select>
 </div>
 
+<div class="oc-form-group">
+    <label>Online Tutor</label>
+    <select name="" class="oc-form-control-select" id="course-content">
+        <option>Select Course</option>
+        <option>Creative Writing Stage 1</option>
+        <option>Freelance Writing Stage 1</option>
+        <option>Short Story Essentials</option>
+        <option>Novel Writing Essentials</option>
+        <option>Write Your Novel</option>
+    </select>
+</div>
