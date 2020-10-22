@@ -35,13 +35,21 @@ if (! function_exists('_route')) {
 
 if (! function_exists('_redirect')) {
 
+    /**
+     * Redirect to new location
+     *
+     * @param $to
+     * @param array $data
+     * @param int $status
+     */
+    function _redirect( $to, $data = [], $status = 302 ) {
 
-    function _redirect( $to = null, $status = 302 ) {
+
+        echo Router::redirect($to, $data, $status);
 
     }
 
 }
-
 
 if (! function_exists('_resource_path')) {
 

@@ -23,6 +23,8 @@ class Request implements Arrayable, ArrayAccess {
 
     protected $file = [];
 
+    protected $all = [];
+
     public function __construct( $post = [], $get = [], $file = [] )
     {
         $this->post = $post;
@@ -32,6 +34,8 @@ class Request implements Arrayable, ArrayAccess {
         $this->requestPage = $get['page'];
 
         $this->requestRoute = $get['route'];
+
+        $this->all = array_merge($this->post, $this->get);
     }
 
     public function method()
@@ -39,10 +43,35 @@ class Request implements Arrayable, ArrayAccess {
 
     }
 
+    /**
+     * Check if the data has the data
+     *
+     * @param $key
+     * @return bool
+     */
     public function has( $key )
     {
         return array_key_exists( $key, $this->post);
     }
+
+    /**
+     *
+     *
+     * @param array $keys
+     * @return bool
+     */
+    public function hasAny( $keys = [] )
+    {
+        if( is_array($keys) ){
+            foreach( $keys as $key ) {
+                return array_key_exists( $key, $this->post);
+            }
+
+        }
+
+        return false;
+    }
+
 
     public function is( $path )
     {
@@ -81,6 +110,16 @@ class Request implements Arrayable, ArrayAccess {
 
 
     public function file()
+    {
+
+    }
+
+    public function except()
+    {
+
+    }
+
+    public function only()
     {
 
     }

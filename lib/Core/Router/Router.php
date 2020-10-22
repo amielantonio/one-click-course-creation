@@ -1,6 +1,10 @@
 <?php
 
+use AWC\Traits\Sluggish;
+
 class Router {
+
+    use Sluggish;
 
     /**
      * Storage for page information
@@ -330,8 +334,18 @@ class Router {
             : "" ;
     }
 
-    public static function redirect( $from, $to, $redirect = 302)
+    public static function redirect( $to, $data = [], $status = 302 )
     {
+        $slug = self::$instance->toSlug($to);
+
+        $location = "?page=clone-classroom";
+
+        if( !empty($data)) {
+            $location .= "&data={$data}";
+        }
+//        echo admin_url('admin.php'.$location);
+
+        wp_redirect(admin_url('admin.php'.$location)); exit;
 
     }
 
