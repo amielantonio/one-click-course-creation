@@ -12,11 +12,12 @@
 */
 
 //Router::addMenu('One Click Course', 'MainController@index' );
-Router::addMenu('One Click Classroom Setup', 'MainController@index' );
-Router::addSubMenu('One Click Classroom Setup', 'Clone Classroom', 'MainController@create');
+Router::addMenu('One Click Classroom Setup', 'MainController@blank' );
+Router::addSubMenu('One Click Classroom Setup', 'Courses', 'MainController@index', ['menu_slug' => 'one-click-classroom-setup']);
+Router::addSubMenu('One Click Classroom Setup', 'Course Setup', 'MainController@create');
 
 
-Router::addSubMenu('One Click Classroom Setup','Update', 'MainController@update');
+//Router::addSubMenu('One Click Classroom Setup','Update', 'MainController@update');
 
 //
 Router::addChannel( 'post', 'test', 'MainController@test' );

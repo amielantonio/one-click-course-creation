@@ -5,7 +5,7 @@
 
         <div class="container-body">
 
-            <form action="<?= _route('save-settings')?>" method="post">
+            <form action="<?= _route('save-settings')?>" method="post" class="oc-form">
                 <div class="oc-form-group">
                     <label for="oc-content-parent-id">Course content parent ID</label>
                     <select name="oc-content-parent-id[]" id="oc-content-parent-id" class="oc-form-control-select" multiple="multiple">
@@ -31,3 +31,4 @@
         $('#oc-content-parent-id').select2();
     });
 </script>
+

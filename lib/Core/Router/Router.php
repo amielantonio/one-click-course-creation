@@ -117,7 +117,7 @@ class Router {
      * @param array $settings
      * @return Router
      */
-    public static function addMenu( $name, $controller, $settings = [] )
+    public static function addMenu( $name, $controller = null, $settings = [] )
     {
         self::add( 'menu', $name, $controller, $settings );
 
@@ -133,7 +133,7 @@ class Router {
      * @param array $settings
      * @return Router
      */
-    public static function addSubMenu( $parent_name, $name, $controller, $settings = [] )
+    public static function addSubMenu( $parent_name, $name, $controller = null, $settings = [] )
     {
         self::add( 'submenu',
             $name,

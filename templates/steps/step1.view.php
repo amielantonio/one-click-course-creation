@@ -6,7 +6,7 @@
 
 <div class="oc-form-group">
     <label>Course Content</label>
-    <select name="course-content" class="oc-form-control-select" id="course-content">
+    <select name="course-content" class="oc-form-control select2" id="course-content">
         <option>Select Course</option>
         <option>Creative Writing Stage 1</option>
         <option>Freelance Writing Stage 1</option>
@@ -18,7 +18,7 @@
 
 <div class="oc-form-group">
     <label>Online Tutor</label>
-    <select name="" class="oc-form-control-select" id="course-content">
+    <select name="" class="oc-form-control select2" id="online-tutor">
         <option>Select Course</option>
         <option>Creative Writing Stage 1</option>
         <option>Freelance Writing Stage 1</option>

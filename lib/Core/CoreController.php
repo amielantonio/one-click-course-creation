@@ -8,4 +8,9 @@ abstract class CoreController{
 
     }
 
+    public function blank()
+    {
+        return "";
+    }
+
 }
