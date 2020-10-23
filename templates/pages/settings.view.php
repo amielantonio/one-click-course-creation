@@ -28,6 +28,10 @@
 
 <script type="text/javascript">
     $(document).ready(function () {
+        let options = <?php echo $option?>
+
+             console.log(options);
+
         $('#oc-content-parent-id').select2();
     });
 </script>

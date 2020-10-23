@@ -28,8 +28,11 @@ class SettingsController extends CoreController{
 
         $courses = $course->select(['ID, post_title'])->where('post_type', 'sfwd-courses')->results();
 
+        $option = json_encode(get_option('the-course-content'));
+
         return (new View('pages/settings'))
             ->with('courses', $courses)
+            ->with('option', $option)
             ->render();
     }
 
@@ -42,17 +45,20 @@ class SettingsController extends CoreController{
     {
         $option = get_option('one-click-course-content');
 
-        if($option && !empty($option)) {
-            update_option('one-click-course-content', $request->input('oc-content-parent-id'));
-        } else {
-            add_option('one-click-course-content', $request->input('oc-content-parent-id'));
-        }
-
-
         $input = $request->input('oc-content-parent-id');
 
+        if($option && !empty($option)) {
+            update_option('the-course-content', $request->input('oc-content-parent-id'));
+        } else {
+            add_option('the-course-content', $input);
+        }
 
-        Router::redirect('Plugin Settings');
+        add_option('test-options', 'dawdadawdawedwa');
+
+
+
+
+//        Router::redirect('Plugin Settings');
     }
 
 }
