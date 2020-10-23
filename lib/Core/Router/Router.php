@@ -1,6 +1,10 @@
 <?php
 
+use AWC\Traits\Sluggish;
+
 class Router {
+
+    use Sluggish;
 
     /**
      * Storage for page information
@@ -113,7 +117,7 @@ class Router {
      * @param array $settings
      * @return Router
      */
-    public static function addMenu( $name, $controller, $settings = [] )
+    public static function addMenu( $name, $controller = null, $settings = [] )
     {
         self::add( 'menu', $name, $controller, $settings );
 
@@ -129,7 +133,7 @@ class Router {
      * @param array $settings
      * @return Router
      */
-    public static function addSubMenu( $parent_name, $name, $controller, $settings = [] )
+    public static function addSubMenu( $parent_name, $name, $controller = null, $settings = [] )
     {
         self::add( 'submenu',
             $name,
@@ -299,6 +303,18 @@ class Router {
     }
 
     /**
+     * Adds a channel to a specific route
+     *
+     * @param $verb
+     * @param $name
+     * @param $controller
+     */
+    public static function addChannel( $verb, $name, $controller )
+    {
+        static::$currentChannel = static::$channels[$name][] = compact('verb', 'controller', 'name' );
+    }
+
+    /**
      * Get the controller of the router being listened
      *
      * @return mixed
@@ -310,6 +326,7 @@ class Router {
             : "" ;
     }
 
+
     public static function getMethod()
     {
         return (static::isBeingListened())
@@ -317,16 +334,44 @@ class Router {
             : "" ;
     }
 
+    public static function redirect( $to, $data = [], $status = 302 )
+    {
+        $slug = self::$instance->toSlug($to);
+
+        $location = "?page=clone-classroom";
+
+        if( !empty($data)) {
+            $location .= "&data={$data}";
+        }
+//        echo admin_url('admin.php'.$location);
+
+        wp_redirect(admin_url('admin.php'.$location)); exit;
+
+    }
 
     /**
-     * Adds a channel to a specific route
+     * A wrapper for the add Channel with a GET http request
      *
-     * @param $verb
-     * @param $controller
      * @param $name
+     * @param $controller
      */
-    public static function addChannel( $verb, $controller, $name )
+    public static function get($name, $controller)
     {
+        $verb = "get";
         static::$currentChannel = static::$channels[$name][] = compact('verb', 'controller', 'name' );
     }
+
+    /**
+     * A wrapper for the add Channel with a POST http request
+     *
+     * @param $name
+     * @param $controller
+     */
+    public static function post($name, $controller)
+    {
+        $verb = "post";
+        static::$currentChannel = static::$channels[$name][] = compact('verb', 'controller', 'name' );
+    }
+
+
 }

@@ -40,21 +40,13 @@ class MainController extends CoreController{
         $posts = new Posts;
         $courses = $posts->select('*')->where('post_type','sfwd-courses');
 
-
         return (new View('steps/steps'))->render();
     }
 
 
-    public function settings()
+    public function test(Request $request)
     {
-
-
-    }
-
-
-    public function view()
-    {
-
+        var_dump($request);
     }
 
     public function update()

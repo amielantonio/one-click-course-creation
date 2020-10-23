@@ -49,10 +49,10 @@ class PageCreator {
 
         if( current_user_can( $capability ) ){
             return add_menu_page(
-                __( $page['title'], 'textdomain' ),
-                __( $page['title'], 'textdomain' ),
-                isset($page['capability']) ? $page['capability'] : $this->capabilityDefault,
-                isset( $page['menu_slug'] ) ? $page['menu_slug'] : $this->toSlug( $page['title'] ),
+                __( $page['title'], 'textdomain' ), //page title
+                __( $page['title'], 'textdomain' ), // menu title
+                isset($page['capability']) ? $page['capability'] : $this->capabilityDefault, // capability
+                isset( $page['menu_slug'] ) ? $page['menu_slug'] : $this->toSlug( $page['title'] ), //menu sluig
                 $this->setMethod( $page['function'] ),
                 isset( $page['icon_url'] ) ? $page['icon_url'] : "",
                 5
@@ -90,11 +90,15 @@ class PageCreator {
     /**
      * Sets the method to be used for the menu
      *
-     * @param $method
-     * @return array | Closure
+     * @param null $method
+     * @return array|Closure|string|null
      */
-    protected function setMethod( $method )
+    protected function setMethod( $method = null )
     {
+
+        if( $method == null ) {
+            return "";
+        }
         //Check whether the url specifies a channel for the route,
         //If it has then return the associated controller and method
         //for the route channel.

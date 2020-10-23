@@ -12,14 +12,17 @@
 */
 
 //Router::addMenu('One Click Course', 'MainController@index' );
-Router::addMenu('One Click Classroom Setup', 'MainController@index' );
-Router::addSubMenu('One Click Classroom Setup', 'Clone Classroom', 'MainController@create');
-Router::addSubMenu('One Click Classroom Setup', 'Settings', 'MainController@index');
+Router::addMenu('One Click Classroom Setup', 'MainController@blank' );
+Router::addSubMenu('One Click Classroom Setup', 'Courses', 'MainController@index', ['menu_slug' => 'one-click-classroom-setup']);
+Router::addSubMenu('One Click Classroom Setup', 'Course Setup', 'MainController@create');
 
 
-Router::addSubMenu('One Click Classroom Setup','Update', 'MainController@update');
+//Router::addSubMenu('One Click Classroom Setup','Update', 'MainController@update');
 Router::addSubMenu('One Click Classroom Setup','Tag', 'MainController@m_tag');
 
 //
-//Router::addChannel( 'post', 'MainController@test', 'test' );
+Router::addChannel( 'post', 'test', 'MainController@test' );
 //Router::addChannel( 'post', 'MainController@index', 'test2' );
+
+Router::addSubMenu('One Click Classroom Setup', 'Plugin Settings', 'SettingsController@index');
+Router::post('save-settings', 'SettingsController@store' );

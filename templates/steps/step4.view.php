@@ -2,7 +2,7 @@
 
 <div class="oc-form-group">
     <label>Require Tag IDs</label>
-    <select name="" id="" class="oc-form-control">
+    <select name="oc-tag-id" id="oc-tag-id" class="oc-form-control select2">
         <option value=""></option>
         <option value=""></option>
         <option value=""></option>
@@ -13,7 +13,7 @@
 
 <div class="oc-form-group">
     <label>Course Group</label>
-    <select name="" id="" class="oc-form-control">
+    <select name="oc-course-groups" id="oc-course-groups" class="oc-form-control select2">
         <option value=""></option>
         <option value=""></option>
         <option value=""></option>

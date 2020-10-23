@@ -25,10 +25,10 @@
  * ELEMENTS
  * Basic HTML settings and css
  */
-input, select, textarea {
+.oc-form input, .oc-form select, .oc-form textarea {
   width: 100%; }
 
-label {
+.oc-form label {
   width: 100%;
   font-weight: 600; }
 

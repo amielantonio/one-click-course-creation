@@ -1,51 +1,84 @@
 <?php
 
 
-if (! function_exists('')) {
+if (! function_exists('_view')) {
+    /**
+     *
+     *
+     *
+     * @param null $view
+     * @param array $data
+     * @return mixed|string
+     */
+    function _view($view = null, $data = []) {
 
+        $view = new AWC\Helpers\View($view, $data);
 
-    function view($view = null, $data = []) {
-
-    }
-}
-
-
-if (! function_exists('')) {
-
-    function route( $name, $parameters = []) {
-
-    }
-}
-
-
-if (! function_exists('')) {
-
-
-    function resource_path( $path = "" ) {
+        return $view->render();
 
     }
 }
 
-if (! function_exists('')) {
+
+if (! function_exists('_route')) {
+    /**
+     *
+     *
+     * @param $name
+     * @param array $parameters
+     * @return string
+     */
+    function _route( $name, $parameters = []) {
+        return "?page={$_GET['page']}&route={$name}";
+    }
+}
+
+if (! function_exists('_redirect')) {
+
+    /**
+     * Redirect to new location
+     *
+     * @param $to
+     * @param array $data
+     * @param int $status
+     */
+    function _redirect( $to, $data = [], $status = 302 ) {
 
 
-    function request( $path = "" ) {
+        echo Router::redirect($to, $data, $status);
+
+    }
+
+}
+
+if (! function_exists('_resource_path')) {
+
+
+    function _resource_path( $path = "" ) {
 
     }
 }
 
-if (! function_exists('')) {
+if (! function_exists('_request')) {
 
 
-    function wp_nonce(){
+    function _request( $path = "" ) {
 
     }
 }
 
-if (! function_exists('')) {
+if (! function_exists('_wp_nonce')) {
 
 
-    function wp_nonce_field() {
+    function _wp_nonce(){
+
+    }
+}
+
+if (! function_exists('_wp_nonce_field')) {
+
+
+    function _wp_nonce_field() {
 
     }
 }

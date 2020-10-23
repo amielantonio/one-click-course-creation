@@ -128,6 +128,8 @@ final class OneClickCourseCreation {
 
         $installer = new \AWC\Helpers\Installer;
 
+        include_once S_LIBPATH . "/Helpers/Functions/helpers.php";
+
         $installer->install();
 
     }
