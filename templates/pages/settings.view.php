@@ -9,6 +9,13 @@
                 <div class="oc-form-group">
                     <label for="oc-content-parent-id">Course content parent ID</label>
                     <select name="oc-content-parent-id[]" id="oc-content-parent-id" class="oc-form-control-select" multiple="multiple">
+
+                        <?php if(isset($option) && !empty($option) ): ?>
+                            <?php foreach($option as $key => $value):?>
+                                <option value="<?php echo $key?>" selected="selected"><?php echo $value?></option>
+                            <?php endforeach;?>
+                        <?php endif; ?>
+
                         <?php foreach($courses as $course) :?>
                             <option value="<?php echo $course->ID?>"><?php echo $course->ID . " - " . $course->post_title?></option>
                         <?php endforeach;?>
@@ -28,10 +35,6 @@
 
 <script type="text/javascript">
     $(document).ready(function () {
-        let options = <?php echo $option?>
-
-             console.log(options);
-
         $('#oc-content-parent-id').select2();
     });
 </script>

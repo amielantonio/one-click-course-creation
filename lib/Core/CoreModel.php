@@ -123,8 +123,6 @@ abstract class CoreModel {
 
         $query = $this->query->select( $columns )->from( $this->table );
 
-        var_dump($query);
-
         return $this->wpdb->get_results( $query );
     }
 

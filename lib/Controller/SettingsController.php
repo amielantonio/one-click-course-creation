@@ -28,7 +28,18 @@ class SettingsController extends CoreController{
 
         $courses = $course->select(['ID, post_title'])->where('post_type', 'sfwd-courses')->results();
 
-        $option = json_encode(get_option('the-course-content'));
+        $getOptions = get_option('the-course-content');
+        $option = [];
+        if(!empty($getOptions)) {
+            foreach($getOptions as $getOption) {
+                $courseSelected = get_post($getOption);
+                $option[$courseSelected->ID] = $courseSelected->post_title;
+
+                foreach(get_children($getOption) as $child) {
+                    var_dump($child);
+                }
+            }
+        }
 
         return (new View('pages/settings'))
             ->with('courses', $courses)
@@ -52,11 +63,6 @@ class SettingsController extends CoreController{
         } else {
             add_option('the-course-content', $input);
         }
-
-        add_option('test-options', 'dawdadawdawedwa');
-
-
-
 
 //        Router::redirect('Plugin Settings');
     }

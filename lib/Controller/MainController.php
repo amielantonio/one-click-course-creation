@@ -36,11 +36,20 @@ class MainController extends CoreController{
      */
     public function create()
     {
-
         $posts = new Posts;
-        $courses = $posts->select('*')->where('post_type','sfwd-courses');
 
-        return (new View('steps/steps'))->render();
+        $getOptions = get_option('the-course-content');
+        $courseContent = [];
+        if(!empty($getOptions)) {
+            foreach($getOptions as $getOption) {
+                $courseSelected = get_post($getOption);
+                $courseContent[$courseSelected->ID] = $courseSelected->post_title;
+            }
+        }
+
+        return (new View('steps/steps'))
+            ->with('courseContent',$courseContent )
+            ->render();
     }
 
 

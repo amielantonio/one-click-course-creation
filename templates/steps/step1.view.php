@@ -8,11 +8,11 @@
     <label>Course Content</label>
     <select name="course-content" class="oc-form-control select2" id="course-content">
         <option>Select Course</option>
-        <option>Creative Writing Stage 1</option>
-        <option>Freelance Writing Stage 1</option>
-        <option>Short Story Essentials</option>
-        <option>Novel Writing Essentials</option>
-        <option>Write Your Novel</option>
+        <?php if(isset($courseContent)) : ?>
+            <?php foreach( $courseContent as $key => $value) : ?>
+                <option value="<?php echo $key?>"><?php echo $key . " - " . $value?></option>
+            <?php endforeach;?>
+        <?php endif; ?>
     </select>
 </div>
 
