@@ -35,7 +35,10 @@
 
 <script type="text/javascript">
     $(document).ready(function () {
-        $('#oc-content-parent-id').select2();
+        $('#oc-content-parent-id').select2({
+            placeholder: "Select course content",
+            allowClear: true
+        });
     });
 </script>
 

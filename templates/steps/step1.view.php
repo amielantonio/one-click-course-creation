@@ -10,7 +10,7 @@
         <option>Select Course</option>
         <?php if(isset($courseContent)) : ?>
             <?php foreach( $courseContent as $key => $value) : ?>
-                <option value="<?php echo $key?>"><?php echo $key . " - " . $value?></option>
+                <option value="<?php echo $key?>" data-lessons="<?php echo json_encode($value['lessons']);?>"><?php echo $key . " - " . $value['course_name']?></option>
             <?php endforeach;?>
         <?php endif; ?>
     </select>

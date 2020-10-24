@@ -31,13 +31,10 @@ class SettingsController extends CoreController{
         $getOptions = get_option('the-course-content');
         $option = [];
         if(!empty($getOptions)) {
+
             foreach($getOptions as $getOption) {
                 $courseSelected = get_post($getOption);
                 $option[$courseSelected->ID] = $courseSelected->post_title;
-
-                foreach(get_children($getOption) as $child) {
-                    var_dump($child);
-                }
             }
         }
 
@@ -54,12 +51,12 @@ class SettingsController extends CoreController{
      */
     public function store(Request $request)
     {
-        $option = get_option('one-click-course-content');
+        $option = get_option('the-course-content');
 
         $input = $request->input('oc-content-parent-id');
 
-        if($option && !empty($option)) {
-            update_option('the-course-content', $request->input('oc-content-parent-id'));
+        if( count($option) > 0 ) {
+            update_option('the-course-content', $input);
         } else {
             add_option('the-course-content', $input);
         }

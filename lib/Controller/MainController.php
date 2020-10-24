@@ -43,7 +43,13 @@ class MainController extends CoreController{
         if(!empty($getOptions)) {
             foreach($getOptions as $getOption) {
                 $courseSelected = get_post($getOption);
-                $courseContent[$courseSelected->ID] = $courseSelected->post_title;
+                $courseContent[$courseSelected->ID]['course_name'] = $courseSelected->post_title;
+
+                $lessons = learndash_get_course_lessons_list($getOption);
+
+                foreach($lessons as $lesson) {
+                    $courseContent[$courseSelected->ID]['lessons'][] = $lesson['post']->post_title;
+                }
             }
         }
 

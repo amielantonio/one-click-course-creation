@@ -1,5 +1,6 @@
 $ = jQuery;
 import tabs from './components/tabs';
+import form_fillup from './process/form_fillup';
 
 /**
  *
@@ -10,7 +11,7 @@ import tabs from './components/tabs';
 
   $(function() {
 
-    tabs();
+    form_fillup();
 
     console.log( 'App Initialized' );
 

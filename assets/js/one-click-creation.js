@@ -94,7 +94,7 @@
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _components_tabs__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./components/tabs */ \"./src/js/components/tabs.js\");\n$ = jQuery;\r\n\r\n\r\n/**\r\n *\r\n */\r\n\r\n\r\n( function ($){\r\n\r\n  $(function() {\r\n\r\n    Object(_components_tabs__WEBPACK_IMPORTED_MODULE_0__[\"default\"])();\r\n\r\n    console.log( 'App Initialized' );\r\n\r\n  });\r\n\r\n\r\n})(jQuery);\r\n\r\n\r\n\n\n//# sourceURL=webpack:///./src/js/app.js?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _components_tabs__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./components/tabs */ \"./src/js/components/tabs.js\");\n/* harmony import */ var _process_form_fillup__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./process/form_fillup */ \"./src/js/process/form_fillup.js\");\n$ = jQuery;\r\n\r\n\r\n\r\n/**\r\n *\r\n */\r\n\r\n\r\n( function ($){\r\n\r\n  $(function() {\r\n\r\n    Object(_process_form_fillup__WEBPACK_IMPORTED_MODULE_1__[\"default\"])();\r\n\r\n    console.log( 'App Initialized' );\r\n\r\n  });\r\n\r\n\r\n})(jQuery);\r\n\r\n\r\n\n\n//# sourceURL=webpack:///./src/js/app.js?");
 
 /***/ }),
 
@@ -107,6 +107,18 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _com
 
 "use strict";
 eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"default\", function() { return tabs; });\nfunction tabs() {\r\n    progress();\r\n    steps();\r\n}\r\n\r\nfunction progress() {\r\n    let progressItem = $('.cohort-progress a');\r\n\r\n    //Defaults\r\n    progressItem.addClass('disabled');\r\n    progressItem.eq(0).removeClass('disabled').addClass('active');\r\n\r\n\r\n    progressItem.on('click', function (e) {\r\n        e.preventDefault();\r\n\r\n\r\n        //Progress behaviour\r\n        progressItem.removeClass('active');\r\n        $(this).removeClass('disabled').addClass('active');\r\n\r\n\r\n    });\r\n}\r\n\r\nfunction steps( $step = 1 ) {\r\n    let steps = $('.cohort-step');\r\n\r\n    let currentStep = $step - 1;\r\n\r\n    // steps.addClass('hide');\r\n    // steps.eq(currentStep).removeClass('hide');\r\n\r\n\r\n}\r\n\n\n//# sourceURL=webpack:///./src/js/components/tabs.js?");
+
+/***/ }),
+
+/***/ "./src/js/process/form_fillup.js":
+/*!***************************************!*\
+  !*** ./src/js/process/form_fillup.js ***!
+  \***************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"default\", function() { return form_fillup; });\nfunction form_fillup() {\r\n    onChangeCourseSelection();\r\n}\r\n\r\n\r\nfunction onChangeCourseSelection(){\r\n\r\n    let selection = $('#course-content');\r\n\r\n    selection.change(function(){\r\n        console.log($(this).val());\r\n    });\r\n}\r\n\r\n\n\n//# sourceURL=webpack:///./src/js/process/form_fillup.js?");
 
 /***/ }),
 
