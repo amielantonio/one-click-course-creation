@@ -145,6 +145,7 @@ final class OneClickCourseCreation {
         wp_enqueue_style('airdatepicker-admin', 'https://cdnjs.cloudflare.com/ajax/libs/air-datepicker/2.2.3/css/datepicker.min.css', '', '', '');
         wp_enqueue_script('airdatepicker-admin', 'https://cdnjs.cloudflare.com/ajax/libs/air-datepicker/2.2.3/js/datepicker.min.js', '', '', '');
         wp_enqueue_script('airdatepicker-admin-en', 'https://cdnjs.cloudflare.com/ajax/libs/air-datepicker/2.2.3/js/i18n/datepicker.en.min.js', '', '', '');
+        wp_enqueue_script('moment-admin', 'https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js', '', '', '');
 
         wp_enqueue_script('ckeditor-admin', '//cdn.ckeditor.com/4.14.0/standard/ckeditor.js', '', '', '');
 

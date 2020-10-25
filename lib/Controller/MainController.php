@@ -49,6 +49,15 @@ class MainController extends CoreController{
 
                 foreach($lessons as $lesson) {
                     $courseContent[$courseSelected->ID]['lessons'][] = $lesson['post']->post_title;
+                    $courseContent[$courseSelected->ID]['post_meta'] = [
+                        'awc_active_course' => get_post_meta($getOption, 'awc_active_course'),
+                        'collapse_replies_for_course' => get_post_meta($getOption, 'collapse_replies_for_course'),
+                        'awc_private_comments' => get_post_meta($getOption, 'awc_private_comments'),
+                        'email_daily_comment_digest' => get_post_meta($getOption, 'email_daily_comment_digest'),
+                        'excerpt' => $courseSelected->post_excerpt,
+                    ];
+
+
                 }
             }
         }
