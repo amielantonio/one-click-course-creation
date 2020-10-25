@@ -11,6 +11,7 @@ function onChangeCourseSelection(){
         let selectionID = $(this).val();
         let table = $('#tbl-module-schedule');
         let selectionData = $('#option-' + selectionID).data('lessons');
+        let courseMeta = $('#option-' + selectionID).data('course-meta');
 
         selectionData.forEach(function(item, index){
             table.find('tbody').append('<tr>' +
@@ -27,6 +28,7 @@ function onChangeCourseSelection(){
         });
 
         datePicker(selectionData);
+        settingsFill(courseMeta);
 
     });
 }
@@ -37,19 +39,50 @@ function datePicker( data ) {
 
     data.forEach(function(item, index){
 
-
         var toDate = selectedDate;
 
         $('#start-' + index).datepicker().data('datepicker').selectDate(toDate.toDate());
 
         selectedDate.add('6', 'days');
 
-
         $('#end-'+index).datepicker().data('datepicker').selectDate(toDate.toDate());
 
         selectedDate.add('6', 'days');
 
-
     });
+
+}
+
+function settingsFill( data ) {
+    let cbActiveCourse = $('#awc_active_course');
+    let cbCollapseReplies = $('#collapse_replies_for_course');
+    let cbDailyDigests = $('#email_daily_comment_digest');
+    let cbPrivateComments = $('#awc_private_comments');
+    // let cbExcerpt = $('#excerpt');
+
+
+    if(data['awc_active_course'] !== "" || data['awc_active_course']) {
+        cbActiveCourse.prop('checked', true);
+    } else {
+        cbActiveCourse.prop('checked', false);
+    }
+
+    if(data['collapse_replies_for_course'] !== "") {
+        cbCollapseReplies.prop('checked', true);
+    } else {
+        cbCollapseReplies.prop('checked', false);
+    }
+
+    if(data['email_daily_comment_digest'] !== "") {
+        cbDailyDigests.prop('checked', true);
+    } else {
+        cbDailyDigests.prop('checked', false)
+    }
+
+    if(data['awc_private_comments'] !=="") {
+        cbPrivateComments.prop('checked', true);
+    } else {
+        cbPrivateComments.prop('checked', false);
+    }
 
 }

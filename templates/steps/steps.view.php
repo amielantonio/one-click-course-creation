@@ -32,6 +32,8 @@
 </div>
 <script type="text/javascript">
     $(document).ready(function () {
+        let courseContent = '<?php echo json_encode($courseContent)?>';
+
         $('.select2').select2();
     });
 </script>
