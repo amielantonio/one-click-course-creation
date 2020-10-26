@@ -36,10 +36,13 @@ class MainController extends CoreController{
      */
     public function create()
     {
+        global $wpdb;
         $posts = new Posts;
 
         $getOptions = get_option('the-course-content');
         $courseContent = [];
+
+        //Get course content data
         if(!empty($getOptions)) {
             foreach($getOptions as $getOption) {
                 $courseSelected = get_post($getOption);
@@ -61,9 +64,33 @@ class MainController extends CoreController{
             }
         }
 
+        // Memberium data list
+        $memberium = get_option('memberium', []);
+
+        // GET THE TAG LIST
+        $tags = [];
+        $table = 'memberium_tags';
+        $appname = "lf159"; # memberium_tags table  appname field
+        $sql = "SELECT id, name FROM {$table} WHERE `appname` = '{$appname}' ORDER BY category, name ";
+        $result = $wpdb->get_results($sql, ARRAY_A);
+        foreach ($result as $data) {
+            $tags['mc'][$data['id']] = $data['name'];
+            //$tags['lc'][$data['id']] = strtolower($data['name']);
+        }
+
+        $tags = $tags['mc'];
+        // INCLUDE TAG ON LIST
+        foreach ($memberium['memberships'] as $key => $data) {
+            $tag = !empty($tags[$key]) ? $tags[$key]." ({$key})" :  '(Missing Tag)';
+            $memberium['memberships'][$key]['tag_name']  =  $tag;
+        }
+
+
         return (new View('steps/steps'))
+            ->with('memberships',$memberium['memberships'])
             ->with('courseContent', $courseContent )
             ->render();
+
     }
 
 
@@ -82,8 +109,18 @@ class MainController extends CoreController{
         $my_query = new WP_Query($args);
 
 
-
         return (new View('pages/update'))->with('data',$my_query)->render();
     }
+
+
+
+    // public function m_tag()
+    // {
+    //     global $wpdb;
+
+    //     $this->dd($a);
+
+    //     return (new View('pages/m_tag'))->with('data',$my_query)->render();
+    // }
 
 }
