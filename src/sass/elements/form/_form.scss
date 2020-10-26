@@ -24,6 +24,16 @@ label ~ .oc-form-control-select{
   &:last-child {
     margin-bottom: 0;
   }
+
+  &.oc-form-group-right {
+    float: right;
+  }
+
+  &.form-row {
+    display: flex;
+    align-items: center;
+    flex-flow: row;
+  }
 }
 
 
@@ -83,4 +93,8 @@ label ~ .oc-form-control-select{
 
 .oc-form hr.divider {
   margin: 20px -20px;
+}
+
+.module-name {
+  font-weight: bold;
 }
