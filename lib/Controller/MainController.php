@@ -6,6 +6,7 @@ use AWC\Helpers\View;
 use AWC\Core\Request;
 use AWC\Core\CoreController;
 use AWC\Model\AccessDevice;
+use AWC\Model\PostMeta;
 use WP_Query;
 use AWC\Model\Posts;
 
@@ -38,6 +39,7 @@ class MainController extends CoreController{
     {
         global $wpdb;
         $posts = new Posts;
+        $postMeta = new PostMeta;
 
         $getOptions = get_option('the-course-content');
         $courseContent = [];

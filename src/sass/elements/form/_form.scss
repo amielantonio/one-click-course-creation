@@ -1,10 +1,15 @@
-.oc-form input, .oc-form select, .oc-form textarea {
+.oc-form input[type='text'],
+.oc-form input[type='password'],
+.oc-form input[type='email'],
+.oc-form input[type='number'],
+.oc-form select,
+.oc-form textarea {
   width: 100%;
 }
 
 .oc-form label {
   width: 100%;
-  font-weight: 600;
+  font-weight: bold;
 }
 
 label ~ .oc-form-control,
@@ -73,4 +78,9 @@ label ~ .oc-form-control-select{
 .information {
   margin: 0 0 20px;
 
+}
+
+
+.oc-form hr.divider {
+  margin: 20px -20px;
 }

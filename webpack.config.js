@@ -28,9 +28,7 @@ module.exports = {
       filename: 'css/one-click-creation.css',
     }),
 
-    new MomentLocalesPlugin({
-      localesToKeep: ['es-us'],
-    }),
+    new MomentLocalesPlugin(),
   ],
 
 
