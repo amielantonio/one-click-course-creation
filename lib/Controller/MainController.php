@@ -71,6 +71,8 @@ class MainController extends CoreController{
         $tags = [];
         $table = 'memberium_tags';
         $appname = "lf159"; # memberium_tags table  appname field
+
+        // Note: can also use the query builder $posts->select(['id, name'])->where('appname', $appname)->orderBy('category')->results();
         $sql = "SELECT id, name FROM {$table} WHERE `appname` = '{$appname}' ORDER BY category, name ";
         $result = $wpdb->get_results($sql, ARRAY_A);
         foreach ($result as $data) {
