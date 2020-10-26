@@ -3,11 +3,12 @@
 <div class="oc-form-group">
     <label>Require Tag IDs</label>
     <select name="oc-tag-id" id="oc-tag-id" class="oc-form-control select2">
-        <option value=""></option>
-        <option value=""></option>
-        <option value=""></option>
-        <option value=""></option>
-        <option value=""></option>
+    <option>Select Tag</option>
+        <?php
+         foreach($memberships as $data){
+            echo "<option value='{$data['main_id']}'>{$data['tag_name']}</option> ";
+         }
+        ?>
     </select>
 </div>
 
