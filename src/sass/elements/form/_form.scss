@@ -33,6 +33,22 @@ label ~ .oc-form-control-select{
     display: flex;
     align-items: center;
     flex-flow: row;
+
+    &.align-center {
+      align-items: center;
+    }
+
+    &.justify-center {
+      justify-content: center;
+    }
+
+    &.justify-right {
+      justify-content: flex-end;
+    }
+
+    &.justify-between {
+      justify-content: space-between;
+    }
   }
 }
 
