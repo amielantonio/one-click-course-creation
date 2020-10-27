@@ -63,34 +63,45 @@ class MainController extends CoreController{
                 }
             }
         }
+        
+     
 
-        // Memberium data list
-        $memberium = get_option('memberium', []);
+        // Get memberships
+        $memberium = get_option('memberium');
+        $memberships = [];
+        if(isset($memberium['memberships'])){
+            // GET THE TAG LIST
+            $tags = [];
+            $table = 'memberium_tags';
+            $appname = "lf159"; # memberium_tags table  appname field
 
-        // GET THE TAG LIST
-        $tags = [];
-        $table = 'memberium_tags';
-        $appname = "lf159"; # memberium_tags table  appname field
+            // Note: can also use the query builder $posts->select(['id, name'])->where('appname', $appname)->orderBy('category')->results();
+            $sql = "SELECT id, name FROM {$table} WHERE `appname` = '{$appname}' ORDER BY category, name ";
+            $result = $wpdb->get_results($sql, ARRAY_A);
+            foreach ($result as $data) {
+                $tags['mc'][$data['id']] = $data['name'];
+                //$tags['lc'][$data['id']] = strtolower($data['name']);
+            }
 
-        // Note: can also use the query builder $posts->select(['id, name'])->where('appname', $appname)->orderBy('category')->results();
-        $sql = "SELECT id, name FROM {$table} WHERE `appname` = '{$appname}' ORDER BY category, name ";
-        $result = $wpdb->get_results($sql, ARRAY_A);
-        foreach ($result as $data) {
-            $tags['mc'][$data['id']] = $data['name'];
-            //$tags['lc'][$data['id']] = strtolower($data['name']);
+            $tags = $tags['mc'];
+            // INCLUDE TAG ON LIST
+            foreach ($memberium['memberships'] as $key => $data) {
+                $tag = !empty($tags[$key]) ? $tags[$key]." ({$key})" : '(Missing Tag)';
+                $memberium['memberships'][$key]['tag_name']  =  $tag;
+            }
+
+            $memberships = $memberium['memberships'];
         }
 
-        $tags = $tags['mc'];
-        // INCLUDE TAG ON LIST
-        foreach ($memberium['memberships'] as $key => $data) {
-            $tag = !empty($tags[$key]) ? $tags[$key]." ({$key})" :  '(Missing Tag)';
-            $memberium['memberships'][$key]['tag_name']  =  $tag;
-        }
+       
+        // Course Group
+        $courseGroups = $this->get_course_groups_by_user_id(); 
 
 
         return (new View('steps/steps'))
-            ->with('memberships',$memberium['memberships'])
+            ->with('memberships',$memberships)
             ->with('courseContent', $courseContent )
+            ->with('courseGroups',$courseGroups)
             ->render();
 
     }
@@ -101,28 +112,51 @@ class MainController extends CoreController{
         var_dump($request);
     }
 
-    public function update()
+    
+
+    public function get_course_groups_by_user_id()
     {
 
-        $args = [
-                    'p' => 88724, // GET the ID of the edit post
-                    'post_type' => 'sfwd-courses',
-                ];
-        $my_query = new WP_Query($args);
+        $roles = get_editable_roles();
 
+        if(empty($roles)){ // for non admin
+            $group_ids = array();
+            $all_user_meta = get_user_meta( get_current_user_id() );
+            if ( ! empty( $all_user_meta ) ) {
+                foreach ( $all_user_meta as $meta_key => $meta_set ) {
+                    if ( 'learndash_group_leaders_' == substr( $meta_key, 0, strlen( 'learndash_group_leaders_' ) ) ) {
+                        $group_ids = array_merge( $group_ids, $meta_set );
+                    }
+                }
+            }
 
-        return (new View('pages/update'))->with('data',$my_query)->render();
+            if(empty($group_ids)){
+                return $group_ids;
+            }
+
+            $groups_query_args = array(
+                'post__in'    => $group_ids,
+                'post_type'   => 'groups',
+                'nopaging'    => true,
+                'post_status' => array( 'publish', 'pending', 'draft', 'future', 'private' ),
+            );
+        } else { // admin
+            $groups_query_args = array(
+                'post_type'   => 'groups',
+                'nopaging'    => true,
+                'post_status' => array( 'publish', 'pending', 'draft', 'future', 'private' ),
+            );
+        }
+        
+        $groups_query = new WP_Query( $groups_query_args );
+		return $groups_query->posts;
+        
     }
 
 
 
-    // public function m_tag()
-    // {
-    //     global $wpdb;
+   
 
-    //     $this->dd($a);
 
-    //     return (new View('pages/m_tag'))->with('data',$my_query)->render();
-    // }
 
 }
