@@ -6,6 +6,7 @@ use AWC\Helpers\View;
 use AWC\Core\Request;
 use AWC\Core\CoreController;
 use AWC\Model\AccessDevice;
+use AWC\Model\PostMeta;
 use WP_Query;
 use AWC\Model\Posts;
 
@@ -38,6 +39,7 @@ class MainController extends CoreController{
     {
         global $wpdb;
         $posts = new Posts;
+        $postMeta = new PostMeta;
 
         $getOptions = get_option('the-course-content');
         $courseContent = [];
@@ -65,7 +67,7 @@ class MainController extends CoreController{
         }
         
      
-
+        
         // Get memberships
         $memberium = get_option('memberium');
         $memberships = [];
@@ -73,14 +75,13 @@ class MainController extends CoreController{
             // GET THE TAG LIST
             $tags = [];
             $table = 'memberium_tags';
-            $appname = "lf159"; # memberium_tags table  appname field
+            $appname = "lf159"; # memberium_tags table appname field
 
-            // Note: can also use the query builder $posts->select(['id, name'])->where('appname', $appname)->orderBy('category')->results();
+            // Note: can't use the query builder due to memberium have no prefix $posts->select(['id, name'])->where('appname', $appname)->orderBy('category')->results();
             $sql = "SELECT id, name FROM {$table} WHERE `appname` = '{$appname}' ORDER BY category, name ";
             $result = $wpdb->get_results($sql, ARRAY_A);
             foreach ($result as $data) {
                 $tags['mc'][$data['id']] = $data['name'];
-                //$tags['lc'][$data['id']] = strtolower($data['name']);
             }
 
             $tags = $tags['mc'];
@@ -98,10 +99,17 @@ class MainController extends CoreController{
         $courseGroups = $this->get_course_groups_by_user_id(); 
 
 
+        // Online Tutor
+        $onlineTutor =  get_users([ 
+                        'role__in' => [ 'Administrator', 'group_leader'],
+                        'fields'   => ['ID','user_email','display_name']
+                       ]);
+
         return (new View('steps/steps'))
             ->with('memberships',$memberships)
             ->with('courseContent', $courseContent )
             ->with('courseGroups',$courseGroups)
+            ->with('onlineTutor',$onlineTutor)
             ->render();
 
     }
@@ -119,7 +127,7 @@ class MainController extends CoreController{
 
         $roles = get_editable_roles();
 
-        if(empty($roles)){ // for non admin
+        if( empty($roles) ){ // for non admin
             $group_ids = array();
             $all_user_meta = get_user_meta( get_current_user_id() );
             if ( ! empty( $all_user_meta ) ) {

@@ -25,12 +25,17 @@
  * ELEMENTS
  * Basic HTML settings and css
  */
-.oc-form input, .oc-form select, .oc-form textarea {
+.oc-form input[type='text'],
+.oc-form input[type='password'],
+.oc-form input[type='email'],
+.oc-form input[type='number'],
+.oc-form select,
+.oc-form textarea {
   width: 100%; }
 
 .oc-form label {
   width: 100%;
-  font-weight: 600; }
+  font-weight: bold; }
 
 label ~ .oc-form-control,
 label ~ .oc-form-control-select {
@@ -40,6 +45,12 @@ label ~ .oc-form-control-select {
   margin-bottom: 20px; }
   .oc-form-group:last-child {
     margin-bottom: 0; }
+  .oc-form-group.oc-form-group-right {
+    float: right; }
+  .oc-form-group.form-row {
+    display: flex;
+    align-items: center;
+    flex-flow: row; }
 
 .oc-form-control {
   width: 100%;
@@ -72,6 +83,12 @@ label ~ .oc-form-control-select {
 
 .information {
   margin: 0 0 20px; }
+
+.oc-form hr.divider {
+  margin: 20px -20px; }
+
+.module-name {
+  font-weight: bold; }
 
 .oc-btn {
   cursor: pointer;

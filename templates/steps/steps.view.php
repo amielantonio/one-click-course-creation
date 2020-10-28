@@ -1,15 +1,9 @@
 <h1 class="_m-b--50">Setup Classroom</h1>
 
 <div class="cohort-tabs" data-last-selected="1">
-<!--    <ul class="cohort-progress">-->
-<!--        <li><a data-target="#cohort-step1">Select a Course</a></li>-->
-<!--        <li><a data-target="#cohort-step2">Module Schedules</a></li>-->
-<!--        <li><a data-target="#cohort-step3">Course Settings</a></li>-->
-<!--        <li><a data-target="#cohort-step4">Tags</a></li>-->
-<!--    </ul>-->
 
     <div class="cohort-steps">
-        <form action="" method="post">
+        <form action="" method="post" class="oc-form">
             <div class="cohort-step cohort-step1" id="cohort-step1">
                 <?php include_once "step1.view.php" ?>
             </div>

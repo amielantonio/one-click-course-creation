@@ -10,6 +10,8 @@
     </div>
 </div>
 
+<hr class="divider">
+
 <div class="oc-checkbox-row">
     <div class="oc-checkbox-row--left">
         <input type="checkbox" id="email_daily_comment_digest" name="email_daily_comment_digest">
@@ -30,6 +32,7 @@
     </div>
 </div>
 
+<hr class="divider">
 
 <div class="oc-checkbox-row">
     <div class="oc-checkbox-row--left">

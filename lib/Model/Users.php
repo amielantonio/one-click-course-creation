@@ -3,11 +3,11 @@ namespace AWC\Model;
 
 use AWC\Core\CoreModel;
 
-class Classrooms extends CoreModel {
+class Users extends CoreModel {
 
-    protected $table = "";
+    protected $table = "users";
 
-    protected $primary_key = "";
+    protected $primary_key = "ID";
 
     public function __construct()
     {

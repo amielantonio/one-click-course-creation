@@ -17,9 +17,6 @@ Router::addSubMenu('One Click Classroom Setup', 'Courses', 'MainController@index
 Router::addSubMenu('One Click Classroom Setup', 'Course Setup', 'MainController@create');
 
 
-//Router::addSubMenu('One Click Classroom Setup','Update', 'MainController@update');
-// Router::addSubMenu('One Click Classroom Setup','Tag', 'MainController@m_tag');
-
 //
 Router::addChannel( 'post', 'test', 'MainController@test' );
 //Router::addChannel( 'post', 'MainController@index', 'test2' );

@@ -3,11 +3,11 @@ namespace AWC\Model;
 
 use AWC\Core\CoreModel;
 
-class AccessDevice extends CoreModel {
+class PostMeta extends CoreModel {
 
-    protected $table = "posts";
+    protected $table = "postmeta";
 
-    protected $primary_key = "ID";
+    protected $primary_key = "meta_id";
 
     public function __construct()
     {
