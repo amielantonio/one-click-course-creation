@@ -18,31 +18,50 @@
     color: #fff;
 
     &:hover {
-
+      background-color: lighten($blue, 20%);
     }
   }
 
   &.oc-btn--secondary {
 
-    &:hover {
+    background-color: $green;
+    border-color: $green;
+    color: #fff;
 
+    &:hover {
+      background-color: lighten($green, 20%);
     }
   }
 
   &.oc-btn--danger {
-    &:hover {
 
+    background-color: $red;
+    border-color: $red;
+    color: #fff;
+
+    &:hover {
+      background-color: lighten($red, 20%);
     }
   }
 
   &.oc-btn--warning {
-    &:hover {
 
+    background-color: $orange;
+    border-color: $orange;
+    color: #fff;
+
+    &:hover {
+      background-color: lighten($orange, 20%);
     }
   }
 
   &~& {
     margin-left: 10px;
+  }
+
+  &.oc-btn--small {
+    font-size: 12px;
+    padding: 6px 20px;
   }
 
 
