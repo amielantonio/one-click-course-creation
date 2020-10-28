@@ -18,6 +18,8 @@ function onChangeCourseSelection() {
     let selectionData = $('#option-' + selectionID).data('lessons');
     let courseMeta = $('#option-' + selectionID).data('course-meta');
 
+    table.find('tbody tr').remove();
+
     selectionData.forEach(function (item, index) {
       table.find('tbody').append('<tr>' +
         '<td><input type="text" class="oc-form-control module-name" id="module-title-'+index+'" value="' + item + '"></td>' +
@@ -161,6 +163,9 @@ function settingsFill(data) {
   let cbDailyDigests = $('#email_daily_comment_digest');
   let cbPrivateComments = $('#awc_private_comments');
   // let cbExcerpt = $('#excerpt');
+
+
+  console.log(data);
 
 
   if (data['awc_active_course'] !== "" || data['awc_active_course']) {
