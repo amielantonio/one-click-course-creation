@@ -103,7 +103,8 @@ class MainController extends CoreController{
         // Online Tutor
         $onlineTutor =  get_users([
                         'role__in' => [ 'Administrator', 'group_leader'],
-                        'fields'   => ['ID','user_email','display_name']
+                        'fields'   => ['ID','user_email','display_name'],
+                        'orderby'    => 'display_name'
                        ]);
 
         return (new View('steps/steps'))
