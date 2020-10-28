@@ -94,11 +94,7 @@ class MainController extends CoreController{
             $memberships = $memberium['memberships'];
         }
 
-       
-        // Course Group
-        $courseGroups = $this->get_course_groups_by_user_id(); 
-
-
+    
         // Online Tutor
         $onlineTutor =  get_users([ 
                         'role__in' => [ 'Administrator', 'group_leader'],
@@ -106,11 +102,16 @@ class MainController extends CoreController{
                         'orderby'    => 'display_name'
                        ]);
 
+        // Course Certificate
+        $courseCertificates = $posts->select(['ID, post_title'])->where('post_type', 'sfwd-certificates')->orderBy('post_title')->results();
+
+
+
         return (new View('steps/steps'))
             ->with('memberships',$memberships)
             ->with('courseContent', $courseContent )
-            ->with('courseGroups',$courseGroups)
             ->with('onlineTutor',$onlineTutor)
+            ->with('courseCertificates',$courseCertificates)
             ->render();
 
     }
