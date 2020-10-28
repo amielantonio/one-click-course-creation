@@ -59,15 +59,16 @@ class MainController extends CoreController{
                         'collapse_replies_for_course' => get_post_meta($getOption, 'collapse_replies_for_course')[0],
                         'awc_private_comments' => get_post_meta($getOption, 'awc_private_comments')[0],
                         'email_daily_comment_digest' => get_post_meta($getOption, 'email_daily_comment_digest')[0],
+                        'cc_recipients' => get_post_meta($getOption, 'cc_recipients'),
                     ];
 
 
                 }
             }
         }
-        
-     
-        
+
+
+
         // Get memberships
         $memberium = get_option('memberium');
         $memberships = [];
@@ -94,13 +95,13 @@ class MainController extends CoreController{
             $memberships = $memberium['memberships'];
         }
 
-       
+
         // Course Group
-        $courseGroups = $this->get_course_groups_by_user_id(); 
+        $courseGroups = $this->get_course_groups_by_user_id();
 
 
         // Online Tutor
-        $onlineTutor =  get_users([ 
+        $onlineTutor =  get_users([
                         'role__in' => [ 'Administrator', 'group_leader'],
                         'fields'   => ['ID','user_email','display_name']
                        ]);
@@ -120,7 +121,7 @@ class MainController extends CoreController{
         var_dump($request);
     }
 
-    
+
 
     public function get_course_groups_by_user_id()
     {
@@ -155,15 +156,15 @@ class MainController extends CoreController{
                 'post_status' => array( 'publish', 'pending', 'draft', 'future', 'private' ),
             );
         }
-        
+
         $groups_query = new WP_Query( $groups_query_args );
 		return $groups_query->posts;
-        
+
     }
 
 
 
-   
+
 
 
 

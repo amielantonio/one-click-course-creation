@@ -9,7 +9,7 @@
     <tr>
         <th style="width: 55%;">Module</th>
         <th>Start</th>
-        <th>End</th>
+<!--        <th>End</th>-->
     </tr>
     </thead>
     <tbody>
@@ -19,7 +19,7 @@
     <tr>
         <th>Module</th>
         <th>Start</th>
-        <th>End</th>
+<!--        <th>End</th>-->
     </tr>
     </tfoot>
 </table>

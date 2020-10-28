@@ -24,7 +24,6 @@ function onChangeCourseSelection() {
       table.find('tbody').append('<tr>' +
         '<td><input type="text" class="oc-form-control module-name" id="module-title-'+index+'" value="' + item + '"></td>' +
         '<td><input type="text" class="oc-form-control module-date-picker" id="start-' + index + '"></td>' +
-        '<td><input type="text" class="oc-form-control module-date-picker" id="end-' + index + '"></td>' +
         '</tr>')
     });
 
@@ -66,35 +65,29 @@ function datePicker(data) {
 
       startDate.add(dayInterval, 'day');
 
-      var endDate = startDate.clone();
-      endDate.hour(23);
-      endDate.minute(59);
-
-      endDate.add(-1, 'day');
+      // var endDate = startDate.clone();
+      // endDate.hour(23);
+      // endDate.minute(59);
+      //
+      // endDate.add(-1, 'day');
 
       console.log(index + ": initialize...");
 
-      $('#end-' + index).datepicker().data('datepicker').selectDate(endDate.toDate());
+      // $('#end-' + index).datepicker().data('datepicker').selectDate(endDate.toDate());
 
       $('#start-' + index).datepicker().data('datepicker').update('onSelect', function(fd, d, inst){
-        if(!theArray.includes(index + "-start")) {
-
-          console.log(index + "-start");
-
-          theArray.push(index + "-start");
           dripDatePicker( d, index, data, 'start' );
-        }
       });
 
-      $('#end-' + index).datepicker().data('datepicker').update('onSelect', function(fd, d, inst){
-        if(!theArray.includes(index + "-end")) {
-
-          console.log(index + "-end");
-
-          theArray.push(index + "-end");
-          dripDatePicker(d, index, data, 'end');
-        }
-      });
+      // $('#end-' + index).datepicker().data('datepicker').update('onSelect', function(fd, d, inst){
+      //   if(!theArray.includes(index + "-end")) {
+      //
+      //     console.log(index + "-end");
+      //
+      //     theArray.push(index + "-end");
+      //     dripDatePicker(d, index, data, 'end');
+      //   }
+      // });
     }
 
   });
@@ -118,38 +111,32 @@ function dripDatePicker( currentDate, dateIndex, dateData, pickerType = null ) {
       endDateDefault.hour(23);
       endDateDefault.minute(59);
 
-      endDateDefault.add((dayInterval - 1), 'day');
-
-      $('#end-' + dateIndex).datepicker().data('datepicker').selectDate(endDateDefault.toDate());
+      // endDateDefault.add((dayInterval - 1), 'day');
+      //
+      // $('#end-' + dateIndex).datepicker().data('datepicker').selectDate(endDateDefault.toDate());
       dateIndex = dateIndex + 1;
     }
 
-    if( pickerType == 'end') {
-      dateIndex = dateIndex + 1;
-    }
+    // if( pickerType == 'end') {
+    //   dateIndex = dateIndex + 1;
+    // }
   }
 
   //Loop in the date indexes to add the selection
   for( var _x = dateIndex; _x < dateData.length; _x++ ) {
 
-    console.log(_x);
-
     startDate.add(dayInterval, 'day');
 
     $('#start-' + _x).datepicker().data('datepicker').selectDate(startDate.toDate());
 
-    var endDate = startDate.clone();
-    endDate.hour(23);
-    endDate.minute(59);
-
-    endDate.add((dayInterval - 1), 'day');
-
-    $('#end-' + _x).datepicker().data('datepicker').selectDate(endDate.toDate());
+    // var endDate = startDate.clone();
+    // endDate.hour(23);
+    // endDate.minute(59);
+    //
+    // endDate.add((dayInterval - 1), 'day');
+    //
+    // $('#end-' + _x).datepicker().data('datepicker').selectDate(endDate.toDate());
   }
-
-  console.log(_x);
-  console.log('test');
-
 }
 
 /**
@@ -162,34 +149,36 @@ function settingsFill(data) {
   let cbCollapseReplies = $('#collapse_replies_for_course');
   let cbDailyDigests = $('#email_daily_comment_digest');
   let cbPrivateComments = $('#awc_private_comments');
-  // let cbExcerpt = $('#excerpt');
+  let ccRecipients = $('#cc_recipients');
 
-
-  console.log(data);
-
-
-  if (data['awc_active_course'] !== "" || data['awc_active_course']) {
+  if ( data['awc_active_course'] == 1) {
     cbActiveCourse.prop('checked', true);
   } else {
     cbActiveCourse.prop('checked', false);
   }
 
-  if (data['collapse_replies_for_course'] !== "") {
+  if ( data['collapse_replies_for_course'] != "") {
     cbCollapseReplies.prop('checked', true);
   } else {
     cbCollapseReplies.prop('checked', false);
   }
 
-  if (data['email_daily_comment_digest'] !== "") {
+  if (data['email_daily_comment_digest'] == 1) {
     cbDailyDigests.prop('checked', true);
   } else {
     cbDailyDigests.prop('checked', false)
   }
 
-  if (data['awc_private_comments'] !== "") {
+  if (data['awc_private_comments'] != "") {
     cbPrivateComments.prop('checked', true);
   } else {
     cbPrivateComments.prop('checked', false);
+  }
+
+  if (data['cc_recipients'][0] !== "" ) {
+    ccRecipients.val(data['cc_recipients']);
+  } else {
+    ccRecipients.val();
   }
 
 }

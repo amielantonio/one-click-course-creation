@@ -22,6 +22,12 @@
     </div>
 </div>
 
+<div class="oc-form-group">
+    <label>CC Recipients</label>
+    <p class="information">NEW LINE separated list of email addresses, who will receive a copy of this email when sent</p>
+    <textarea name="cc_recipients" id="cc_recipients" cols="30" rows="7"></textarea>
+</div>
+
 <div class="oc-checkbox-row">
     <div class="oc-checkbox-row--left">
         <input type="checkbox" id="awc_private_comments" name="awc_private_comments">
@@ -42,9 +48,4 @@
         <label for="">Collapse Replies</label>
         <p class="information">Collapse replies for this course</p>
     </div>
-</div>
-
-<div class="oc-form-group">
-    <label>Excerpt</label>
-    <textarea name="excerpt" id="excerpt" cols="30" rows="10" class="oc-form-control"></textarea>
 </div>
