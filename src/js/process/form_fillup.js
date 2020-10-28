@@ -2,7 +2,11 @@ export default function form_fillup() {
   onChangeCourseSelection();
 }
 
+let theArray = [];
 
+/**
+ * on Change Course selection
+ */
 function onChangeCourseSelection() {
 
   let selection = $('#course-content');
@@ -14,9 +18,11 @@ function onChangeCourseSelection() {
     let selectionData = $('#option-' + selectionID).data('lessons');
     let courseMeta = $('#option-' + selectionID).data('course-meta');
 
+    table.find('tbody tr').remove();
+
     selectionData.forEach(function (item, index) {
       table.find('tbody').append('<tr>' +
-        '<td><input type="text" class="oc-form-control module-name" value="' + item + '"></td>' +
+        '<td><input type="text" class="oc-form-control module-name" id="module-title-'+index+'" value="' + item + '"></td>' +
         '<td><input type="text" class="oc-form-control module-date-picker" id="start-' + index + '"></td>' +
         '<td><input type="text" class="oc-form-control module-date-picker" id="end-' + index + '"></td>' +
         '</tr>')
@@ -27,7 +33,9 @@ function onChangeCourseSelection() {
     $('.module-date-picker').datepicker({
       language: "en",
       dateFormat: 'dd MM, yyyy',
-      timepicker: true
+      timepicker: true,
+      todayButton: new Date(),
+      autoClose: true
     });
 
     datePicker(selectionData);
@@ -36,39 +44,128 @@ function onChangeCourseSelection() {
   });
 }
 
+/**
+ *
+ *
+ * @param data
+ */
 function datePicker(data) {
-  // let datePickers = $('.module-date-picker').datepicker().data('datepicker').selectDate(new Date());
+
   var startDate = moment();
   startDate.hour(24);
   startDate.minute(1);
-
-  var endDate = moment();
-  endDate.hour(23);
-  endDate.minute(59);
+  startDate.add(-1, 'day');
 
   var dayInterval = $('#day-interval').val();
-  var endDay = dayInterval - 1;
 
   data.forEach(function (item, index) {
 
-    $('#start-' + index).datepicker().data('datepicker').selectDate(startDate.toDate());
+    if( $('#module-title-' + index).val() !== "Welcome" && !$('#module-title-' + index).val().includes('Course chat')) {
 
-    endDate.add(endDay, 'day');
+      $('#start-' + index).datepicker().data('datepicker').selectDate(startDate.toDate());
 
-    $('#end-' + index).datepicker().data('datepicker').selectDate(endDate.toDate());
+      startDate.add(dayInterval, 'day');
 
-    startDate.add(dayInterval,'day');
+      var endDate = startDate.clone();
+      endDate.hour(23);
+      endDate.minute(59);
+
+      endDate.add(-1, 'day');
+
+      console.log(index + ": initialize...");
+
+      $('#end-' + index).datepicker().data('datepicker').selectDate(endDate.toDate());
+
+      $('#start-' + index).datepicker().data('datepicker').update('onSelect', function(fd, d, inst){
+        if(!theArray.includes(index + "-start")) {
+
+          console.log(index + "-start");
+
+          theArray.push(index + "-start");
+          dripDatePicker( d, index, data, 'start' );
+        }
+      });
+
+      $('#end-' + index).datepicker().data('datepicker').update('onSelect', function(fd, d, inst){
+        if(!theArray.includes(index + "-end")) {
+
+          console.log(index + "-end");
+
+          theArray.push(index + "-end");
+          dripDatePicker(d, index, data, 'end');
+        }
+      });
+    }
 
   });
 
 }
 
+
+function dripDatePicker( currentDate, dateIndex, dateData, pickerType = null ) {
+
+  var startDate = moment(currentDate);
+  startDate.hour(24);
+  startDate.minute(1);
+  startDate.add(-1, 'day');
+
+  var dayInterval = $('#day-interval').val();
+
+  // If date picker type is not null, then process them first before going inside the loop
+  if( pickerType !== null ) {
+    if(pickerType == 'start'){
+      var endDateDefault = startDate.clone();
+      endDateDefault.hour(23);
+      endDateDefault.minute(59);
+
+      endDateDefault.add((dayInterval - 1), 'day');
+
+      $('#end-' + dateIndex).datepicker().data('datepicker').selectDate(endDateDefault.toDate());
+      dateIndex = dateIndex + 1;
+    }
+
+    if( pickerType == 'end') {
+      dateIndex = dateIndex + 1;
+    }
+  }
+
+  //Loop in the date indexes to add the selection
+  for( var _x = dateIndex; _x < dateData.length; _x++ ) {
+
+    console.log(_x);
+
+    startDate.add(dayInterval, 'day');
+
+    $('#start-' + _x).datepicker().data('datepicker').selectDate(startDate.toDate());
+
+    var endDate = startDate.clone();
+    endDate.hour(23);
+    endDate.minute(59);
+
+    endDate.add((dayInterval - 1), 'day');
+
+    $('#end-' + _x).datepicker().data('datepicker').selectDate(endDate.toDate());
+  }
+
+  console.log(_x);
+  console.log('test');
+
+}
+
+/**
+ * Fill up checkboxes of the steps
+ *
+ * @param data
+ */
 function settingsFill(data) {
   let cbActiveCourse = $('#awc_active_course');
   let cbCollapseReplies = $('#collapse_replies_for_course');
   let cbDailyDigests = $('#email_daily_comment_digest');
   let cbPrivateComments = $('#awc_private_comments');
   // let cbExcerpt = $('#excerpt');
+
+
+  console.log(data);
 
 
   if (data['awc_active_course'] !== "" || data['awc_active_course']) {
