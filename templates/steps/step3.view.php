@@ -6,7 +6,7 @@
     </div>
     <div class="oc-checkbox-row--right">
         <label for="">Active Course</label>
-        <p class="information">Lorem ipsum dolor sit amet consectetur</p>
+        <p class="information">Mark the course as an active course</p>
     </div>
 </div>
 
@@ -34,7 +34,7 @@
     </div>
     <div class="oc-checkbox-row--right">
         <label for="">Private Comments</label>
-        <p class="information">Lorem ipsum dolor sit amet consectetur</p>
+        <p class="information">Allow private comments for this course</p>
     </div>
 </div>
 

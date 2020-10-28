@@ -22,6 +22,12 @@
                     </select>
                 </div>
 
+                <div class="oc-form-group">
+                    <label for="oc-exclude-module-keywords">Exclude module keywords</label>
+                    <p class="information">Separate keywords with comma (,)</p>
+                    <textarea name="oc-exclude-module-keywords" id="oc-exclude-module-keywords" class="oc-form-control" cols="30" rows="10"><?php echo isset($excludeKeywords) ? $excludeKeywords : ""?></textarea>
+                </div>
+
                 <div class="cohort-buttons oc-button-group align-center">
                     <button id="btn-classroom" class="oc-btn oc-btn--primary" type="submit">Save Settings</button>
                 </div>

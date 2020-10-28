@@ -40,11 +40,29 @@ function onChangeCourseSelection() {
     datePicker(selectionData);
     settingsFill(courseMeta);
 
+    applyIntervalButton(selectionData);
+
   });
 }
 
 /**
+ * Button apply interval
  *
+ * @param data
+ */
+function applyIntervalButton(data) {
+
+  let btnApplyInterval = $('#btn-apply-interval');
+
+  btnApplyInterval.on('click', function(){
+    dripDatePicker(null, 0, data);
+  });
+
+
+}
+
+/**
+ * Initial Drip behaviour and adding of onSelect property for air-datepicker modules.
  *
  * @param data
  */
@@ -57,6 +75,7 @@ function datePicker(data) {
 
   var dayInterval = $('#day-interval').val();
 
+  //Loop thru all data to add the value inside the air-datepicker.
   data.forEach(function (item, index) {
 
     if( $('#module-title-' + index).val() !== "Welcome" && !$('#module-title-' + index).val().includes('Course chat')) {
@@ -65,39 +84,31 @@ function datePicker(data) {
 
       startDate.add(dayInterval, 'day');
 
-      // var endDate = startDate.clone();
-      // endDate.hour(23);
-      // endDate.minute(59);
-      //
-      // endDate.add(-1, 'day');
-
-      console.log(index + ": initialize...");
-
-      // $('#end-' + index).datepicker().data('datepicker').selectDate(endDate.toDate());
-
       $('#start-' + index).datepicker().data('datepicker').update('onSelect', function(fd, d, inst){
           dripDatePicker( d, index, data, 'start' );
       });
-
-      // $('#end-' + index).datepicker().data('datepicker').update('onSelect', function(fd, d, inst){
-      //   if(!theArray.includes(index + "-end")) {
-      //
-      //     console.log(index + "-end");
-      //
-      //     theArray.push(index + "-end");
-      //     dripDatePicker(d, index, data, 'end');
-      //   }
-      // });
     }
-
   });
-
 }
 
+/**
+ * Drip Date picker process
+ *
+ * @param currentDate
+ * @param dateIndex
+ * @param dateData
+ * @param pickerType
+ */
+function dripDatePicker( currentDate = null, dateIndex, dateData, pickerType = null ) {
 
-function dripDatePicker( currentDate, dateIndex, dateData, pickerType = null ) {
+  var startDate;
 
-  var startDate = moment(currentDate);
+  if(currentDate == null ){
+    startDate = moment();
+  } else {
+    startDate = moment(currentDate);
+  }
+
   startDate.hour(24);
   startDate.minute(1);
   startDate.add(-1, 'day');
@@ -107,19 +118,8 @@ function dripDatePicker( currentDate, dateIndex, dateData, pickerType = null ) {
   // If date picker type is not null, then process them first before going inside the loop
   if( pickerType !== null ) {
     if(pickerType == 'start'){
-      var endDateDefault = startDate.clone();
-      endDateDefault.hour(23);
-      endDateDefault.minute(59);
-
-      // endDateDefault.add((dayInterval - 1), 'day');
-      //
-      // $('#end-' + dateIndex).datepicker().data('datepicker').selectDate(endDateDefault.toDate());
       dateIndex = dateIndex + 1;
     }
-
-    // if( pickerType == 'end') {
-    //   dateIndex = dateIndex + 1;
-    // }
   }
 
   //Loop in the date indexes to add the selection
@@ -129,13 +129,6 @@ function dripDatePicker( currentDate, dateIndex, dateData, pickerType = null ) {
 
     $('#start-' + _x).datepicker().data('datepicker').selectDate(startDate.toDate());
 
-    // var endDate = startDate.clone();
-    // endDate.hour(23);
-    // endDate.minute(59);
-    //
-    // endDate.add((dayInterval - 1), 'day');
-    //
-    // $('#end-' + _x).datepicker().data('datepicker').selectDate(endDate.toDate());
   }
 }
 
@@ -180,5 +173,4 @@ function settingsFill(data) {
   } else {
     ccRecipients.val();
   }
-
 }

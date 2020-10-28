@@ -37,8 +37,8 @@
   width: 100%;
   font-weight: bold; }
 
-label ~ .oc-form-control,
-label ~ .oc-form-control-select {
+label + .oc-form-control,
+label + .oc-form-control-select {
   margin-top: 10px; }
 
 .oc-form-group {
