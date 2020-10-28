@@ -122,46 +122,6 @@ class MainController extends CoreController{
         var_dump($request);
     }
 
-    
-
-    public function get_course_groups_by_user_id()
-    {
-
-        $roles = get_editable_roles();
-
-        if( empty($roles) ){ // for non admin
-            $group_ids = array();
-            $all_user_meta = get_user_meta( get_current_user_id() );
-            if ( ! empty( $all_user_meta ) ) {
-                foreach ( $all_user_meta as $meta_key => $meta_set ) {
-                    if ( 'learndash_group_leaders_' == substr( $meta_key, 0, strlen( 'learndash_group_leaders_' ) ) ) {
-                        $group_ids = array_merge( $group_ids, $meta_set );
-                    }
-                }
-            }
-
-            if(empty($group_ids)){
-                return $group_ids;
-            }
-
-            $groups_query_args = array(
-                'post__in'    => $group_ids,
-                'post_type'   => 'groups',
-                'nopaging'    => true,
-                'post_status' => array( 'publish', 'pending', 'draft', 'future', 'private' ),
-            );
-        } else { // admin
-            $groups_query_args = array(
-                'post_type'   => 'groups',
-                'nopaging'    => true,
-                'post_status' => array( 'publish', 'pending', 'draft', 'future', 'private' ),
-            );
-        }
-        
-        $groups_query = new WP_Query( $groups_query_args );
-		return $groups_query->posts;
-        
-    }
 
 
 
