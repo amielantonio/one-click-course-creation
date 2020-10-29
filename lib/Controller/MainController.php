@@ -31,10 +31,17 @@ class MainController extends CoreController{
 
     /**
      * Create entry
-     *
+     * Load the course setup page with course content, memberships,
+     * online tutor and course certificates
+     * 
+     * @return array $courseContent
+     * @return array $memberships
+     * @return array $onlineTutor
+     * @return array $courseCertificates
      * @return mixed|string
      * @throws \Exception
      */
+
     public function create()
     {
         global $wpdb;
@@ -67,8 +74,6 @@ class MainController extends CoreController{
             }
         }
 
-
-
         // Get memberships
         $memberium = get_option('memberium');
         $memberships = [];
@@ -78,7 +83,6 @@ class MainController extends CoreController{
             $table = 'memberium_tags';
             $appname = "lf159"; # memberium_tags table appname field
 
-            // Note: can't use the query builder due to memberium have no prefix $posts->select(['id, name'])->where('appname', $appname)->orderBy('category')->results();
             $sql = "SELECT id, name FROM {$table} WHERE `appname` = '{$appname}' ORDER BY category, name ";
             $result = $wpdb->get_results($sql, ARRAY_A);
             foreach ($result as $data) {
@@ -95,11 +99,6 @@ class MainController extends CoreController{
             $memberships = $memberium['memberships'];
         }
 
-
-        // Course Group
-        $courseGroups = $this->get_course_groups_by_user_id();
-
-
         // Online Tutor
         $onlineTutor =  get_users([
                         'role__in' => [ 'Administrator', 'group_leader'],
@@ -107,11 +106,16 @@ class MainController extends CoreController{
                         'orderby'    => 'display_name'
                        ]);
 
+        // Course Certificate
+        $courseCertificates = $posts->select(['ID, post_title'])->where('post_type', 'sfwd-certificates')->orderBy('post_title')->results();
+
+
+
         return (new View('steps/steps'))
             ->with('memberships',$memberships)
             ->with('courseContent', $courseContent )
-            ->with('courseGroups',$courseGroups)
             ->with('onlineTutor',$onlineTutor)
+            ->with('courseCertificates',$courseCertificates)
             ->render();
 
     }
@@ -121,52 +125,5 @@ class MainController extends CoreController{
     {
         var_dump($request);
     }
-
-
-
-    public function get_course_groups_by_user_id()
-    {
-
-        $roles = get_editable_roles();
-
-        if( empty($roles) ){ // for non admin
-            $group_ids = array();
-            $all_user_meta = get_user_meta( get_current_user_id() );
-            if ( ! empty( $all_user_meta ) ) {
-                foreach ( $all_user_meta as $meta_key => $meta_set ) {
-                    if ( 'learndash_group_leaders_' == substr( $meta_key, 0, strlen( 'learndash_group_leaders_' ) ) ) {
-                        $group_ids = array_merge( $group_ids, $meta_set );
-                    }
-                }
-            }
-
-            if(empty($group_ids)){
-                return $group_ids;
-            }
-
-            $groups_query_args = array(
-                'post__in'    => $group_ids,
-                'post_type'   => 'groups',
-                'nopaging'    => true,
-                'post_status' => array( 'publish', 'pending', 'draft', 'future', 'private' ),
-            );
-        } else { // admin
-            $groups_query_args = array(
-                'post_type'   => 'groups',
-                'nopaging'    => true,
-                'post_status' => array( 'publish', 'pending', 'draft', 'future', 'private' ),
-            );
-        }
-
-        $groups_query = new WP_Query( $groups_query_args );
-		return $groups_query->posts;
-
-    }
-
-
-
-
-
-
 
 }

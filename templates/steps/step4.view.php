@@ -1,9 +1,8 @@
 <h3 class="cohort-title">Tags</h3>
 
 <div class="oc-form-group">
-    <label>Require Tag IDs</label>
-    <select name="oc-tag-id" id="oc-tag-id" class="oc-form-control select2">
-    <option>Select Tag</option>
+<label for="oc-tag-id">Select Tags</label>
+    <select name="oc-tag-id[]" id="oc-tag-id" class="oc-form-control-select select2" multiple="multiple">
         <?php if(isset($memberships)) : ?>
             <?php foreach($memberships as $data): ?>
             <?php   echo "<option value='{$data['main_id']}'>{$data['tag_name']}</option> ";?>
@@ -12,14 +11,25 @@
     </select>
 </div>
 
+
 <div class="oc-form-group">
-    <label>Course Group</label>
-    <select name="oc-course-groups" id="oc-course-groups" class="oc-form-control select2">
-        <option>Select Course Group</option>
-        <?php if(isset($courseGroups)) : ?>
-            <?php foreach($courseGroups as $data): ?>
-            <?php   echo "<option value='{$data->ID}'>{$data->post_title}</option> ";?>
-            <?php endforeach; ?>
+    <label>Course Certificate</label>
+    <select name="oc-course-cert" id="oc-course-cert" class="oc-form-control select2">
+    <option>Select Course Certificate</option>
+    <?php if(isset($courseCertificates)) : ?>
+            <?php foreach($courseCertificates as $data): ?>
+            <?php echo "<option value='{$data->ID}'>{$data->post_title}</option> ";?>
+             <?php endforeach; ?>
         <?php endif; ?>
     </select>
 </div>
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#oc-tag-id').select2({
+            placeholder: "Select tag",
+            allowClear: true
+        });
+    });
+</script>
