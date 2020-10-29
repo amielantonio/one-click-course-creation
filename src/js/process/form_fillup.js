@@ -2,8 +2,6 @@ export default function form_fillup() {
   onChangeCourseSelection();
 }
 
-let theArray = [];
-
 /**
  * on Change Course selection
  */
@@ -17,6 +15,7 @@ function onChangeCourseSelection() {
     let $courseTitle = $('#course-title');
     let selectionData = $('#option-' + selectionID).data('lessons');
     let courseMeta = $('#option-' + selectionID).data('course-meta');
+    let excludedKeywords = courseMeta.excluded_keywords;
 
     table.find('tbody tr').remove();
 
@@ -37,7 +36,7 @@ function onChangeCourseSelection() {
       autoClose: true
     });
 
-    datePicker(selectionData);
+    datePicker(selectionData, excludedKeywords);
     settingsFill(courseMeta);
 
     applyIntervalButton(selectionData);
@@ -65,8 +64,9 @@ function applyIntervalButton(data) {
  * Initial Drip behaviour and adding of onSelect property for air-datepicker modules.
  *
  * @param data
+ * @param excludedKeywords
  */
-function datePicker(data) {
+function datePicker(data, excludedKeywords) {
 
   var startDate = moment();
   startDate.hour(24);
@@ -75,19 +75,28 @@ function datePicker(data) {
 
   var dayInterval = $('#day-interval').val();
 
+
   //Loop thru all data to add the value inside the air-datepicker.
   data.forEach(function (item, index) {
 
-    if( $('#module-title-' + index).val() !== "Welcome" && !$('#module-title-' + index).val().includes('Course chat')) {
+    // console.log($('#module-title-' + index).val() + " - " + checkKeywords($('#module-title-' + index).val(), excludedKeywords));
+    console.log(checkKeywords($('#module-title-' + index).val(), excludedKeywords));
 
-      $('#start-' + index).datepicker().data('datepicker').selectDate(startDate.toDate());
-
-      startDate.add(dayInterval, 'day');
-
-      $('#start-' + index).datepicker().data('datepicker').update('onSelect', function(fd, d, inst){
-          dripDatePicker( d, index, data, 'start' );
-      });
-    }
+    // if( $('#module-title-' + index).val() !== "Welcome" && !$('#module-title-' + index).val().includes('Course chat')) {
+    // if( checkKeywords($('#module-title-' + index).val(), excludedKeywords) ) {
+    //
+    //   console.log('entered')
+    //
+    //   $('#start-' + index).datepicker().data('datepicker').selectDate(startDate.toDate());
+    //
+    //   startDate.add(dayInterval, 'day');
+    //
+    //   $('#start-' + index).datepicker().data('datepicker').update('onSelect', function(fd, d, inst){
+    //       dripDatePicker( d, index, data, 'start' );
+    //   });
+    // } else {
+    //   console.log('not entered');
+    // }
   });
 }
 
@@ -173,4 +182,41 @@ function settingsFill(data) {
   } else {
     ccRecipients.val();
   }
+}
+
+
+function checkKeywords( _needle, _haystack ){
+
+  let _array = [];
+
+  if(_haystack != null) {
+    _haystack.forEach(function( item, index ){
+
+      item = item.toLowerCase().trim();
+      _needle = _needle.toLowerCase().trim();
+
+      if(_needle.includes(item)) {
+
+
+        _array.push(_needle);
+        return _array;
+      }
+    });
+
+
+    // _haystack.find( function(e){
+    //   var regex = new RegExp(e);
+    //
+    //
+    //
+    //   return _needle.match(regex);
+    //
+    // });
+
+
+
+
+  }
+
+
 }

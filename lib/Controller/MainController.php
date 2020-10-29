@@ -60,14 +60,11 @@ class MainController extends CoreController{
                         'awc_private_comments' => get_post_meta($getOption, 'awc_private_comments')[0],
                         'email_daily_comment_digest' => get_post_meta($getOption, 'email_daily_comment_digest')[0],
                         'cc_recipients' => get_post_meta($getOption, 'cc_recipients'),
+                        'excluded_keywords' => get_option('exclude-module-keywords'),
                     ];
-
-
                 }
             }
         }
-
-
 
         // Get memberships
         $memberium = get_option('memberium');
@@ -106,6 +103,7 @@ class MainController extends CoreController{
                         'fields'   => ['ID','user_email','display_name'],
                         'orderby'    => 'display_name'
                        ]);
+
 
         return (new View('steps/steps'))
             ->with('memberships',$memberships)
