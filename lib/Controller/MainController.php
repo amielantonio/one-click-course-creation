@@ -31,10 +31,17 @@ class MainController extends CoreController{
 
     /**
      * Create entry
-     *
+     * Load the course setup page with course content, memberships,
+     * online tutor and course certificates
+     * 
+     * @return array $courseContent
+     * @return array $memberships
+     * @return array $onlineTutor
+     * @return array $courseCertificates
      * @return mixed|string
      * @throws \Exception
      */
+
     public function create()
     {
         global $wpdb;
@@ -67,7 +74,7 @@ class MainController extends CoreController{
         }
         
      
-        
+
         // Get memberships
         $memberium = get_option('memberium');
         $memberships = [];
@@ -77,7 +84,6 @@ class MainController extends CoreController{
             $table = 'memberium_tags';
             $appname = "lf159"; # memberium_tags table appname field
 
-            // Note: can't use the query builder due to memberium have no prefix $posts->select(['id, name'])->where('appname', $appname)->orderBy('category')->results();
             $sql = "SELECT id, name FROM {$table} WHERE `appname` = '{$appname}' ORDER BY category, name ";
             $result = $wpdb->get_results($sql, ARRAY_A);
             foreach ($result as $data) {
