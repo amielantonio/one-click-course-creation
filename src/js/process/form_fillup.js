@@ -1,3 +1,5 @@
+import {inArray, inArraySubstr} from '../helpers/array';
+
 export default function form_fillup() {
   onChangeCourseSelection();
 }
@@ -80,23 +82,20 @@ function datePicker(data, excludedKeywords) {
   data.forEach(function (item, index) {
 
     // console.log($('#module-title-' + index).val() + " - " + checkKeywords($('#module-title-' + index).val(), excludedKeywords));
-    console.log(checkKeywords($('#module-title-' + index).val(), excludedKeywords));
+    console.log(inArraySubstr($('#module-title-' + index).val(), excludedKeywords));
 
     // if( $('#module-title-' + index).val() !== "Welcome" && !$('#module-title-' + index).val().includes('Course chat')) {
-    // if( checkKeywords($('#module-title-' + index).val(), excludedKeywords) ) {
-    //
-    //   console.log('entered')
-    //
-    //   $('#start-' + index).datepicker().data('datepicker').selectDate(startDate.toDate());
-    //
-    //   startDate.add(dayInterval, 'day');
-    //
-    //   $('#start-' + index).datepicker().data('datepicker').update('onSelect', function(fd, d, inst){
-    //       dripDatePicker( d, index, data, 'start' );
-    //   });
-    // } else {
-    //   console.log('not entered');
-    // }
+    if(! inArraySubstr($('#module-title-' + index).val(), excludedKeywords) ) {
+
+
+      $('#start-' + index).datepicker().data('datepicker').selectDate(startDate.toDate());
+
+      startDate.add(dayInterval, 'day');
+
+      $('#start-' + index).datepicker().data('datepicker').update('onSelect', function(fd, d, inst){
+          dripDatePicker( d, index, data, 'start' );
+      });
+    }
   });
 }
 
@@ -182,41 +181,4 @@ function settingsFill(data) {
   } else {
     ccRecipients.val();
   }
-}
-
-
-function checkKeywords( _needle, _haystack ){
-
-  let _array = [];
-
-  if(_haystack != null) {
-    _haystack.forEach(function( item, index ){
-
-      item = item.toLowerCase().trim();
-      _needle = _needle.toLowerCase().trim();
-
-      if(_needle.includes(item)) {
-
-
-        _array.push(_needle);
-        return _array;
-      }
-    });
-
-
-    // _haystack.find( function(e){
-    //   var regex = new RegExp(e);
-    //
-    //
-    //
-    //   return _needle.match(regex);
-    //
-    // });
-
-
-
-
-  }
-
-
 }
