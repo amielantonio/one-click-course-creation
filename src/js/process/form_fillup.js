@@ -1,8 +1,15 @@
 import {inArray, inArraySubstr} from '../helpers/array';
 
+var moment = require('moment');
+
 export default function form_fillup() {
   onChangeCourseSelection();
 }
+
+let $_keywordsMatch = [];
+let $_selectionData = [];
+let $_dripdates = [];
+let $_initialDate = "";
 
 /**
  * on Change Course selection
@@ -23,9 +30,9 @@ function onChangeCourseSelection() {
 
     selectionData.forEach(function (item, index) {
       table.find('tbody').append('<tr>' +
-        '<td><input type="text" class="oc-form-control module-name" id="module-title-'+index+'" value="' + item + '"></td>' +
+        '<td><input type="text" class="oc-form-control module-name" id="module-title-' + index + '" value="' + item + '"></td>' +
         '<td><input type="text" class="oc-form-control module-date-picker" id="start-' + index + '"></td>' +
-        '</tr>')
+        '</tr>');
     });
 
     $courseTitle.val($('#option-' + selectionID).data('course-title'));
@@ -40,8 +47,11 @@ function onChangeCourseSelection() {
 
     datePicker(selectionData, excludedKeywords);
     settingsFill(courseMeta);
-
     applyIntervalButton(selectionData);
+
+    $_keywordsMatch = excludedKeywords;
+    $_selectionData = selectionData;
+
 
   });
 }
@@ -55,7 +65,7 @@ function applyIntervalButton(data) {
 
   let btnApplyInterval = $('#btn-apply-interval');
 
-  btnApplyInterval.on('click', function(){
+  btnApplyInterval.on('click', function () {
     dripDatePicker(null, 0, data);
   });
 
@@ -81,21 +91,21 @@ function datePicker(data, excludedKeywords) {
   //Loop thru all data to add the value inside the air-datepicker.
   data.forEach(function (item, index) {
 
-    // console.log($('#module-title-' + index).val() + " - " + checkKeywords($('#module-title-' + index).val(), excludedKeywords));
-    console.log(inArraySubstr($('#module-title-' + index).val(), excludedKeywords));
-
-    // if( $('#module-title-' + index).val() !== "Welcome" && !$('#module-title-' + index).val().includes('Course chat')) {
-    if(! inArraySubstr($('#module-title-' + index).val(), excludedKeywords) ) {
-
+    if (!inArraySubstr($('#module-title-' + index).val(), excludedKeywords)) {
 
       $('#start-' + index).datepicker().data('datepicker').selectDate(startDate.toDate());
 
       startDate.add(dayInterval, 'day');
 
-      $('#start-' + index).datepicker().data('datepicker').update('onSelect', function(fd, d, inst){
-          dripDatePicker( d, index, data, 'start' );
+      $('#start-' + index).datepicker().data('datepicker').update('onSelect', function (fd, d, inst) {
+        // Do nothing if selection was cleared
+        if (!d) return;
+
+        dripDatePicker(d, index, data, 'start');
       });
     }
+
+    $_dripdates.push($('#start-' + index).val());
   });
 }
 
@@ -107,11 +117,12 @@ function datePicker(data, excludedKeywords) {
  * @param dateData
  * @param pickerType
  */
-function dripDatePicker( currentDate = null, dateIndex, dateData, pickerType = null ) {
+function dripDatePicker(currentDate = null, dateIndex, dateData, pickerType = null) {
 
   var startDate;
+  var startDateChecker;
 
-  if(currentDate == null ){
+  if (currentDate == null) {
     startDate = moment();
   } else {
     startDate = moment(currentDate);
@@ -124,20 +135,51 @@ function dripDatePicker( currentDate = null, dateIndex, dateData, pickerType = n
   var dayInterval = $('#day-interval').val();
 
   // If date picker type is not null, then process them first before going inside the loop
-  if( pickerType !== null ) {
-    if(pickerType == 'start'){
+  if (pickerType !== null) {
+    if (pickerType == 'start') {
       dateIndex = dateIndex + 1;
     }
   }
 
   //Loop in the date indexes to add the selection
-  for( var _x = dateIndex; _x < dateData.length; _x++ ) {
+  for( var _x = dateIndex; _x < $_dripdates.length; _x++ ) {
 
-    startDate.add(dayInterval, 'day');
+    if(! inArraySubstr($('#module-title-' + _x).val(), $_keywordsMatch) ) {
 
-    $('#start-' + _x).datepicker().data('datepicker').selectDate(startDate.toDate());
+      console.log( "enter: " + $('#module-title-' + _x).val() );
 
+      startDate.add(dayInterval, 'day');
+
+      $('#start-' + _x).datepicker().data('datepicker').selectDate(startDate.toDate());
+    }
   }
+
+  // var prevValue = "";
+  // var initialDate = "";
+  //
+  // $_dripdates.forEach(function (value, index) {
+  //
+  //   if (prevValue == "" && value != "") {
+  //     initialDate = value;
+  //   }
+  //
+  //   if (initialDate != "") {
+  //     startDate = moment(initialDate, 'DD MMMM, YYYY hh:mm a');
+  //
+  //     console.log(startDate.toDate());
+  //
+  //     startDate.add(dayInterval, 'day');
+  //
+  //     $('#start-' + index).datepicker().data('datepicker').selectDate(startDate.toDate());
+  //
+  //   }
+  //
+  //   initialDate = "";
+  //
+  //   prevValue = value;
+  //
+  //
+  // });
 }
 
 /**
@@ -152,13 +194,13 @@ function settingsFill(data) {
   let cbPrivateComments = $('#awc_private_comments');
   let ccRecipients = $('#cc_recipients');
 
-  if ( data['awc_active_course'] == 1) {
+  if (data['awc_active_course'] == 1) {
     cbActiveCourse.prop('checked', true);
   } else {
     cbActiveCourse.prop('checked', false);
   }
 
-  if ( data['collapse_replies_for_course'] != "") {
+  if (data['collapse_replies_for_course'] != "") {
     cbCollapseReplies.prop('checked', true);
   } else {
     cbCollapseReplies.prop('checked', false);
@@ -176,7 +218,7 @@ function settingsFill(data) {
     cbPrivateComments.prop('checked', false);
   }
 
-  if (data['cc_recipients'][0] !== "" ) {
+  if (data['cc_recipients'][0] !== "") {
     ccRecipients.val(data['cc_recipients']);
   } else {
     ccRecipients.val();
