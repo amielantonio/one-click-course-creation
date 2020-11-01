@@ -28,10 +28,8 @@
 
     let courseContent = '<?php echo json_encode($courseContent)?>';
 
+    $ = jQuery;
     $(document).ready(function () {
-
-
-
 
         $('.select2').select2();
     });

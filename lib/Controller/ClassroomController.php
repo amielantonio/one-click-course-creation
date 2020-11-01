@@ -23,4 +23,10 @@ class ClassroomController extends CoreController{
     }
 
 
+    public function store(Request $request)
+    {
+
+    }
+
+
 }

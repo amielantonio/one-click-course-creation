@@ -65,8 +65,14 @@ function applyIntervalButton(data) {
 
   let btnApplyInterval = $('#btn-apply-interval');
 
+  // resetDripDates();
+
   btnApplyInterval.on('click', function () {
     dripDatePicker(null, 0, data);
+
+    console.log($_dripdates);
+
+      // console.log(resetDripDates())
   });
 
 
@@ -105,7 +111,10 @@ function datePicker(data, excludedKeywords) {
       });
     }
 
-    $_dripdates.push($('#start-' + index).val());
+    $_dripdates.push({
+        date: $('#start-' + index).val(),
+        has_passed: false
+    });
   });
 }
 
@@ -135,51 +144,58 @@ function dripDatePicker(currentDate = null, dateIndex, dateData, pickerType = nu
   var dayInterval = $('#day-interval').val();
 
   // If date picker type is not null, then process them first before going inside the loop
-  if (pickerType !== null) {
+  if (pickerType !== null && dateIndex !== null) {
     if (pickerType == 'start') {
       dateIndex = dateIndex + 1;
     }
   }
 
+
   //Loop in the date indexes to add the selection
-  for( var _x = dateIndex; _x < $_dripdates.length; _x++ ) {
-
-    if(! inArraySubstr($('#module-title-' + _x).val(), $_keywordsMatch) ) {
-
-      console.log( "enter: " + $('#module-title-' + _x).val() );
-
-      startDate.add(dayInterval, 'day');
-
-      $('#start-' + _x).datepicker().data('datepicker').selectDate(startDate.toDate());
-    }
-  }
-
-  // var prevValue = "";
-  // var initialDate = "";
+  // for( var _x = dateIndex; _x < $_dripdates.length; _x++ ) {
   //
-  // $_dripdates.forEach(function (value, index) {
-  //
-  //   if (prevValue == "" && value != "") {
-  //     initialDate = value;
-  //   }
-  //
-  //   if (initialDate != "") {
-  //     startDate = moment(initialDate, 'DD MMMM, YYYY hh:mm a');
-  //
-  //     console.log(startDate.toDate());
+  //   if(! inArraySubstr($('#module-title-' + _x).val(), $_keywordsMatch) ) {
   //
   //     startDate.add(dayInterval, 'day');
   //
-  //     $('#start-' + index).datepicker().data('datepicker').selectDate(startDate.toDate());
-  //
+  //     $('#start-' + _x).datepicker().data('datepicker').selectDate(startDate.toDate());
   //   }
   //
-  //   initialDate = "";
+  //     console.log('#start-' + _x);
   //
-  //   prevValue = value;
-  //
-  //
-  // });
+  // }
+
+  var prevValue = "";
+  var initialDate = "";
+
+  $_dripdates.forEach(function (value, index) {
+
+    if (prevValue == "" && value.date != "") {
+      initialDate = value.date;
+    }
+
+    if (initialDate != "" && value.has_passed == false ) {
+
+        $_dripdates[index].has_passed = true;
+
+      startDate = moment(initialDate, 'DD MMMM, YYYY hh:mm a');
+
+      startDate.add(dayInterval, 'day');
+
+      $('#start-' + index).datepicker().data('datepicker').selectDate(startDate.toDate());
+
+
+    }
+
+    initialDate = "";
+
+    prevValue = value.date;
+
+
+    console.log("prev: "+ prevValue);
+    console.log("init: "+ initialDate);
+
+  });
 }
 
 /**
@@ -223,4 +239,14 @@ function settingsFill(data) {
   } else {
     ccRecipients.val();
   }
+}
+
+
+
+function resetDripDates() {
+
+    $_dripdates.forEach(function(value, index){
+        value.has_passed = false;
+    });
+
 }
