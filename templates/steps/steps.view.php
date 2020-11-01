@@ -25,8 +25,11 @@
 
 </div>
 <script type="text/javascript">
+
+    let courseContent = '<?php echo json_encode($courseContent)?>';
+
+    $ = jQuery;
     $(document).ready(function () {
-        let courseContent = '<?php echo json_encode($courseContent)?>';
 
         $('.select2').select2();
     });

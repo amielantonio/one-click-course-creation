@@ -67,9 +67,8 @@ class MainController extends CoreController{
                         'awc_private_comments' => get_post_meta($getOption, 'awc_private_comments')[0],
                         'email_daily_comment_digest' => get_post_meta($getOption, 'email_daily_comment_digest')[0],
                         'cc_recipients' => get_post_meta($getOption, 'cc_recipients'),
+                        'excluded_keywords' => get_option('exclude-module-keywords'),
                     ];
-
-
                 }
             }
         }
@@ -108,7 +107,6 @@ class MainController extends CoreController{
 
         // Course Certificate
         $courseCertificates = $posts->select(['ID, post_title'])->where('post_type', 'sfwd-certificates')->orderBy('post_title')->results();
-
 
 
         return (new View('steps/steps'))
