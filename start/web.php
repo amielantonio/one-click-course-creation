@@ -23,3 +23,7 @@ Router::addChannel( 'post', 'test', 'MainController@test' );
 
 Router::addSubMenu('One Click Classroom Setup', 'Plugin Settings', 'SettingsController@index');
 Router::post('save-settings', 'SettingsController@store' );
+
+
+//One Click Saving - controller
+Router::addChannel( 'post', 'classroom-store', 'ClassroomController@store' );
