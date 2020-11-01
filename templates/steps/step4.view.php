@@ -15,7 +15,7 @@
 <div class="oc-form-group">
     <label>Course Certificate</label>
     <select name="oc-course-cert" id="oc-course-cert" class="oc-form-control select2">
-    <option>Select Course Certificate</option>
+    <option value="">Select Course Certificate</option>
     <?php if(isset($courseCertificates)) : ?>
             <?php foreach($courseCertificates as $data): ?>
             <?php echo "<option value='{$data->ID}'>{$data->post_title}</option> ";?>
@@ -26,6 +26,8 @@
 </div>
 
 <script type="text/javascript">
+    $ = jQuery;
+
     $(document).ready(function () {
         $('#oc-tag-id').select2({
             placeholder: "Select tag",

@@ -19,13 +19,13 @@
 
 <div class="oc-form-group">
     <label>Course Title</label>
-    <input type="text" class="oc-form-control" id="course-title" placeholder="Add New Course Title">
+    <input type="text" class="oc-form-control" name="course-title" id="course-title" placeholder="Add New Course Title">
 </div>
 
 <div class="oc-form-group">
     <label>Online Tutor</label>
-    <select name="" class="oc-form-control select2" id="online-tutor">
-        <option>Select Tutor</option>
+    <select name="online-tutor" class="oc-form-control select2" id="online-tutor">
+        <option value="">Select Tutor</option>
         <?php if(isset($onlineTutor)) : ?>
             <?php foreach($onlineTutor as $data): ?>
             <?php   echo "<option value='{$data->ID}'>{$data->display_name} ({$data->user_email})</option> ";?>

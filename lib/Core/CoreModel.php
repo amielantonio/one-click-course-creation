@@ -570,6 +570,35 @@ abstract class CoreModel {
 
     }
 
+    public function get_table()
+    {
+        return $this->table;
+    }
+
+    public function set_table( $table )
+    {
+        $this->table = $table;
+    }
+
+    public function get_columns()
+    {
+        return $this->columns;
+    }
+
+
+
+
+    public function get_primary_key()
+    {
+
+    }
+
+    public function set_primary_key()
+    {
+
+    }
+
+
     public function withTrashed()
     {
 

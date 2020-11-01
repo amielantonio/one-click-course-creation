@@ -29,7 +29,7 @@ if (! function_exists('_route')) {
      * @return string
      */
     function _route( $name, $parameters = []) {
-        return "?page={$_GET['page']}&route={$name}";
+        return "admin.php?page={$_GET['page']}&route={$name}";
     }
 }
 

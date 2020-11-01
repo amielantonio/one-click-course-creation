@@ -30,8 +30,8 @@ function onChangeCourseSelection() {
 
     selectionData.forEach(function (item, index) {
       table.find('tbody').append('<tr>' +
-        '<td><input type="text" class="oc-form-control module-name" id="module-title-' + index + '" value="' + item + '"></td>' +
-        '<td><input type="text" class="oc-form-control module-date-picker" id="start-' + index + '"></td>' +
+        '<td><input type="text" name="lesson-name[]" class="oc-form-control module-name" id="module-title-' + index + '" value="' + item + '"></td>' +
+        '<td><input type="text" name="topic-date[]" class="oc-form-control module-date-picker" id="start-' + index + '"></td>' +
         '</tr>');
     });
 
