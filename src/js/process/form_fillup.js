@@ -28,11 +28,19 @@ function onChangeCourseSelection() {
 
     table.find('tbody tr').remove();
 
+    var x = 0;
+
+    console.log(selectionData);
+
     selectionData.forEach(function (item, index) {
       table.find('tbody').append('<tr>' +
-        '<td><input type="text" name="lesson-name[]" class="oc-form-control module-name" id="module-title-' + index + '" value="' + item + '"></td>' +
+        '<td>' +
+          '<input type="hidden" name="lesson-id[]" class="oc-form-control module-id" value="' + item['lesson-id'] + '">' +
+          '<input type="text" name="lesson-name[]" class="oc-form-control module-name" id="module-title-' + index + '" value="' + item['lesson-title'] + '">' +
+        '</td>' +
         '<td><input type="text" name="topic-date[]" class="oc-form-control module-date-picker" id="start-' + index + '"></td>' +
         '</tr>');
+
     });
 
     $courseTitle.val($('#option-' + selectionID).data('course-title'));

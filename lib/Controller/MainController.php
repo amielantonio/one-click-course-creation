@@ -60,7 +60,10 @@ class MainController extends CoreController{
                 $lessons = learndash_get_course_lessons_list($getOption);
 
                 foreach($lessons as $lesson) {
-                    $courseContent[$courseSelected->ID]['lessons'][] = $lesson['post']->post_title;
+                    $courseContent[$courseSelected->ID]['lessons'][] = [
+                        'lesson-id' => $lesson['post']->ID,
+                        'lesson-title' => $lesson['post']->post_title,
+                    ];
                     $courseContent[$courseSelected->ID]['post_meta'] = [
                         'awc_active_course' => get_post_meta($getOption, 'awc_active_course')[0],
                         'collapse_replies_for_course' => get_post_meta($getOption, 'collapse_replies_for_course')[0],
