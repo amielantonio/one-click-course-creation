@@ -33,3 +33,9 @@
         $('.select2').select2();
     });
 </script>
+
+<style>
+    #wpfooter {
+        position: relative !important;
+    }
+</style>

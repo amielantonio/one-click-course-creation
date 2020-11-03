@@ -55,7 +55,7 @@ class ClassroomController extends CoreController
         //Save to database
 
         if ($course_id = wp_insert_post($course->get_columns())) {
-            echo "course created";
+            echo "course created<br />";
 
             // Post meta for the course
             $this->save_course_meta($course_id, $request, $dolly);
@@ -85,7 +85,7 @@ class ClassroomController extends CoreController
                     //Create ld_course_steps meta
                     $this->save_lesson_meta($lesson_id, $course_id, $request, $dollyLesson);
 
-                    echo "lessons created";
+                    echo "{$lessonName[$i]} lessons created<br />";
 
                     add_post_meta($lesson_id, 'ld_course_steps', $this->create_ld_course_steps($arrLessons));
                 }
