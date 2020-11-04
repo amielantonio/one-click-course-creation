@@ -45,7 +45,23 @@ if (! function_exists('_redirect')) {
     function _redirect( $to, $data = [], $status = 302 ) {
 
 
-        echo Router::redirect($to, $data, $status);
+        if(headers_sent())
+        {
+            $string = '<script type="text/javascript">';
+            $string .= 'window.location = "' . $to . '"';
+            $string .= '</script>';
+
+            echo $string;
+        }
+        else
+        {
+            if (isset($_SERVER['HTTP_REFERER']) AND ($to == $_SERVER['HTTP_REFERER']))
+                header('Location: '.$_SERVER['HTTP_REFERER']);
+            else
+                header('Location: '.$to);
+
+        }
+        exit;
 
     }
 

@@ -1,7 +1,7 @@
 <h1 class="_m-b--50">Setup Classroom</h1>
 
 <div class="cohort-tabs" data-last-selected="1">
-    <form action="admin.php<?php echo _route('classroom-store')?>" method="post" class="oc-form">
+    <form action="<?php echo _route('classroom-store')?>" method="post" class="oc-form">
 
     <div class="cohort-steps">
             <div class="cohort-step cohort-step1" id="cohort-step1">

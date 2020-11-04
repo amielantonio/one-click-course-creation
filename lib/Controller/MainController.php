@@ -33,7 +33,7 @@ class MainController extends CoreController{
      * Create entry
      * Load the course setup page with course content, memberships,
      * online tutor and course certificates
-     * 
+     *
      * @return array $courseContent
      * @return array $memberships
      * @return array $onlineTutor
@@ -70,6 +70,8 @@ class MainController extends CoreController{
                         'awc_private_comments' => get_post_meta($getOption, 'awc_private_comments')[0],
                         'email_daily_comment_digest' => get_post_meta($getOption, 'email_daily_comment_digest')[0],
                         'cc_recipients' => get_post_meta($getOption, 'cc_recipients'),
+                        'tag_ids' => explode(', ',get_post_meta($getOption, '_is4wp_access_tags')[0]),
+                        'certificate' => get_post_meta($getOption, '_sfwd-courses')[0]['sfwd-courses_certificate'],
                         'excluded_keywords' => get_option('exclude-module-keywords'),
                     ];
                 }

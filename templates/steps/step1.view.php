@@ -2,7 +2,7 @@
 
 <div class="oc-form-group">
     <label>Course Content</label>
-    <select name="course-content" class="oc-form-control select2" id="course-content">
+    <select name="course-content" class="oc-form-control select2" id="course-content" required="required">
         <option>Select Course</option>
         <?php if(isset($courseContent)) : ?>
             <?php foreach( $courseContent as $key => $value) : ?>

@@ -52,17 +52,17 @@ class ClassroomController extends CoreController
         $course->post_status = 'publish';
         $course->post_type = $dolly->post_type;
 
+
+//        var_dump(get_post_meta(89111, '_sfwd-courses' )[0]['sfwd-courses_certificate']);
+//        var_dump(get_post_meta(89111, '_is4wp_access_tags' ));
+
         //Save to database
 
         if ($course_id = wp_insert_post($course->get_columns())) {
-            echo "course created<br />";
+            echo "{$request->input('course-title')} course created<br />";
 
             // Post meta for the course
             $this->save_course_meta($course_id, $request, $dolly);
-
-            //Create Course Steps post meta
-            add_post_meta($course_id, 'ld_course_steps', $this->create_ld_course_steps($lessonID));
-
 
             // Once the main course is saved, process the lesson
             for ($i = 0; $i < count($lessonName); $i++) {
@@ -90,7 +90,12 @@ class ClassroomController extends CoreController
                     add_post_meta($lesson_id, 'ld_course_steps', $this->create_ld_course_steps($arrLessons));
                 }
             }
+
+            //Create Course Steps post meta
+            add_post_meta($course_id, 'ld_course_steps', $this->create_ld_course_steps($arrLessons));
         }
+//
+//        _redirect('https://coursesstaging3.writerscentre.com.au/wp-admin/admin.php?page=one-click-classroom-setup', []);
 
     }
 
@@ -198,6 +203,7 @@ class ClassroomController extends CoreController
             "wdm_video_thumb_url",
             "_sfwd-courses",
             "_iswp_custom_code",
+            "learndash_certificate_options",
 //            "ld_course_steps",
         ];
 
@@ -216,6 +222,13 @@ class ClassroomController extends CoreController
 
     }
 
+    /**
+     * Duplicate lesson postmeta from the Template Lesson
+     *
+     * @param $lesson_id
+     * @param $dollyLesson
+     * @return array
+     */
     private function duplicate_lesson_meta($lesson_id, $dollyLesson)
     {
         $lessons_meta = [

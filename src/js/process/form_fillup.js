@@ -217,6 +217,8 @@ function settingsFill(data) {
   let cbDailyDigests = $('#email_daily_comment_digest');
   let cbPrivateComments = $('#awc_private_comments');
   let ccRecipients = $('#cc_recipients');
+  let ddTags = $('#oc-tag-id');
+  let ddCertificate = $('#oc-course-cert');
 
   if (data['awc_active_course'] == 1) {
     cbActiveCourse.prop('checked', true);
@@ -247,6 +249,10 @@ function settingsFill(data) {
   } else {
     ccRecipients.val();
   }
+
+
+
+
 }
 
 
