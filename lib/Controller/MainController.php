@@ -9,6 +9,7 @@ use AWC\Model\AccessDevice;
 use AWC\Model\PostMeta;
 use WP_Query;
 use AWC\Model\Posts;
+use Exception;
 
 class MainController extends CoreController{
 
@@ -26,6 +27,9 @@ class MainController extends CoreController{
     public function index()
     {
 
+
+
+
         return (new View('dashboard/dashboard'))->render();
     }
 
@@ -39,7 +43,7 @@ class MainController extends CoreController{
      * @return array $onlineTutor
      * @return array $courseCertificates
      * @return mixed|string
-     * @throws \Exception
+     * @throws Exception
      */
 
     public function create()

@@ -20,9 +20,12 @@ class ClassroomController extends CoreController
         parent::__construct();
     }
 
-    public function view(Posts $id)
+    public function view(Posts $posts)
     {
 
+
+
+        return (new View('steps/steps'))->render();
     }
 
 
@@ -51,10 +54,6 @@ class ClassroomController extends CoreController
         $course->post_excerpt = $dolly->post_excerpt;
         $course->post_status = 'publish';
         $course->post_type = $dolly->post_type;
-
-
-//        var_dump(get_post_meta(89111, '_sfwd-courses' )[0]['sfwd-courses_certificate']);
-//        var_dump(get_post_meta(89111, '_is4wp_access_tags' ));
 
         //Save to database
 
@@ -88,11 +87,17 @@ class ClassroomController extends CoreController
                     echo "{$lessonName[$i]} lessons created<br />";
 
                     add_post_meta($lesson_id, 'ld_course_steps', $this->create_ld_course_steps($arrLessons));
+                } else {
+                    echo "{$lessonName[$i]} was not created";
                 }
             }
 
             //Create Course Steps post meta
             add_post_meta($course_id, 'ld_course_steps', $this->create_ld_course_steps($arrLessons));
+
+            //Save the relationship as post meta
+            add_post_meta($course_id, 'created-from-one-click', true);
+
         }
 //
 //        _redirect('https://coursesstaging3.writerscentre.com.au/wp-admin/admin.php?page=one-click-classroom-setup', []);
@@ -130,7 +135,6 @@ class ClassroomController extends CoreController
      */
     public function save_lesson_meta($lesson_id, $course_id, $request, $dollyLesson)
     {
-
         add_post_meta($lesson_id, 'ld_course_' . $course_id, $course_id);
         $this->duplicate_lesson_meta($lesson_id, $dollyLesson);
     }
@@ -144,7 +148,6 @@ class ClassroomController extends CoreController
      */
     private function create_ld_course_steps($lesson_ids)
     {
-        $course_steps = [];
         $h = [];
         $t = [];
         $r = [];
@@ -162,26 +165,13 @@ class ClassroomController extends CoreController
             $l[] = 'sfwd-lessons:' . $lesson_id;
         }
 
-        $course_steps = [
+        return [
             'h' => $h,
             't' => $t,
             'r' => $r,
             'l' => $l,
 
         ];
-
-        return $course_steps;
-
-    }
-
-    private function get_lesson_quizzes($lesson_id)
-    {
-        return learndash_get_lesson_quiz_list($lesson_id);
-    }
-
-    private function create_sfwd_lessons($lessons)
-    {
-
     }
 
     /**
