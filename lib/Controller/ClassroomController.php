@@ -99,8 +99,8 @@ class ClassroomController extends CoreController
             add_post_meta($course_id, 'created-from-one-click', true);
 
         }
-//
-//        _redirect('https://coursesstaging3.writerscentre.com.au/wp-admin/admin.php?page=one-click-classroom-setup', []);
+
+        _redirect('https://coursesstaging3.writerscentre.com.au/wp-admin/admin.php?page=one-click-classroom-setup', []);
 
     }
 
@@ -136,6 +136,7 @@ class ClassroomController extends CoreController
     public function save_lesson_meta($lesson_id, $course_id, $request, $dollyLesson)
     {
         add_post_meta($lesson_id, 'ld_course_' . $course_id, $course_id);
+        add_post_meta($lesson_id, '_sfwd-lessons', $this->create_sfwd_lesson($lesson_id, $dollyLesson));
         $this->duplicate_lesson_meta($lesson_id, $dollyLesson);
     }
 
@@ -191,10 +192,9 @@ class ClassroomController extends CoreController
             "_fl_builder_enabled",
             "fw_options",
             "wdm_video_thumb_url",
-            "_sfwd-courses",
+//            "_sfwd-courses",
             "_iswp_custom_code",
             "learndash_certificate_options",
-//            "ld_course_steps",
         ];
 
         $return = [];
@@ -213,6 +213,47 @@ class ClassroomController extends CoreController
     }
 
     /**
+     * Create the Sfwd Lessons that is required by the Learndash
+     *
+     * @param $lesson_id
+     * @param $dollyLessonMeta
+     * @return array
+     */
+    private function create_sfwd_lesson( $lesson_id, $dollyLessonMeta )
+    {
+        $dollyLessonMeta = $this->duplicate_lesson_meta($lesson_id, $dollyLessonMeta)['_sfwd-lessons'];
+
+        $lesson_meta = [
+            'sfwd-lessons_lesson_materials' => "",
+            'sfwd-lessons_forced_lesson_time' => "",
+            'sfwd-lessons_lesson_assignment_upload' => "",
+            'sfwd-lessons_auto_approve_assignment' => "",
+            'sfwd-lessons_assignment_upload_limit_count' => 1,
+            'sfwd-lessons_lesson_assignment_deletion_enabled' => "",
+            'sfwd-lessons_lesson_assignment_points_enabled' => "",
+            'sfwd-lessons_lesson_assignment_points_amount' => 0,
+            'sfwd-lessons_assignment_upload_limit_extensions' => "",
+            'sfwd-lessons_assignment_upload_limit_size' => "",
+            'sfwd-lessons_sample_lesson' => [],
+            'sfwd-lessons_visible_after' => "0",
+            'sfwd-lessons_visible_after_specific_date' => 0,
+        ];
+
+        foreach( $lesson_meta as $key => $meta ){
+            $lesson_meta[$key] = (isset($dollyLessonMeta[$key])) ? $dollyLessonMeta[$key] : $lesson_meta[$key];
+        }
+
+        $getDiff = array_diff($lesson_meta, $dollyLessonMeta);
+
+        return array_merge($lesson_meta, $getDiff);
+    }
+
+    private function create_sfwd_course()
+    {
+
+    }
+
+    /**
      * Duplicate lesson postmeta from the Template Lesson
      *
      * @param $lesson_id
@@ -222,7 +263,7 @@ class ClassroomController extends CoreController
     private function duplicate_lesson_meta($lesson_id, $dollyLesson)
     {
         $lessons_meta = [
-            '_sfwd-lessons',
+//            '_sfwd-lessons',
             '_iswp_custom_code',
             'fw_options',
             '_fl_builder_draft',
