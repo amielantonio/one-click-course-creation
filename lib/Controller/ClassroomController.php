@@ -37,6 +37,8 @@ class ClassroomController extends CoreController
      */
     public function store(Request $request)
     {
+        var_dump(get_post_meta(25632, '_sfwd-lessons'));
+
         $arrLessons = [];
 
         $lessonName = $request->input('lesson-name');
@@ -136,6 +138,12 @@ class ClassroomController extends CoreController
     public function save_lesson_meta($lesson_id, $course_id, $request, $dollyLesson)
     {
         add_post_meta($lesson_id, 'ld_course_' . $course_id, $course_id);
+
+        $new_lesson_meta = [
+            "sfwd-lessons_visible_after_specific_date" =>
+        ];
+
+
         add_post_meta($lesson_id, '_sfwd-lessons', $this->create_sfwd_lesson($lesson_id, $dollyLesson));
         $this->duplicate_lesson_meta($lesson_id, $dollyLesson);
     }
@@ -217,10 +225,12 @@ class ClassroomController extends CoreController
      *
      * @param $lesson_id
      * @param $dollyLessonMeta
+     * @param array $new_lesson_meta
      * @return array
      */
-    private function create_sfwd_lesson( $lesson_id, $dollyLessonMeta )
+    private function create_sfwd_lesson( $lesson_id, $dollyLessonMeta, $new_lesson_meta = [] )
     {
+        //Get Dolly Lesson Meta for SFWD lessons
         $dollyLessonMeta = $this->duplicate_lesson_meta($lesson_id, $dollyLessonMeta)['_sfwd-lessons'];
 
         $lesson_meta = [
@@ -239,13 +249,27 @@ class ClassroomController extends CoreController
             'sfwd-lessons_visible_after_specific_date' => 0,
         ];
 
+        // Combine results for parent lesson sfwd-lessons with the default values of the sfwd-lessons,
+        // check whether there is a result for the parent ID else get the default one instead.
         foreach( $lesson_meta as $key => $meta ){
             $lesson_meta[$key] = (isset($dollyLessonMeta[$key])) ? $dollyLessonMeta[$key] : $lesson_meta[$key];
         }
 
+
+        //Get other meta keys that are not in the default, then merge it with the current lesson meta.
         $getDiff = array_diff($lesson_meta, $dollyLessonMeta);
 
-        return array_merge($lesson_meta, $getDiff);
+        $lesson_meta = array_merge($lesson_meta, $getDiff);
+
+        // Combine result of the new lesson meta with values to the lesson meta then return everything.
+        if( count($new_lesson_meta) > 0 ){
+            foreach ($lesson_meta as $key => $meta ){
+                $lesson_meta[$key] = (isset($new_lesson_meta[$key])) ? $new_lesson_meta[$key] : $lesson_meta[$key];
+            }
+        }
+
+
+        return $lesson_meta;
     }
 
     private function create_sfwd_course()
