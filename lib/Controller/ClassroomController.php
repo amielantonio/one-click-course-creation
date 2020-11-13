@@ -90,20 +90,32 @@ class ClassroomController extends CoreController
 //
 
 
-                    $new_lesson_meta = [
-                        "sfwd-lessons_visible_after_specific_date" => Carbon::createFromFormat('d M Y, g:i a', $dates[0])->format('Y-m-d g:i a')
-                    ];
+//            $lessonDate = $dates[$i] <> "";
+
+//                    $new_lesson_meta = [
+//                        "sfwd-lessons_visible_after_specific_date" => Carbon::createFromFormat('d M Y, g:i a', $dates[3])->format('Y-m-d g:i a')
+//                    ];
 
 //                    echo Carbon::createFromFormat('d M Y, g:i a', $dates[0])->format('Y-m-d g:i a') . "<br />";
 
                     $dollyLesson = [];
 //                    add_post_meta($lesson_id, '_sfwd-lessons', $this->create_sfwd_lesson($lesson_id, $dollyLesson, $new_lesson_meta));
 
-        foreach($lessonIds as $lesson_id) {
-            echo $lesson_id;
-            var_dump($this->create_sfwd_lesson($lesson_id, $dollyLesson, $new_lesson_meta));
+//        echo "test";
+//        var_dump($lessonIds);
+//
+//        echo $dates[3];
+//        echo Carbon::now()->format('d F Y, g:i a');
 
-        }
+        echo Carbon::createFromFormat('d F, Y g:i a', $dates[4])->format('Y-m-d g:i a');
+//        echo var_dump(Carbon::createFromFormat('d M Y, g:i a', $dates[3]));
+
+//
+//        foreach($lessonIds as $lesson_id) {
+//            echo $lesson_id;
+//            var_dump($this->create_sfwd_lesson($lesson_id, $dollyLesson, $new_lesson_meta));
+//
+//        }
 
 //
 //                    echo "{$lessonName[$i]} lessons created<br />";
