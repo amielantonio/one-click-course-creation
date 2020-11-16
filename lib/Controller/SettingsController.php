@@ -24,6 +24,7 @@ class SettingsController extends CoreController{
      */
     public function index()
     {
+
         $course = new Posts;
 
         $courses = $course->select(['ID, post_title'])->where('post_type', 'sfwd-courses')->results();

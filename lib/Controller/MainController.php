@@ -26,11 +26,41 @@ class MainController extends CoreController{
      */
     public function index()
     {
+        global $wpdb;
+      
+        $args = array(
+            'posts_per_page'=> -1,
+            'post_type' => 'sfwd-courses',
+            'meta_query' => array(
+                array(
+                    'key'     => 'created-from-one-click',
+                    'value'   => true,
+                    'compare' => '='
+                )
+            )
+        );
+        $posts = get_posts( $args );
+        
+        foreach( $posts as $post ) : ;
+            $courseSelected = get_post($post->ID);
+            $courseContent[$courseSelected->ID]['course_name'] = $courseSelected->post_title;
+            $courseContent[$courseSelected->ID]['author'] = get_user_by('id', $courseSelected->post_author)->data->display_name;
+            $courseContent[$courseSelected->ID]['date_created'] = date("F j, Y, g:i a", strtotime($courseSelected->post_date));
+            
+            $tag_ids = implode(', ',get_post_meta($post->ID, '_is4wp_access_tags'));
+            $sql = "SELECT id FROM `memberium_tags` WHERE id IN($tag_ids)";
+            $courseContent[$courseSelected->ID]['tag_info'] = $wpdb->get_results($sql, ARRAY_A);
+            wp_reset_postdata(); 
+        endforeach;
 
+        
+       
 
+       
 
-
-        return (new View('dashboard/dashboard'))->render();
+        return (new View('dashboard/dashboard'))
+                ->with('courseContent', $courseContent )
+                ->render();
     }
 
     /**
@@ -54,6 +84,7 @@ class MainController extends CoreController{
 
         $getOptions = get_option('the-course-content');
         $courseContent = [];
+
 
         //Get course content data
         if(!empty($getOptions)) {

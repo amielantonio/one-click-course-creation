@@ -692,3 +692,9 @@ table.oc-table-striped {
 .oc-table.dataTable {
   padding-top: 30px !important;
   padding-bottom: 30px !important; }
+
+
+  /* options course content */
+  p#options > a{
+    text-decoration: none !important;
+    }
