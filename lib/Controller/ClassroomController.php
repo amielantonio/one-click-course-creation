@@ -43,82 +43,85 @@ class ClassroomController extends CoreController
         $lessonIds = $request->input('lesson-id');
 
         //Get Dolly
-//        $dolly = new Posts;
-//        $dolly->find($request->input('course-content'));
-//
-//        //Cloning process for the course
-//        $course = new Posts;
-//        $course->post_title = $request->input('course-title');
-//        $course->post_author = get_current_user_id();
-//        $course->post_content = $dolly->post_content;
-//        $course->post_excerpt = $dolly->post_excerpt;
-//        $course->post_status = 'publish';
-//        $course->post_type = $dolly->post_type;
-//
-//        //Save to database
-//
-//        if ($course_id = wp_insert_post($course->get_columns())) {
-//            echo "{$request->input('course-title')} course created<br />";
-//
-//            // Post meta for the course
-//            $this->save_course_meta($course_id, $request, $dolly);
-//
-//            // Once the main course is saved, process the lesson
-//            for ($i = 0; $i < count($lessonName); $i++) {
-//                // Save the lessons to swfd-lesson post type
-//                $lesson = new Posts;
-//                $dollyLesson = new Posts;
-//                $dollyLesson->find($lessonID[$i]);
-//
-//                $lesson->post_title = $lessonName[$i];
-//                $lesson->post_author = get_current_user_id();
-//                $lesson->post_content = $dollyLesson->post_content;
-//                $lesson->post_excerpt = $dollyLesson->post_excerpt;
-//                $lesson->post_status = "publish";
-//                $lesson->post_type = $dollyLesson->post_type;
-//
-//                //Save Lesson to database
-//                if ($arrLessons[] = $lesson_id = wp_insert_post($lesson->get_columns())) {
-//                    //Post meta
-//
-//                    //Create ld_course_steps meta
-//                    $this->save_lesson_meta($lesson_id, $course_id, $request, $dollyLesson);
-//
-//
-//                    $lessonDate = $dates[$i] <> "" ? Carbon::createFromFormat('d F, Y g:i a', $dates[$i])->format('Y-m-d g:i a'): "";
-//
-//
-//                    $new_lesson_meta = [
-//                        "sfwd-lessons_visible_after_specific_date" => $lessonDate
-//                    ];
-//
-//                    $dollyLesson = [];
-//                    add_post_meta($lesson_id, '_sfwd-lessons', $this->create_sfwd_lesson($lesson_id, $dollyLesson, $new_lesson_meta));
-//
-//                    echo "{$lessonName[$i]} lessons created<br />";
-//
-//                    add_post_meta($lesson_id, 'ld_course_steps', $this->create_ld_course_steps($arrLessons));
-//                } else {
-//                    echo "{$lessonName[$i]} was not created";
-//                }
-//            }
-//
-//            //Create Course Steps post meta
-//            add_post_meta($course_id, 'ld_course_steps', $this->create_ld_course_steps($arrLessons));
-//
-//            //Save the relationship as post meta
-//            add_post_meta($course_id, 'created-from-one-click', true);
-//
-//        }
+        $dolly = new Posts;
+        $dolly->find($request->input('course-content'));
 
-        foreach($lessonIds as $lessonId) {
+        //Cloning process for the course
+        $course = new Posts;
+        $course->post_title = $request->input('course-title');
+        $course->post_author = get_current_user_id();
+        $course->post_content = $dolly->post_content;
+        $course->post_excerpt = $dolly->post_excerpt;
+        $course->post_status = 'publish';
+        $course->post_type = $dolly->post_type;
 
-            $dollyLesson = [];
-            $new_lesson_meta = [];
+        //Save to database
 
-            var_dump($this->create_sfwd_lesson($lessonId, $dollyLesson, $new_lesson_meta));
+        if ($course_id = wp_insert_post($course->get_columns())) {
+            echo "{$request->input('course-title')} course created<br />";
+
+            // Post meta for the course
+            $this->save_course_meta($course_id, $request, $dolly);
+
+            // Once the main course is saved, process the lesson
+            for ($i = 0; $i < count($lessonNames); $i++) {
+                // Save the lessons to swfd-lesson post type
+                $lesson = new Posts;
+                $dollyLesson = new Posts;
+                $dollyLesson->find($lessonIds[$i]);
+
+                $lesson->post_title = $lessonNames[$i];
+                $lesson->post_author = get_current_user_id();
+                $lesson->post_content = $dollyLesson->post_content;
+                $lesson->post_excerpt = $dollyLesson->post_excerpt;
+                $lesson->post_status = "publish";
+                $lesson->post_type = $dollyLesson->post_type;
+
+                //Save Lesson to database
+                if ($arrLessons[] = $lesson_id = wp_insert_post($lesson->get_columns())) {
+                    //Post meta
+
+                    //Create ld_course_steps meta
+                    $this->save_lesson_meta($lesson_id, $course_id, $request, $dollyLesson);
+
+
+                    $lessonDate = $dates[$i] <> "" ? Carbon::createFromFormat('d F, Y g:i a', $dates[$i])->format('Y-m-d g:i a'): "";
+
+
+                    $new_lesson_meta = [
+                        "sfwd-lessons_visible_after_specific_date" => $lessonDate
+                    ];
+
+                    $dollyLesson = [];
+                    add_post_meta($lesson_id, '_sfwd-lessons', $this->create_sfwd_lesson($lesson_id, $dollyLesson, $new_lesson_meta));
+
+                    echo "{$lessonNames[$i]} lessons created<br />";
+
+                    add_post_meta($lesson_id, 'ld_course_steps', $this->create_ld_course_steps($arrLessons));
+                } else {
+                    echo "{$lessonNames[$i]} was not created";
+                }
+            }
+
+            //Create Course Steps post meta
+            add_post_meta($course_id, 'ld_course_steps', $this->create_ld_course_steps($arrLessons));
+
+            //Save the relationship as post meta
+            add_post_meta($course_id, 'created-from-one-click', true);
 
         }
+
+
+        //For bug testing only
+//        foreach($lessonIds as $lessonId) {
+//
+//            $dollyLesson = [];
+//            $new_lesson_meta = [];
+//
+//            var_dump($this->create_sfwd_lesson($lessonId, $dollyLesson, $new_lesson_meta));
+//
+//        }
+        //Testing
 
 
 
@@ -217,7 +220,7 @@ class ClassroomController extends CoreController
             "_fl_builder_enabled",
             "fw_options",
             "wdm_video_thumb_url",
-//            "_sfwd-courses",
+//            "_sfwd-courses", // created via create_sfwd_courses()
             "_iswp_custom_code",
             "learndash_certificate_options",
         ];
@@ -241,15 +244,16 @@ class ClassroomController extends CoreController
      * Create the Sfwd Lessons that is required by the Learndash
      *
      * @param $lesson_id
-     * @param $dollyLessonMeta
+     * @param $dollyLesson
      * @param array $new_lesson_meta
      * @return array
      */
-    private function create_sfwd_lesson($lesson_id, $dollyLessonMeta, $new_lesson_meta = [])
+    private function create_sfwd_lesson($lesson_id, $dollyLesson, $new_lesson_meta = [])
     {
         //Get Dolly Lesson Meta for SFWD lessons
-        $dollyLessonMeta = $this->duplicate_lesson_meta($lesson_id, $dollyLessonMeta)['_sfwd-lessons'];
+        $dollyLessonMeta = get_post_meta(  $dollyLesson->ID, '_sfwd-lessons')[0];
 
+        //Instantiate default value of the SFWD Lessons Meta
         $lesson_meta = [
             'sfwd-lessons_lesson_materials' => "",
             'sfwd-lessons_forced_lesson_time' => "",
@@ -268,26 +272,15 @@ class ClassroomController extends CoreController
 
         // Combine results for parent lesson sfwd-lessons with the default values of the sfwd-lessons,
         // check whether there is a result for the parent ID else get the default one instead.
-
         if( !empty($dollyLessonMeta)) {
             foreach ($lesson_meta as $key => $meta) {
                 $lesson_meta[$key] = (isset($dollyLessonMeta[$key])) ? $dollyLessonMeta[$key] : $lesson_meta[$key];
             }
-
             //Get other meta keys that are not in the default, then merge it with the current lesson meta.
             $getDiff = array_diff($lesson_meta, $dollyLessonMeta);
 
             $lesson_meta = array_merge($lesson_meta, $getDiff);
         }
-
-
-
-        echo "<br /> lesson meta";
-        echo "<br />";
-
-        var_dump($lesson_meta);
-        echo "<br />";
-        echo "<br />";
 
         // Combine result of the new lesson meta with values to the lesson meta then return everything.
         if (count($new_lesson_meta) > 0) {
@@ -296,9 +289,6 @@ class ClassroomController extends CoreController
                 $lesson_meta[$key] = (isset($new_lesson_meta[$key])) ? $new_lesson_meta[$key] : $lesson_meta[$key];
             }
         }
-
-        echo "Created sfwd-lesson {$lesson_id}";
-
 
         return $lesson_meta;
     }
@@ -318,7 +308,7 @@ class ClassroomController extends CoreController
     private function duplicate_lesson_meta($lesson_id, $dollyLesson)
     {
         $lessons_meta = [
-//            '_sfwd-lessons',
+//            '_sfwd-lessons', // created via create_sfwd_lessons()
             '_iswp_custom_code',
             'fw_options',
             '_fl_builder_draft',
