@@ -16,6 +16,10 @@
             <div class="cohort-step cohort-step4" id="cohort-step4">
                 <?php include_once "step4.view.php" ?>
             </div>
+
+        <div class="cohort-step cohort-step5" id="cohort-step5">
+            <?php include_once "step5.view.php" ?>
+        </div>
     </div>
 
     <div class="cohort-buttons oc-button-group align-center">

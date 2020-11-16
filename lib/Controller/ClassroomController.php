@@ -24,7 +24,6 @@ class ClassroomController extends CoreController
     {
 
 
-
         return (new View('steps/steps'))->render();
     }
 
@@ -37,16 +36,13 @@ class ClassroomController extends CoreController
      */
     public function store(Request $request)
     {
-//        $arrLessons = [];
+        $arrLessons = [];
 //
         $dates = $request->input('topic-date');
-//        $lessonNames = $request->input('lesson-name');
+        $lessonNames = $request->input('lesson-name');
         $lessonIds = $request->input('lesson-id');
-//
-//        $lessonName = $request->input('lesson-name');
-//        $lessonID = $request->input('lesson-id');
-//
-//        //Get Dolly
+
+        //Get Dolly
 //        $dolly = new Posts;
 //        $dolly->find($request->input('course-content'));
 //
@@ -82,41 +78,22 @@ class ClassroomController extends CoreController
 //                $lesson->post_type = $dollyLesson->post_type;
 //
 //                //Save Lesson to database
-//                if ( $arrLessons[] = $lesson_id = wp_insert_post($lesson->get_columns()) ) {
+//                if ($arrLessons[] = $lesson_id = wp_insert_post($lesson->get_columns())) {
 //                    //Post meta
 //
 //                    //Create ld_course_steps meta
 //                    $this->save_lesson_meta($lesson_id, $course_id, $request, $dollyLesson);
 //
-
-
-//            $lessonDate = $dates[$i] <> "";
-
+//
+//                    $lessonDate = $dates[$i] <> "" ? Carbon::createFromFormat('d F, Y g:i a', $dates[$i])->format('Y-m-d g:i a'): "";
+//
+//
 //                    $new_lesson_meta = [
-//                        "sfwd-lessons_visible_after_specific_date" => Carbon::createFromFormat('d M Y, g:i a', $dates[3])->format('Y-m-d g:i a')
+//                        "sfwd-lessons_visible_after_specific_date" => $lessonDate
 //                    ];
-
-//                    echo Carbon::createFromFormat('d M Y, g:i a', $dates[0])->format('Y-m-d g:i a') . "<br />";
-
-                    $dollyLesson = [];
+//
+//                    $dollyLesson = [];
 //                    add_post_meta($lesson_id, '_sfwd-lessons', $this->create_sfwd_lesson($lesson_id, $dollyLesson, $new_lesson_meta));
-
-//        echo "test";
-//        var_dump($lessonIds);
-//
-//        echo $dates[3];
-//        echo Carbon::now()->format('d F Y, g:i a');
-
-        echo Carbon::createFromFormat('d F, Y g:i a', $dates[4])->format('Y-m-d g:i a');
-//        echo var_dump(Carbon::createFromFormat('d M Y, g:i a', $dates[3]));
-
-//
-//        foreach($lessonIds as $lesson_id) {
-//            echo $lesson_id;
-//            var_dump($this->create_sfwd_lesson($lesson_id, $dollyLesson, $new_lesson_meta));
-//
-//        }
-
 //
 //                    echo "{$lessonName[$i]} lessons created<br />";
 //
@@ -133,7 +110,18 @@ class ClassroomController extends CoreController
 //            add_post_meta($course_id, 'created-from-one-click', true);
 //
 //        }
-//
+
+        foreach($lessonIds as $lessonId) {
+
+            $dollyLesson = [];
+            $new_lesson_meta = [];
+
+            var_dump($this->create_sfwd_lesson($lessonId, $dollyLesson, $new_lesson_meta));
+
+        }
+
+
+
 //        _redirect('https://coursesstaging3.writerscentre.com.au/wp-admin/admin.php?page=one-click-classroom-setup', []);
 
     }
@@ -155,7 +143,7 @@ class ClassroomController extends CoreController
         add_post_meta($course_id, 'email_daily_comment_digest', $request->input('email_daily_comment_digest'));
         add_post_meta($course_id, 'cc_recipients', $request->input('cc_recipients'));
         add_post_meta($course_id, 'awc_private_comments', $private_commenting);
-        add_post_meta($course_id, 'collapse_replies_for_course',  $collapse_replies );
+        add_post_meta($course_id, 'collapse_replies_for_course', $collapse_replies);
         $this->duplicate_course_meta($course_id, $dolly);
     }
 
@@ -257,7 +245,7 @@ class ClassroomController extends CoreController
      * @param array $new_lesson_meta
      * @return array
      */
-    private function create_sfwd_lesson( $lesson_id, $dollyLessonMeta, $new_lesson_meta = [] )
+    private function create_sfwd_lesson($lesson_id, $dollyLessonMeta, $new_lesson_meta = [])
     {
         //Get Dolly Lesson Meta for SFWD lessons
         $dollyLessonMeta = $this->duplicate_lesson_meta($lesson_id, $dollyLessonMeta)['_sfwd-lessons'];
@@ -280,19 +268,31 @@ class ClassroomController extends CoreController
 
         // Combine results for parent lesson sfwd-lessons with the default values of the sfwd-lessons,
         // check whether there is a result for the parent ID else get the default one instead.
-        foreach( $lesson_meta as $key => $meta ){
-            $lesson_meta[$key] = (isset($dollyLessonMeta[$key])) ? $dollyLessonMeta[$key] : $lesson_meta[$key];
+
+        if( !empty($dollyLessonMeta)) {
+            foreach ($lesson_meta as $key => $meta) {
+                $lesson_meta[$key] = (isset($dollyLessonMeta[$key])) ? $dollyLessonMeta[$key] : $lesson_meta[$key];
+            }
+
+            //Get other meta keys that are not in the default, then merge it with the current lesson meta.
+            $getDiff = array_diff($lesson_meta, $dollyLessonMeta);
+
+            $lesson_meta = array_merge($lesson_meta, $getDiff);
         }
 
 
-        //Get other meta keys that are not in the default, then merge it with the current lesson meta.
-        $getDiff = array_diff($lesson_meta, $dollyLessonMeta);
 
-        $lesson_meta = array_merge($lesson_meta, $getDiff);
+        echo "<br /> lesson meta";
+        echo "<br />";
+
+        var_dump($lesson_meta);
+        echo "<br />";
+        echo "<br />";
 
         // Combine result of the new lesson meta with values to the lesson meta then return everything.
-        if( count($new_lesson_meta) > 0 ){
-            foreach ($lesson_meta as $key => $meta ){
+        if (count($new_lesson_meta) > 0) {
+            echo "test enter new lesson";
+            foreach ($lesson_meta as $key => $meta) {
                 $lesson_meta[$key] = (isset($new_lesson_meta[$key])) ? $new_lesson_meta[$key] : $lesson_meta[$key];
             }
         }
