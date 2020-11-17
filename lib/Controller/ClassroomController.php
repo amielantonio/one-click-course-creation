@@ -37,7 +37,7 @@ class ClassroomController extends CoreController
     public function store(Request $request)
     {
         $arrLessons = [];
-//
+
         $dates = $request->input('topic-date');
         $lessonNames = $request->input('lesson-name');
         $lessonIds = $request->input('lesson-id');
@@ -70,6 +70,7 @@ class ClassroomController extends CoreController
                 $dollyLesson = new Posts;
                 $dollyLesson->find($lessonIds[$i]);
 
+                //Populate Lesson Model with the info needed to insert the lesson in WP_Post
                 $lesson->post_title = $lessonNames[$i];
                 $lesson->post_author = get_current_user_id();
                 $lesson->post_content = $dollyLesson->post_content;
@@ -84,22 +85,21 @@ class ClassroomController extends CoreController
                     //Create ld_course_steps meta
                     $this->save_lesson_meta($lesson_id, $course_id, $request, $dollyLesson);
 
-
+                    //Check if there is a date available for the current array node.
                     $lessonDate = $dates[$i] <> "" ? Carbon::createFromFormat('d F, Y g:i a', $dates[$i])->format('Y-m-d g:i a'): "";
 
-
+                    //Add new leson meta
                     $new_lesson_meta = [
                         "sfwd-lessons_visible_after_specific_date" => $lessonDate
                     ];
 
-                    $dollyLesson = [];
                     add_post_meta($lesson_id, '_sfwd-lessons', $this->create_sfwd_lesson($lesson_id, $dollyLesson, $new_lesson_meta));
 
                     echo "{$lessonNames[$i]} lessons created<br />";
 
                     add_post_meta($lesson_id, 'ld_course_steps', $this->create_ld_course_steps($arrLessons));
                 } else {
-                    echo "{$lessonNames[$i]} was not created";
+                    echo "{$lessonNames[$i]} was not created<br />";
                 }
             }
 
