@@ -41,7 +41,7 @@ class MainController extends CoreController{
         );
         $posts = get_posts( $args );
         
-        foreach( $posts as $post ) : ;
+        foreach( $posts as $post ) : 
             $courseSelected = get_post($post->ID);
             $courseContent[$courseSelected->ID]['course_name'] = $courseSelected->post_title;
             $courseContent[$courseSelected->ID]['author'] = get_user_by('id', $courseSelected->post_author)->data->display_name;
@@ -54,10 +54,6 @@ class MainController extends CoreController{
         endforeach;
 
         
-       
-
-       
-
         return (new View('dashboard/dashboard'))
                 ->with('courseContent', $courseContent )
                 ->render();
@@ -158,6 +154,45 @@ class MainController extends CoreController{
 
     }
 
+    
+    /**
+     * View Classroom
+     *
+     * @param Request $request
+     * @throws \Exception
+     */
+    public function classroom_update_page(Request $request){
+        //$id = $request->input('post_id');
+
+        //return (new View('steps/updateCourse.view.php'));
+    }
+
+    /**
+     * Update Classroom
+     *
+     * @param Request $request
+     * @throws \Exception
+     */
+    public function update(Request $request){
+        
+        
+    }
+
+    /**
+     * Delete Classroom
+     *
+     * @param Request $request
+     * @throws \Exception
+     */
+    public function delete(Request $request){
+        $course = new Posts;
+        $id = $request->input('id');
+       
+        // $data = $course->delete($id);
+        echo json_encode($data);
+        die();
+        
+    }
 
     public function test(Request $request)
     {
