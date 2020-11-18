@@ -16,6 +16,7 @@ trait CourseMeta
     function duplicate_course_meta($course_id, $dollyCourse)
     {
         $courses_meta = [
+            "_sfwd-courses",
             "_fl_builder_draft",
             "_fl_builder_draft_settings",
             "_fl_builder_data",
