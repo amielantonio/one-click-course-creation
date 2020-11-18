@@ -82,7 +82,6 @@ class MainController extends CoreController{
         $getOptions = get_option('the-course-content');
         $courseContent = [];
 
-
         //Get course content data
         if(!empty($getOptions)) {
             foreach($getOptions as $getOption) {
@@ -134,12 +133,13 @@ class MainController extends CoreController{
 
             $memberships = $memberium['memberships'];
         }
+       
 
         // Online Tutor
         $onlineTutor =  get_users([
                         'role__in' => [ 'Administrator', 'group_leader'],
                         'fields'   => ['ID','user_email','display_name'],
-                        'orderby'    => 'display_name'
+                        'orderby'  => 'display_name'
                        ]);
 
         
@@ -149,11 +149,13 @@ class MainController extends CoreController{
         // FOR EDIT
         $course_info = [];
         if(isset($_GET['p_id']) && !empty($_GET['p_id'])){
-            $sql = "SELECT ID, post_title FROM wp_posts WHERE ID = {$_GET['p_id']} LIMIT 1;";
+            $sql = "SELECT * FROM wp_posts WHERE ID = {$_GET['p_id']} LIMIT 1;";
             $classroom = $wpdb->get_results($sql);
            
             if(count($classroom) > 0){
                 foreach($classroom as $post){
+                   
+                    $course_info[$post->ID]['post_author'] = $post->post_author;
                     $course_info[$post->ID]['course_name'] = $post->post_title;
                     $lessons = learndash_get_course_lessons_list($post->ID);
         
@@ -176,8 +178,6 @@ class MainController extends CoreController{
                 }
             }
         }
-
-        
 
 
         return (new View('steps/steps'))

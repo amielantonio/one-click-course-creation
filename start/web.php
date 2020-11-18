@@ -20,6 +20,7 @@ Router::get('classroom_update', 'MainController@classroom_update_page');
 
 // Delete 
 Router::post('classroom-delete', 'MainController@delete' );
+Router::get('classroom-view', 'ClassroomController@view' );
 
 
 //

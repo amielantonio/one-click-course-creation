@@ -103,7 +103,7 @@ class ClassroomController extends CoreController
 ​
         }
 ​
-        _redirect('https://coursesstaging3.writerscentre.com.au/wp-admin/admin.php?page=one-click-classroom-setup', []);
+        //_redirect('https://coursesstaging3.writerscentre.com.au/wp-admin/admin.php?page=one-click-classroom-setup', []);
 ​
     }
 ​
