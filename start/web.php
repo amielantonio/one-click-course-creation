@@ -16,7 +16,7 @@ Router::addMenu('One Click Classroom Setup', 'MainController@blank' );
 Router::addSubMenu('One Click Classroom Setup', 'Courses', 'MainController@index', ['menu_slug' => 'one-click-classroom-setup']);
 Router::addSubMenu('One Click Classroom Setup', 'Course Setup', 'MainController@create');
 
-Router::addChannel('get','classroom-update-page', 'MainController@classroom_update_page');
+Router::get('classroom_update', 'MainController@classroom_update_page');
 
 // Delete 
 Router::post('classroom-delete', 'MainController@delete' );

@@ -19,7 +19,15 @@
 
 <div class="oc-form-group">
     <label>Course Title</label>
-    <input type="text" class="oc-form-control" name="course-title" id="course-title" placeholder="Add New Course Title">
+    <?php 
+       if(!empty($course_info)){
+            $ct = "value='{$course_info[$_GET['p_id']]['course_name']}'";
+        } else {
+            $ct = "";
+        }
+    ?>
+    <input type="text" class="oc-form-control" name="course-title" id="course-title" <?= $ct; ?>  placeholder="Add New Course Title">
+    
 </div>
 
 <div class="oc-form-group">

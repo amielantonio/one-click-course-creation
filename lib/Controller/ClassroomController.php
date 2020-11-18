@@ -38,7 +38,7 @@ class ClassroomController extends CoreController
     public function store(Request $request)
     {
 ​
-​
+
         $arrLessons = [];
 ​
         $lessonName = $request->input('lesson-name');
@@ -291,6 +291,7 @@ class ClassroomController extends CoreController
 ​
         return $return;
     }
-​
+
     
+​
 }

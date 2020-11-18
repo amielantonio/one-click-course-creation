@@ -40,7 +40,7 @@
                         <td style="font-size: 14px;text-transform: capitalize;">
                         <p id="options" style="display:inline !important;">
                         <?php echo "<a style='text-decoration:none;' href='".get_site_url()."/wp-admin/post.php?post=".$key."&action=edit' target='_blank'>"?>view</a>
-                        <?php echo "<a style='text-decoration:none;' href='".get_site_url()."/wp-admin/?page=course-setup&route=classroom-update-page&post_id=".$key."' target='_blank'>"?>edit</a>
+                        <?php echo "<a style='text-decoration:none;' href='admin.php?page=course-setup&p_id=".$key."' target='_blank'>"?>edit</a>
                             <a style="text-decoration:none;" href="#" data-id="<?php echo $key;?>" class="delete_one_click_data">delete</a>
                         <p>
                         </td>
@@ -83,7 +83,7 @@
 
   $(document).on('click','.delete_one_click_data',function(){
 
-    var ajaxurl = "admin.php?page=course-setup&route=classroom-delete";
+    var ajaxurl = '<?php echo _route('classroom-delete'); ?>';
     var me = $(this);
     var id = me.attr('data-id');
     var confirmBox = confirm('Are you sure you want to delete this post? This action cannot be undone.');
