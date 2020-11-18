@@ -41,7 +41,24 @@ trait CourseMeta
 
     function create_sfwd_course()
     {
-
+        $course_meta = [
+            "sfwd-courses_ld_course_category" => [],
+            "sfwd-courses_ld_course_tag" => [],
+            "sfwd-courses_course_materials" => "",
+            "sfwd-courses_course_price_type" => "free",
+            "sfwd-courses_custom_button_label" => "",
+            "sfwd-courses_custom_button_url" => "",
+            "sfwd-courses_course_price" => "",
+            "sfwd-courses_course_prerequisite_enabled" => "off",
+            "sfwd-courses_course_prerequisite" => [],
+            "sfwd-courses_course_prerequuisite_compare" => "ANY",
+            "sfwd-courses_course_points_enabled" => "",
+            "sfwd-courses_course_points" => 0,
+            "sfwd-courses_course_points_access" => 0,
+            "sfwd-courses_course_disable_lesson_progression" => "on",
+            "sfwd-courses_expire_access" => "",
+            "sfwd-courses_expire_access_days" => "",
+        ];
     }
 
     /**

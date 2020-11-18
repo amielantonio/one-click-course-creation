@@ -160,50 +160,50 @@ function dripDatePicker(currentDate = null, dateIndex, dateData, pickerType = nu
 
 
     //Loop in the date indexes to add the selection
-    // for( var _x = dateIndex; _x < $_dripdates.length; _x++ ) {
+    for( var _x = dateIndex; _x < $_dripdates.length; _x++ ) {
+
+      if(! inArraySubstr($('#module-title-' + _x).val(), $_keywordsMatch) ) {
+
+        startDate.add(dayInterval, 'day');
+
+        $('#start-' + _x).datepicker().data('datepicker').selectDate(startDate.toDate());
+      }
+
+        console.log('#start-' + _x);
+
+    }
+
+    // var prevValue = "";
+    // var initialDate = "";
     //
-    //   if(! inArraySubstr($('#module-title-' + _x).val(), $_keywordsMatch) ) {
+    // $_dripdates.forEach(function (value, index) {
     //
-    //     startDate.add(dayInterval, 'day');
+    //     if (prevValue == "" && value.date != "") {
+    //         initialDate = value.date;
+    //     }
     //
-    //     $('#start-' + _x).datepicker().data('datepicker').selectDate(startDate.toDate());
-    //   }
+    //     if (initialDate != "" && value.has_passed == false) {
     //
-    //     console.log('#start-' + _x);
+    //         $_dripdates[index].has_passed = true;
     //
-    // }
-
-    var prevValue = "";
-    var initialDate = "";
-
-    $_dripdates.forEach(function (value, index) {
-
-        if (prevValue == "" && value.date != "") {
-            initialDate = value.date;
-        }
-
-        if (initialDate != "" && value.has_passed == false) {
-
-            $_dripdates[index].has_passed = true;
-
-            startDate = moment(initialDate, 'DD MMMM, YYYY hh:mm a');
-
-            startDate.add(dayInterval, 'day');
-
-            $('#start-' + index).datepicker().data('datepicker').selectDate(startDate.toDate());
-
-
-        }
-
-        initialDate = "";
-
-        prevValue = value.date;
-
-
-        console.log("prev: " + prevValue);
-        console.log("init: " + initialDate);
-
-    });
+    //         startDate = moment(initialDate, 'DD MMMM, YYYY hh:mm a');
+    //
+    //         startDate.add(dayInterval, 'day');
+    //
+    //         $('#start-' + index).datepicker().data('datepicker').selectDate(startDate.toDate());
+    //
+    //
+    //     }
+    //
+    //     initialDate = "";
+    //
+    //     prevValue = value.date;
+    //
+    //
+    //     console.log("prev: " + prevValue);
+    //     console.log("init: " + initialDate);
+    //
+    // });
 }
 
 /**

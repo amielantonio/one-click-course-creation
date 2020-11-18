@@ -26,6 +26,7 @@ class ClassroomController extends CoreController
 
     public function view(Posts $posts)
     {
+        var_dump($posts);
         return (new View('steps/steps'))->render();
     }
 
@@ -116,34 +117,7 @@ class ClassroomController extends CoreController
 
         }
 
-
-        //For bug testing only
-//        foreach($lessonIds as $lessonId) {
-//
-//            $dollyLesson = [];
-//            $new_lesson_meta = [];
-//
-//            var_dump($this->create_sfwd_lesson($lessonId, $dollyLesson, $new_lesson_meta));
-//
-//        }
-        //Testing
-
-
 //        _redirect('https://coursesstaging3.writerscentre.com.au/wp-admin/admin.php?page=one-click-classroom-setup', []);
 
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 }

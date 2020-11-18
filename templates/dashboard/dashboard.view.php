@@ -7,6 +7,10 @@
             <h3>Classrooms</h3>
         </div>
         <div class="container-body oc-table-stats">
+
+            <!-- model attachment testing-->
+            <a href="<?php echo _channel('classroom-view', ['posts'=>109665])?>">view</a>
+            <!-- model atachment testing end -->
             <table class="oc-table" id="tbl-created-tables">
                 <thead>
                 <tr>
@@ -40,6 +44,7 @@
                         <td style="font-size: 14px;text-transform: capitalize;">
                         <p id="options" style="display:inline !important;">
                         <?php echo "<a style='text-decoration:none;' href='".get_site_url()."/wp-admin/post.php?post=".$key."&action=edit' target='_blank'>"?>view</a>
+
                         <?php echo "<a style='text-decoration:none;' href='".get_site_url()."/wp-admin/?page=course-setup&route=classroom-update-page&post_id=".$key."' target='_blank'>"?>edit</a>
                             <a style="text-decoration:none;" href="#" data-id="<?php echo $key;?>" class="delete_one_click_data">delete</a>
                         <p>

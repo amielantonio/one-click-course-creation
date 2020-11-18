@@ -33,6 +33,25 @@ if (! function_exists('_route')) {
     }
 }
 
+if (! function_exists('_channel')) {
+
+
+    function _channel( $name, $parameters = []) {
+
+        $link = "admin.php?page={$_GET['page']}&route={$name}";
+
+        if( !empty($parameters)) {
+            foreach($parameters as $key => $value) {
+                $link.= "&{$key}=$value";
+            }
+        }
+
+        return $link;
+    }
+
+}
+
+
 if (! function_exists('_redirect')) {
 
     /**
