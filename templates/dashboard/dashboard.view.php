@@ -1,4 +1,7 @@
 <div class="oc-container">
+
+    <h1>One-Click Course</h1>
+
     <div class="oc-collection-container">
         <div class="container-head">
             <h3>Classrooms</h3>
@@ -31,14 +34,14 @@
                         // echo "<pre>";
                         // print_r($value);
                         ?>
-                        <td style="font-size: 14px;text-transform: capitalize;"><?php echo "<a style='text-decoration:none;' href='".get_site_url()."/wp-admin/post.php?post=".$key."&action=edit' target='_blank'>".$value['course_name']."</a>"; ?></td>
-                        <td style="font-size: 14px;text-transform: capitalize;"><?php echo $value['author']?></td>
-                        <td style="font-size: 14px;text-transform: capitalize;"><?php echo $value['post_meta']['awc_active_course'] == '0' ? 'No' : 'Yes'?></td>
-                        <td style="font-size: 14px;text-transform: capitalize;"><?php foreach($value['tag_info'] as $tags){
+                        <td><?php echo "<a style='text-decoration:none;' href='".get_site_url()."/wp-admin/post.php?post=".$key."&action=edit' target='_blank'>".$value['course_name']."</a>"; ?></td>
+                        <td><?php echo $value['author']?></td>
+                        <td><?php echo $value['post_meta']['awc_active_course'] == '0' ? 'No' : 'Yes'?></td>
+                        <td><?php foreach($value['tag_info'] as $tags){
                              echo $tags['id']."<br>";
                         }?></td>
-                        <td style="font-size: 14px;text-transform: capitalize;"><?php echo $value['date_created']?></td>
-                        <td style="font-size: 14px;text-transform: capitalize;">
+                        <td><?php echo $value['date_created']?></td>
+                        <td>
                         <p id="options" style="display:inline !important;">
                         <a style='text-decoration:none;' href='<?php echo _channel('classroom-view', ['posts'=>$key])?>' target='_blank'>view</a>
                         <?php echo "<a style='text-decoration:none;' href='admin.php?page=course-setup&p_id=".$key."' target='_blank'>"?>edit</a>
