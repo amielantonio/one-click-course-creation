@@ -13,11 +13,11 @@ use Carbon\Carbon;
 use WP_Query;
 use AWC\Model\Posts;
 
-
 class ClassroomController extends CoreController
 {
 
-    use CourseMeta, LessonMeta;
+    use LessonMeta, CourseMeta;
+
 
     public function __construct()
     {
@@ -26,12 +26,9 @@ class ClassroomController extends CoreController
 
     public function view(Posts $posts)
     {
-
-
-
+        var_dump($posts);
         return (new View('steps/steps'))->render();
     }
-
 
     /**
      *
@@ -42,11 +39,11 @@ class ClassroomController extends CoreController
     public function store(Request $request)
     {
 
-
         $arrLessons = [];
 
-        $lessonName = $request->input('lesson-name');
-        $lessonID = $request->input('lesson-id');
+        $dates = $request->input('topic-date');
+        $lessonNames = $request->input('lesson-name');
+        $lessonIds = $request->input('lesson-id');
 
 
         //Get Dolly
@@ -71,13 +68,16 @@ class ClassroomController extends CoreController
             $this->save_course_meta($course_id, $request, $dolly);
 
             // Once the main course is saved, process the lesson
-            for ($i = 0; $i < count($lessonName); $i++) {
+            for ($i = 0; $i < count($lessonNames); $i++) {
                 // Save the lessons to swfd-lesson post type
                 $lesson = new Posts;
                 $dollyLesson = new Posts;
-                $dollyLesson->find($lessonID[$i]);
 
-                $lesson->post_title = $lessonName[$i];
+                $dollyLesson->find($lessonIds[$i]);
+
+                //Populate Lesson Model with the info needed to insert the lesson in WP_Post
+                $lesson->post_title = $lessonNames[$i];
+
                 $lesson->post_author = get_current_user_id();
                 $lesson->post_content = $dollyLesson->post_content;
                 $lesson->post_excerpt = $dollyLesson->post_excerpt;
@@ -85,17 +85,27 @@ class ClassroomController extends CoreController
                 $lesson->post_type = $dollyLesson->post_type;
 
                 //Save Lesson to database
-                if ( $arrLessons[] = $lesson_id = wp_insert_post($lesson->get_columns()) ) {
+                if ($arrLessons[] = $lesson_id = wp_insert_post($lesson->get_columns())) {
                     //Post meta
 
                     //Create ld_course_steps meta
                     $this->save_lesson_meta($lesson_id, $course_id, $request, $dollyLesson);
 
-                    echo "{$lessonName[$i]} lessons created<br />";
+                    //Check if there is a date available for the current array node.
+                    $lessonDate = $dates[$i] <> "" ? Carbon::createFromFormat('d F, Y g:i a', $dates[$i])->format('Y-m-d g:i a') : "";
+
+                    //Add new leson meta
+                    $new_lesson_meta = [
+                        "sfwd-lessons_visible_after_specific_date" => $lessonDate
+                    ];
+
+                    add_post_meta($lesson_id, '_sfwd-lessons', $this->create_sfwd_lesson($lesson_id, $dollyLesson, $new_lesson_meta));
+
+                    echo "{$lessonNames[$i]} lessons created<br />";
 
                     add_post_meta($lesson_id, 'ld_course_steps', $this->create_ld_course_steps($arrLessons));
                 } else {
-                    echo "{$lessonName[$i]} was not created";
+                    echo "{$lessonNames[$i]} was not created<br />";
                 }
             }
 
@@ -105,9 +115,11 @@ class ClassroomController extends CoreController
             //Save the relationship as post meta
             add_post_meta($course_id, 'created-from-one-click', true);
 
+        } else {
+            echo "what just happened?";
         }
 
-        //_redirect('https://coursesstaging3.writerscentre.com.au/wp-admin/admin.php?page=one-click-classroom-setup', []);
+//        _redirect('https://coursesstaging3.writerscentre.com.au/wp-admin/admin.php?page=one-click-classroom-setup', []);
 
     }
 }
