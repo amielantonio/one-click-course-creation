@@ -1,6 +1,3 @@
-
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
- 
 <div class="oc-container">
     <div class="oc-collection-container">
         <div class="container-head">
@@ -25,7 +22,7 @@
                 </thead>
 
                 <tbody>
-    
+
                 <?php if(isset($courseContent) && !empty($courseContent) ): ?>
                     <?php foreach($courseContent as $key => $value):?>
                     <tr>
@@ -51,7 +48,7 @@
                     </tr>
                     <?php endforeach;?>
                 <?php endif; ?>
-                
+
                 </tbody>
 
                 <tfoot>
@@ -91,9 +88,9 @@
     var me = $(this);
     var id = me.attr('data-id');
     var confirmBox = confirm('Are you sure you want to delete this post? This action cannot be undone.');
-    
+
     if (confirmBox == true) {
-        let data = { 
+        let data = {
             id: id
         };
         $.post(ajaxurl, data, function (response) {
