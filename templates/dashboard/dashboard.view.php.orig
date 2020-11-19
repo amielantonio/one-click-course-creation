@@ -9,7 +9,7 @@
         <div class="container-body oc-table-stats">
 
             <!-- model attachment testing-->
-            <!-- <a href="<?php echo _channel('classroom-view', ['posts'=>109665])?>">view</a> -->
+            <a href="<?php echo _channel('classroom-view', ['posts'=>109665])?>">view</a>
             <!-- model atachment testing end -->
             <table class="oc-table" id="tbl-created-tables">
                 <thead>
@@ -43,8 +43,13 @@
                         <td style="font-size: 14px;text-transform: capitalize;"><?php echo $value['date_created']?></td>
                         <td style="font-size: 14px;text-transform: capitalize;">
                         <p id="options" style="display:inline !important;">
-                        <a style='text-decoration:none;' href='<?php echo _channel('classroom-view', ['posts'=>$key])?>' target='_blank'>view</a>
+                        <?php echo "<a style='text-decoration:none;' href='".get_site_url()."/wp-admin/post.php?post=".$key."&action=edit' target='_blank'>"?>view</a>
+<<<<<<< HEAD
                         <?php echo "<a style='text-decoration:none;' href='admin.php?page=course-setup&p_id=".$key."' target='_blank'>"?>edit</a>
+=======
+
+                        <?php echo "<a style='text-decoration:none;' href='".get_site_url()."/wp-admin/?page=course-setup&route=classroom-update-page&post_id=".$key."' target='_blank'>"?>edit</a>
+>>>>>>> bba54f94e857f270e94f8fd9b65a7ee2badfa043
                             <a style="text-decoration:none;" href="#" data-id="<?php echo $key;?>" class="delete_one_click_data">delete</a>
                         <p>
                         </td>
