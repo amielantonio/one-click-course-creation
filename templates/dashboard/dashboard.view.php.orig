@@ -1,7 +1,7 @@
+
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+ 
 <div class="oc-container">
-
-    <h1>One-Click Course</h1>
-
     <div class="oc-collection-container">
         <div class="container-head">
             <h3>Classrooms</h3>
@@ -9,7 +9,7 @@
         <div class="container-body oc-table-stats">
 
             <!-- model attachment testing-->
-            <!-- <a href="<?php echo _channel('classroom-view', ['posts'=>109665])?>">view</a> -->
+            <a href="<?php echo _channel('classroom-view', ['posts'=>109665])?>">view</a>
             <!-- model atachment testing end -->
             <table class="oc-table" id="tbl-created-tables">
                 <thead>
@@ -25,7 +25,7 @@
                 </thead>
 
                 <tbody>
-
+    
                 <?php if(isset($courseContent) && !empty($courseContent) ): ?>
                     <?php foreach($courseContent as $key => $value):?>
                     <tr>
@@ -34,24 +34,29 @@
                         // echo "<pre>";
                         // print_r($value);
                         ?>
-                        <td><?php echo "<a style='text-decoration:none;' href='".get_site_url()."/wp-admin/post.php?post=".$key."&action=edit' target='_blank'>".$value['course_name']."</a>"; ?></td>
-                        <td><?php echo $value['author']?></td>
-                        <td><?php echo $value['post_meta']['awc_active_course'] == '0' ? 'No' : 'Yes'?></td>
-                        <td><?php foreach($value['tag_info'] as $tags){
+                        <td style="font-size: 14px;text-transform: capitalize;"><?php echo "<a style='text-decoration:none;' href='".get_site_url()."/wp-admin/post.php?post=".$key."&action=edit' target='_blank'>".$value['course_name']."</a>"; ?></td>
+                        <td style="font-size: 14px;text-transform: capitalize;"><?php echo $value['author']?></td>
+                        <td style="font-size: 14px;text-transform: capitalize;"><?php echo $value['post_meta']['awc_active_course'] == '0' ? 'No' : 'Yes'?></td>
+                        <td style="font-size: 14px;text-transform: capitalize;"><?php foreach($value['tag_info'] as $tags){
                              echo $tags['id']."<br>";
                         }?></td>
-                        <td><?php echo $value['date_created']?></td>
-                        <td>
+                        <td style="font-size: 14px;text-transform: capitalize;"><?php echo $value['date_created']?></td>
+                        <td style="font-size: 14px;text-transform: capitalize;">
                         <p id="options" style="display:inline !important;">
-                        <a style='text-decoration:none;' href='<?php echo _channel('classroom-view', ['posts'=>$key])?>' target='_blank'>view</a>
+                        <?php echo "<a style='text-decoration:none;' href='".get_site_url()."/wp-admin/post.php?post=".$key."&action=edit' target='_blank'>"?>view</a>
+<<<<<<< HEAD
                         <?php echo "<a style='text-decoration:none;' href='admin.php?page=course-setup&p_id=".$key."' target='_blank'>"?>edit</a>
+=======
+
+                        <?php echo "<a style='text-decoration:none;' href='".get_site_url()."/wp-admin/?page=course-setup&route=classroom-update-page&post_id=".$key."' target='_blank'>"?>edit</a>
+>>>>>>> bba54f94e857f270e94f8fd9b65a7ee2badfa043
                             <a style="text-decoration:none;" href="#" data-id="<?php echo $key;?>" class="delete_one_click_data">delete</a>
                         <p>
                         </td>
                     </tr>
                     <?php endforeach;?>
                 <?php endif; ?>
-
+                
                 </tbody>
 
                 <tfoot>
@@ -91,9 +96,9 @@
     var me = $(this);
     var id = me.attr('data-id');
     var confirmBox = confirm('Are you sure you want to delete this post? This action cannot be undone.');
-
+    
     if (confirmBox == true) {
-        let data = {
+        let data = { 
             id: id
         };
         $.post(ajaxurl, data, function (response) {
