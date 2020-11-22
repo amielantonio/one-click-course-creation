@@ -115,6 +115,8 @@ class ClassroomController extends CoreController
             //Save the relationship as post meta
             add_post_meta($course_id, 'created-from-one-click', true);
 
+        } else {
+            echo "what just happened?";
         }
 
 //        _redirect('https://coursesstaging3.writerscentre.com.au/wp-admin/admin.php?page=one-click-classroom-setup', []);

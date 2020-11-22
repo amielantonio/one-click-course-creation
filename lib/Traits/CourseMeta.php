@@ -107,6 +107,10 @@ trait CourseMeta
         $private_commenting = ($request->input('awc_private_comments') <> "") ? "Allow private comments" : "";
         $collapse_replies = ($request->input('collapse_replies_for_course') <> "") ? "Collapse replies for this course" : "";
 
+        $accessTags = 12626;
+        $tags = in_array($accessTags, $request->input('oc-tag-id')) ? $request->input('oc-tag-id') : array_push($request->input('oc-tag-id'), $accessTags);
+
+//        add_post_meta($course_id, '_is4wp_access_tags', implode(', ', $tags));
         add_post_meta($course_id, '_is4wp_access_tags', implode(', ', $request->input('oc-tag-id')));
         add_post_meta($course_id, 'awc_active_course', $request->input('awc_active_course'));
         add_post_meta($course_id, 'email_daily_comment_digest', $request->input('email_daily_comment_digest'));
