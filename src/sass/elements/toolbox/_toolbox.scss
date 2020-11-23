@@ -1,0 +1,42 @@
+.toolbox {
+  display: flex;
+  flex-flow: row;
+  align-items: center;
+  min-height: 25px;
+
+  .tool {
+
+    display: block;
+    padding: 0.25em 0.5em;
+    border-right: 1px solid $gray;
+
+    text-decoration: none;
+
+    &:last-child {
+      border-right: none;
+    }
+
+    &:hover {
+      text-decoration: underline;
+    }
+
+  }
+
+}
+
+.hover-toolbox {
+
+  .toolbox .tool{
+    opacity: 0;
+    visibility: hidden;
+    transition: 0.3s opacity;
+
+    &.show {
+      opacity: 1;
+      visibility: visible;
+    }
+  }
+
+
+
+}

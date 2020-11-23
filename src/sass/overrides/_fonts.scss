@@ -1,142 +1,142 @@
 ._text-right {
-  text-align: right;
+  text-align: right !important;
 }
 
 ._text-center {
-  text-align: center;
+  text-align: center !important;
 }
 
 ._text-justify {
-  text-align: justify;
+  text-align: justify !important;
 }
 
 ._text-left {
-  text-align: left;
+  text-align: left !important;
 }
 
 ._text-blue {
-  color: $blue;
+  color: $blue !important;
 }
 
 ._text-red {
-  color: $red;
+  color: $red !important;
 }
 
 ._text-green {
-  color: $green;
+  color: $green !important;
 }
 
 ._text-orange {
-  color: $orange;
+  color: $orange !important;
 }
 
 ._text-dark {
-  color: #2D2D2D;
+  color: #2D2D2D !important;
 }
 
 ._text-light {
-  color: #FFF5F5;
+  color: #FFF5F5 !important;
 }
 
 ._text-primary {
-  color: $blue;
+  color: $blue !important;
 }
 
 ._text-warning {
-  color: $orange;
+  color: $orange !important;
 }
 
 ._text-danger {
-  color: $red;
+  color: $red !important;
 }
 
 ._text-success {
-  color: $green;
+  color: $green !important;
 }
 
 ._text-muted {
-  color: #666;
+  color: #666 !important;
 }
 
 ._h1 {
-  font-size: 2.5em;
-  font-weight: 700;
+  font-size: 2.5em !important;
+  font-weight: 700 !important;
 }
 
 ._h2 {
-  font-size: 2em;
-  font-weight: 700;
+  font-size: 2em !important;
+  font-weight: 700 !important;
 }
 
 ._h3 {
-  font-size: 1.75em;
-  font-weight: 700;
+  font-size: 1.75em !important;
+  font-weight: 700 !important;
 }
 
 ._h4 {
-  font-size: 1.5em;
-  font-weight: 700;
+  font-size: 1.5em !important;
+  font-weight: 700 !important;
 }
 
 ._h5 {
-  font-size: 1.25em;
-  font-weight: 700;
+  font-size: 1.25em !important;
+  font-weight: 700 !important;
 }
 
 ._h6 {
-  font-size: 1em;
-  font-weight: 700;
+  font-size: 1em !important;
+  font-weight: 700 !important;
 }
 
 ._h1--xl {
-  font-size: 3.25em;
+  font-size: 3.25em !important;
 }
 
 ._text-emphasize {
-  font-weight: 700;
-  font-size: 3.25em;
+  font-weight: 700 !important;
+  font-size: 3.25em !important;
 }
 
 @media only screen and (max-width: 1199px) {
   ._text-emphasize {
-    font-size: 2.5em;
+    font-size: 2.5em !important;
   }
 }
 
 @media only screen and (max-width: 575px) {
   ._text-emphasize {
-    font-size: 2em;
+    font-size: 2em !important;
   }
 }
 
 ._font-light {
-  font-weight: 300;
+  font-weight: 300 !important;
 }
 
 ._font-regular {
-  font-weight: 400;
+  font-weight: 400 !important;
 }
 
 ._font-medium {
-  font-weight: 500;
+  font-weight: 500 !important;
 }
 
 ._font-semibold {
-  font-weight: 600;
+  font-weight: 600 !important;
 }
 
 ._font-bold {
-  font-weight: 700;
+  font-weight: 700 !important;
 }
 
 ._font-extrabold {
-  font-weight: 800;
+  font-weight: 800 !important;
 }
 
 ._font-black {
-  font-weight: 900;
+  font-weight: 900 !important;
 }
 
 ._font-italic {
-  font-style: italic;
+  font-style: italic !important;
 }

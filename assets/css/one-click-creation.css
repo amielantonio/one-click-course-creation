@@ -159,6 +159,29 @@ table.oc-table-striped {
     table.oc-table-striped tbody tr td {
       border: none; }
 
+.toolbox {
+  display: flex;
+  flex-flow: row;
+  align-items: center;
+  min-height: 25px; }
+  .toolbox .tool {
+    display: block;
+    padding: 0.25em 0.5em;
+    border-right: 1px solid #f3f3f3;
+    text-decoration: none; }
+    .toolbox .tool:last-child {
+      border-right: none; }
+    .toolbox .tool:hover {
+      text-decoration: underline; }
+
+.hover-toolbox .toolbox .tool {
+  opacity: 0;
+  visibility: hidden;
+  transition: 0.3s opacity; }
+  .hover-toolbox .toolbox .tool.show {
+    opacity: 1;
+    visibility: visible; }
+
 /* COMPONENTS
  * Rich design UI styles, popups, login interface, etc.
  */
@@ -529,138 +552,151 @@ table.oc-table-striped {
   padding-left: 120px !important; }
 
 ._text-right {
-  text-align: right; }
+  text-align: right !important; }
 
 ._text-center {
-  text-align: center; }
+  text-align: center !important; }
 
 ._text-justify {
-  text-align: justify; }
+  text-align: justify !important; }
 
 ._text-left {
-  text-align: left; }
+  text-align: left !important; }
 
 ._text-blue {
-  color: #00B1CD; }
+  color: #00B1CD !important; }
 
 ._text-red {
-  color: #FE2F4B; }
+  color: #FE2F4B !important; }
 
 ._text-green {
-  color: #7BA33D; }
+  color: #7BA33D !important; }
 
 ._text-orange {
-  color: #FA8317; }
+  color: #FA8317 !important; }
 
 ._text-dark {
-  color: #2D2D2D; }
+  color: #2D2D2D !important; }
 
 ._text-light {
-  color: #FFF5F5; }
+  color: #FFF5F5 !important; }
 
 ._text-primary {
-  color: #00B1CD; }
+  color: #00B1CD !important; }
 
 ._text-warning {
-  color: #FA8317; }
+  color: #FA8317 !important; }
 
 ._text-danger {
-  color: #FE2F4B; }
+  color: #FE2F4B !important; }
 
 ._text-success {
-  color: #7BA33D; }
+  color: #7BA33D !important; }
 
 ._text-muted {
-  color: #666; }
+  color: #666 !important; }
 
 ._h1 {
-  font-size: 2.5em;
-  font-weight: 700; }
+  font-size: 2.5em !important;
+  font-weight: 700 !important; }
 
 ._h2 {
-  font-size: 2em;
-  font-weight: 700; }
+  font-size: 2em !important;
+  font-weight: 700 !important; }
 
 ._h3 {
-  font-size: 1.75em;
-  font-weight: 700; }
+  font-size: 1.75em !important;
+  font-weight: 700 !important; }
 
 ._h4 {
-  font-size: 1.5em;
-  font-weight: 700; }
+  font-size: 1.5em !important;
+  font-weight: 700 !important; }
 
 ._h5 {
-  font-size: 1.25em;
-  font-weight: 700; }
+  font-size: 1.25em !important;
+  font-weight: 700 !important; }
 
 ._h6 {
-  font-size: 1em;
-  font-weight: 700; }
+  font-size: 1em !important;
+  font-weight: 700 !important; }
 
 ._h1--xl {
-  font-size: 3.25em; }
+  font-size: 3.25em !important; }
 
 ._text-emphasize {
-  font-weight: 700;
-  font-size: 3.25em; }
+  font-weight: 700 !important;
+  font-size: 3.25em !important; }
 
 @media only screen and (max-width: 1199px) {
   ._text-emphasize {
-    font-size: 2.5em; } }
+    font-size: 2.5em !important; } }
 
 @media only screen and (max-width: 575px) {
   ._text-emphasize {
-    font-size: 2em; } }
+    font-size: 2em !important; } }
 
 ._font-light {
-  font-weight: 300; }
+  font-weight: 300 !important; }
 
 ._font-regular {
-  font-weight: 400; }
+  font-weight: 400 !important; }
 
 ._font-medium {
-  font-weight: 500; }
+  font-weight: 500 !important; }
 
 ._font-semibold {
-  font-weight: 600; }
+  font-weight: 600 !important; }
 
 ._font-bold {
-  font-weight: 700; }
+  font-weight: 700 !important; }
 
 ._font-extrabold {
-  font-weight: 800; }
+  font-weight: 800 !important; }
 
 ._font-black {
-  font-weight: 900; }
+  font-weight: 900 !important; }
 
 ._font-italic {
-  font-style: italic; }
+  font-style: italic !important; }
 
-.oc-table-stats .dataTables_length label {
-  display: flex;
-  align-items: center; }
-  .oc-table-stats .dataTables_length label select {
-    width: 75px;
-    display: inline-block;
-    margin-left: 10px;
-    margin-right: 10px;
-    height: calc(1.5em + 0.5rem + 2px);
-    padding: 0.25rem 0.5rem;
-    font-size: 0.7875rem;
-    line-height: 1.5;
-    border-radius: 0.2rem; }
+.container-body.oc-table-stats {
+  padding: 0; }
 
-.oc-table-stats .dataTables_filter label {
-  display: flex;
-  align-items: center; }
-  .oc-table-stats .dataTables_filter label input {
-    width: 200px;
-    margin-left: 10px !important;
-    height: calc(1.5em + 0.5rem + 2px);
-    padding: 0.25rem 0.5rem;
-    font-size: 0.7875rem;
-    line-height: 1.5;
-    border-radius: 0.2rem; }
+#tbl-created-tables_wrapper {
+  padding: 10px 0; }
+
+.oc-table-stats .dataTables_length {
+  margin-left: 15px; }
+  .oc-table-stats .dataTables_length label {
+    display: flex;
+    align-items: center; }
+    .oc-table-stats .dataTables_length label select {
+      width: 75px;
+      display: inline-block;
+      margin-left: 10px;
+      margin-right: 10px;
+      height: calc(1.5em + 0.5rem + 2px);
+      padding: 0.25rem 0.5rem;
+      font-size: 0.7875rem;
+      line-height: 1.5;
+      border-radius: 0.2rem; }
+
+.dataTables_info {
+  margin-left: 15px; }
+
+.oc-table-stats .dataTables_filter {
+  margin-right: 15px; }
+  .oc-table-stats .dataTables_filter label {
+    display: flex;
+    align-items: center; }
+    .oc-table-stats .dataTables_filter label input {
+      width: 200px;
+      margin-left: 10px !important;
+      height: calc(1.5em + 0.5rem + 2px);
+      padding: 0.25rem 0.5rem;
+      font-size: 0.7875rem;
+      line-height: 1.5;
+      border-radius: 0.2rem; }
 
 .oc-table-stats table thead th,
 .oc-table-stats table tbody td {
@@ -669,8 +705,20 @@ table.oc-table-striped {
   font-size: 12px;
   border-bottom: 1px solid #e8e9ef !important;
   padding: 10px 18px !important;
-  text-transform: uppercase;
   text-align: left; }
+
+.oc-table-stats table tbody tr:nth-child(odd) {
+  background-color: #f9f9f9; }
+
+.oc-table-stats table tbody td {
+  vertical-align: top; }
+
+.oc-table-stats table tbody td a {
+  text-decoration: none; }
+
+.oc-table-stats table thead th {
+  text-transform: uppercase;
+  border-top: 1px solid #e8e9ef !important; }
 
 .oc-table-stats table tbody tr:last-child td {
   border-bottom: 0 !important; }
@@ -690,5 +738,7 @@ table.oc-table-striped {
   font-size: 14px; }
 
 .oc-table.dataTable {
-  padding-top: 30px !important;
-  padding-bottom: 30px !important; }
+  padding-top: 15px !important;
+  padding-bottom: 15px !important;
+  margin: 0 !important;
+  width: 100% !important; }

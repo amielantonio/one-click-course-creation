@@ -38,14 +38,21 @@ class MainController extends CoreController{
                     'value'   => true,
                     'compare' => '='
                 )
-            )
+            ),
+            'orderby' => 'date_created',
+            'order' => 'DESC'
         );
         $posts = get_posts( $args );
+
+//        var_dump($posts);
         
         foreach( $posts as $post ) : 
             $courseSelected = get_post($post->ID);
             $courseContent[$courseSelected->ID]['course_name'] = $courseSelected->post_title;
-            $courseContent[$courseSelected->ID]['author'] = get_user_by('id', $courseSelected->post_author)->data->display_name;
+            $courseContent[$courseSelected->ID]['author'] = [
+                'id' => $courseSelected->post_author,
+                'name' => get_user_by('id', $courseSelected->post_author)->data->display_name
+            ];
             $courseContent[$courseSelected->ID]['date_created'] = date("F j, Y, g:i a", strtotime($courseSelected->post_date));
             
             $tag_ids = implode(', ',get_post_meta($post->ID, '_is4wp_access_tags'));

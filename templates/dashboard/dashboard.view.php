@@ -8,9 +8,6 @@
         </div>
         <div class="container-body oc-table-stats">
 
-            <!-- model attachment testing-->
-            <!-- <a href="<?php echo _channel('classroom-view', ['posts'=>109665])?>">view</a> -->
-            <!-- model atachment testing end -->
             <table class="oc-table" id="tbl-created-tables">
                 <thead>
                 <tr>
@@ -20,7 +17,6 @@
                     <th>Active Course</th>
                     <th>Tags</th>
                     <th>Date Created</th>
-                    <th>Options</th>
                 </tr>
                 </thead>
 
@@ -30,24 +26,32 @@
                     <?php foreach($courseContent as $key => $value):?>
                     <tr>
                         <td><?php echo $key ?></td>
-                        <?php
-                        // echo "<pre>";
-                        // print_r($value);
-                        ?>
-                        <td><?php echo "<a style='text-decoration:none;' href='".get_site_url()."/wp-admin/post.php?post=".$key."&action=edit' target='_blank'>".$value['course_name']."</a>"; ?></td>
-                        <td><?php echo $value['author']?></td>
-                        <td><?php echo $value['post_meta']['awc_active_course'] == '0' ? 'No' : 'Yes'?></td>
-                        <td><?php foreach($value['tag_info'] as $tags){
-                             echo $tags['id']."<br>";
-                        }?></td>
-                        <td><?php echo $value['date_created']?></td>
-                        <td>
-                        <p id="options" style="display:inline !important;">
-                        <a style='text-decoration:none;' href='<?php echo _channel('classroom-view', ['posts'=>$key])?>' target='_blank'>view</a>
-                        <?php echo "<a style='text-decoration:none;' href='admin.php?page=course-setup&p_id=".$key."' target='_blank'>"?>edit</a>
-                            <a style="text-decoration:none;" href="#" data-id="<?php echo $key;?>" class="delete_one_click_data">delete</a>
-                        <p>
+                        <td class="hover-toolbox">
+                            <a href='<?= get_site_url()."/wp-admin/post.php?post=".$key."&action=edit"?>' target='_blank'><?= $value['course_name'] ?></a>
+                            <div class="toolbox _m-t--30">
+                                <a class="tool" href='<?php echo _channel('classroom-view', ['posts'=>$key])?>' target='_blank'>View Course</a>
+                                <a class="tool" href='<?php echo _channel('classroom-view', ['posts'=>$key])?>' target='_blank'>Edit in Learndash</a>
+                                <a class="tool" href='<?php echo "admin.php?page=course-setup&p_id={$key}" ?>' target='_blank'>Edit in One-click Classroom</a>
+                                <a class="tool delete_one_click_data _text-red" href="#" data-id="<?php echo $key;?>" >Delete</a>
+                            </div>
                         </td>
+                        <td><?php echo $value['author']?></td>
+                        <td class="_text-center">
+                            <?php echo $value['post_meta']['awc_active_course'] == '0'
+                                ? '&#10005;'
+                                : '&#10003;'?>
+                        </td>
+                        <td>
+                            <?php
+                            if(!empty($value['tag_info'])) {
+                                foreach($value['tag_info'] as $tags){
+                                    echo $tags['id']."<br>";
+                                }
+                            } else {
+                                echo "-----";
+                            } ?>
+                        </td>
+                        <td><?php echo $value['date_created']?></td>
                     </tr>
                     <?php endforeach;?>
                 <?php endif; ?>
@@ -62,7 +66,6 @@
                     <th>Active Course</th>
                     <th>Tags</th>
                     <th>Date Created</th>
-                    <th>Options</th>
                 </tr>
                 </tfoot>
             </table>
@@ -80,8 +83,12 @@
             { "width": "5%" },
             { "width": "10%" },
             { "width": "15%" },
-            { "width": "15%" }
-        ]
+        ],
+        "order":[],
+        "columnDefs": [ {
+            "targets": [3,4,5],
+            "orderable": false
+        } ]
     });
   });
 
@@ -102,4 +109,12 @@
         });
     }
   });
+
+  $('tbody tr').hover( function(){
+
+      $(this).find('.toolbox .tool').toggleClass('show');
+
+  })
+
+
 </script>
