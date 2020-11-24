@@ -26,6 +26,7 @@
                     <?php foreach($courseContent as $key => $value):?>
                     <tr>
                         <td><?php echo $key ?></td>
+                        <!--COURSE NAME-->
                         <td class="hover-toolbox">
                             <a href='<?= get_site_url()."/wp-admin/post.php?post=".$key."&action=edit"?>' target='_blank'><?= $value['course_name'] ?></a>
                             <div class="toolbox _m-t--30">
@@ -35,14 +36,17 @@
                                 <a class="tool delete_one_click_data _text-red" href="#" data-id="<?php echo $key;?>" >Delete</a>
                             </div>
                         </td>
+                        <!--AUTHOR NAME-->
                         <td>
                             <a href="<?php echo "admin.php?page=one-click-classroom-setup&author={$value['author']['id']}"?>"><?php echo $value['author']['name']?></a>
                         </td>
+                        <!--ACTIVE COURSE-->
                         <td class="_text-center">
                             <?php echo $value['post_meta']['awc_active_course'] == '0'
                                 ? '&#10005;'
                                 : '&#10003;'?>
                         </td>
+                        <!--MEMBERIUM TAGS-->
                         <td>
                             <?php
                             if(!empty($value['tag_info'])) {
@@ -53,6 +57,7 @@
                                 echo "-----";
                             } ?>
                         </td>
+                        <!--DATE CREATED-->
                         <td><?php echo $value['date_created']?></td>
                     </tr>
                     <?php endforeach;?>
@@ -80,11 +85,11 @@
     $('#tbl-created-tables').DataTable({
         "columns": [
             { "width": "5%" },
-            { "width": "35%" },
-            { "width": "15%" },
+            { "width": "40%" },
+            { "width": "20%" },
             { "width": "5%" },
             { "width": "10%" },
-            { "width": "15%" },
+            { "width": "20%" },
         ],
         "order":[],
         "columnDefs": [ {
@@ -94,6 +99,8 @@
     });
   });
 
+
+  //Delete button on click
   $(document).on('click','.delete_one_click_data',function(){
 
     var ajaxurl = '<?php echo _route('classroom-delete'); ?>';
@@ -112,6 +119,7 @@
     }
   });
 
+  //For the toolbox hover effect
   $('tbody tr').hover( function(){
 
       $(this).find('.toolbox .tool').toggleClass('show');

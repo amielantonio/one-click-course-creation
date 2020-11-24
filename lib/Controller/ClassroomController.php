@@ -45,6 +45,7 @@ class ClassroomController extends CoreController
         $lessonNames = $request->input('lesson-name');
         $lessonIds = $request->input('lesson-id');
 
+        $author = $request->input('online-tutor') <> "" ? $request->input('online-tutor') : get_current_user_id();
 
         //Get Dolly
         $dolly = new Posts;
@@ -53,14 +54,13 @@ class ClassroomController extends CoreController
         //Cloning process for the course
         $course = new Posts;
         $course->post_title = $request->input('course-title');
-        $course->post_author = get_current_user_id();
+        $course->post_author = $author;
         $course->post_content = $dolly->post_content;
         $course->post_excerpt = $dolly->post_excerpt;
         $course->post_status = 'publish';
         $course->post_type = $dolly->post_type;
 
         //Save to database
-
         if ($course_id = wp_insert_post($course->get_columns())) {
             echo "{$request->input('course-title')} course created<br />";
 
@@ -77,7 +77,6 @@ class ClassroomController extends CoreController
 
                 //Populate Lesson Model with the info needed to insert the lesson in WP_Post
                 $lesson->post_title = $lessonNames[$i];
-
                 $lesson->post_author = get_current_user_id();
                 $lesson->post_content = $dollyLesson->post_content;
                 $lesson->post_excerpt = $dollyLesson->post_excerpt;
@@ -119,7 +118,6 @@ class ClassroomController extends CoreController
             echo "what just happened?";
         }
 
-//        _redirect('https://coursesstaging3.writerscentre.com.au/wp-admin/admin.php?page=one-click-classroom-setup', []);
 
     }
 }
