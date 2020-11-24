@@ -35,10 +35,21 @@ if (! function_exists('_route')) {
 
 if (! function_exists('_channel')) {
 
+    /**
+     * Add link url for channel routes
+     *
+     * @param $name
+     * @param array $parameters
+     * @param $page
+     * @return string
+     */
+    function _channel( $name, $parameters = [], $page = "") {
 
-    function _channel( $name, $parameters = []) {
+        $page = $page <> ""
+            ? $page
+            : $_GET['page'];
 
-        $link = "admin.php?page={$_GET['page']}&route={$name}";
+        $link = "admin.php?page={$page}&route={$name}";
 
         if( !empty($parameters)) {
             foreach($parameters as $key => $value) {
@@ -48,9 +59,7 @@ if (! function_exists('_channel')) {
 
         return $link;
     }
-
 }
-
 
 if (! function_exists('_redirect')) {
 

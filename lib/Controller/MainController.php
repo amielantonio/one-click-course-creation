@@ -28,7 +28,9 @@ class MainController extends CoreController{
     {
         global $wpdb;
       
-        // add_post_meta(89027, 'created-from-one-click', true);
+        $author = isset($_GET['author']) ? $_GET['author'] : "";
+
+
         $args = array(
             'posts_per_page'=> -1,
             'post_type' => 'sfwd-courses',
@@ -42,12 +44,21 @@ class MainController extends CoreController{
             'orderby' => 'date_created',
             'order' => 'DESC'
         );
+
+
+
+        if($author <> "" ) {
+            $args['post_author'] = $author;
+        }
+
+
         $posts = get_posts( $args );
 
 //        var_dump($posts);
         
         foreach( $posts as $post ) : 
             $courseSelected = get_post($post->ID);
+            $courseContent[$courseSelected->ID]['course_slug'] = $courseSelected->post_name;
             $courseContent[$courseSelected->ID]['course_name'] = $courseSelected->post_title;
             $courseContent[$courseSelected->ID]['author'] = [
                 'id' => $courseSelected->post_author,

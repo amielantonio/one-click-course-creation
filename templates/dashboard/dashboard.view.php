@@ -29,13 +29,15 @@
                         <td class="hover-toolbox">
                             <a href='<?= get_site_url()."/wp-admin/post.php?post=".$key."&action=edit"?>' target='_blank'><?= $value['course_name'] ?></a>
                             <div class="toolbox _m-t--30">
-                                <a class="tool" href='<?php echo _channel('classroom-view', ['posts'=>$key])?>' target='_blank'>View Course</a>
-                                <a class="tool" href='<?php echo _channel('classroom-view', ['posts'=>$key])?>' target='_blank'>Edit in Learndash</a>
-                                <a class="tool" href='<?php echo "admin.php?page=course-setup&p_id={$key}" ?>' target='_blank'>Edit in One-click Classroom</a>
+                                <a class="tool" href='<?php echo site_url()."/courses/{$value['course_slug']}"?>' target='_blank'>View Course</a>
+                                <a class="tool" href='<?= get_site_url()."/wp-admin/post.php?post=".$key."&action=edit"?>' target='_blank'>Edit in Learndash</a>
+                                <a class="tool" href='<?php echo _channel('classroom-view', ['posts'=>$key], 'course-setup')?>' target='_blank'>Edit in One-click Classroom</a>
                                 <a class="tool delete_one_click_data _text-red" href="#" data-id="<?php echo $key;?>" >Delete</a>
                             </div>
                         </td>
-                        <td><?php echo $value['author']?></td>
+                        <td>
+                            <a href="<?php echo "admin.php?page=one-click-classroom-setup&author={$value['author']['id']}"?>"><?php echo $value['author']['name']?></a>
+                        </td>
                         <td class="_text-center">
                             <?php echo $value['post_meta']['awc_active_course'] == '0'
                                 ? '&#10005;'
