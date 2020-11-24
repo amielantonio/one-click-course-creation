@@ -3,8 +3,7 @@
 
 if (! function_exists('_view')) {
     /**
-     *
-     *
+     * Get view function
      *
      * @param null $view
      * @param array $data
@@ -98,6 +97,11 @@ if (! function_exists('_redirect')) {
 if (! function_exists('_resource_path')) {
 
 
+    /**
+     * Get resource path
+     *
+     * @param string $path
+     */
     function _resource_path( $path = "" ) {
 
     }
