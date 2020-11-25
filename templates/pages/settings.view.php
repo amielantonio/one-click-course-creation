@@ -7,7 +7,7 @@
 
             <form action="<?= _route('save-settings')?>" method="post" class="oc-form">
                 <div class="oc-form-group">
-                    <label for="oc-content-parent-id">Course content parent ID</label>
+                    <label for="oc-content-parent-id">Course templates</label>
                     <select name="oc-content-parent-id[]" id="oc-content-parent-id" class="oc-form-control-select" multiple="multiple">
 
                         <?php if(isset($option) && !empty($option) ): ?>

@@ -39,6 +39,8 @@ function onChangeCourseSelection() {
                 '<input type="text" name="lesson-name[]" class="oc-form-control module-name" id="module-title-' + index + '" value="' + item['lesson-title'] + '">' +
                 '</td>' +
                 '<td><input type="text" name="topic-date[]" class="oc-form-control module-date-picker" id="start-' + index + '"></td>' +
+                '<td class="_text-center"><input type="checkbox" name="add-original[]" class="" id="original-' + index + '"></td>' +
+                '<td class="_text-center"><input type="checkbox" name="excluded-drip[]" class="" id="excluded-' + index + '"></td>' +
                 '</tr>');
 
         });

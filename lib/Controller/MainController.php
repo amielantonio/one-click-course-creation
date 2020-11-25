@@ -26,6 +26,9 @@ class MainController extends CoreController{
      */
     public function index()
     {
+
+//        var_dump(get_post_meta(89262,'_fl_builder_draft'));
+
         global $wpdb;
       
         $author = isset($_GET['author']) ? $_GET['author'] : "";
@@ -45,18 +48,13 @@ class MainController extends CoreController{
             'order' => 'DESC'
         );
 
-
-
         if($author <> "" ) {
             $args['post_author'] = $author;
         }
 
-
         $posts = get_posts( $args );
 
-//        var_dump($posts);
-        
-        foreach( $posts as $post ) : 
+        foreach( $posts as $post ) :
             $courseSelected = get_post($post->ID);
             $courseContent[$courseSelected->ID]['course_slug'] = $courseSelected->post_name;
             $courseContent[$courseSelected->ID]['course_name'] = $courseSelected->post_title;

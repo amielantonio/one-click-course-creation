@@ -167,7 +167,7 @@ table.oc-table-striped {
   .toolbox .tool {
     display: block;
     padding: 0.25em 0.5em;
-    border-right: 1px solid #2D2D2D;
+    border-right: 1px solid #f3f3f3;
     text-decoration: none; }
     .toolbox .tool:last-child {
       border-right: none; }

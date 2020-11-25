@@ -52,7 +52,7 @@ if (! function_exists('_channel')) {
 
         if( !empty($parameters)) {
             foreach($parameters as $key => $value) {
-                $link.= "&{$key}=$value";
+                $link .= "&{$key}=$value";
             }
         }
 

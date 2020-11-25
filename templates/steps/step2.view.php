@@ -1,7 +1,7 @@
 <h3 class="cohort-title">Module Schedule</h3>
 
 <div class="oc-form-group oc-form-group-right form-row justify-right">
-    <label for="start-date">Start Date</label><input type="text" name="start-date-for-interval" class="_m-r--10">
+    <label for="start-date">Start Date</label><input type="text" name="start-date-for-interval" class="start-date-interval _m-r--10">
     <label for="day-interval" style="width: auto;">Day interval: </label><input type="number" name="day-interval" class="_text-right _m-r--10 _m-l--10" style="width: 30%;" id="day-interval" value="7"><button type="button" id="btn-apply-interval" class="oc-btn oc-btn--primary oc-btn--small">Apply</button>
 </div>
 
@@ -10,7 +10,8 @@
     <tr>
         <th style="width: 55%;">Module</th>
         <th>Start</th>
-        <th>Duplicate</th>
+        <th>Use Template</th>
+        <th>Exclude in Drip</th>
     </tr>
     </thead>
     <tbody>
@@ -19,7 +20,19 @@
     <tfoot>
     <tr>
         <th>Module</th>
-        <th>Duplicate</th>
+        <th>Start</th>
+        <th>Exclude in Drip</th>
     </tr>
     </tfoot>
 </table>
+<script>
+
+    $('.start-date-interval').datepicker({
+        language: "en",
+        dateFormat: 'dd MM, yyyy',
+        timepicker: true,
+        todayButton: new Date(),
+        autoClose: true
+    });
+
+</script>
