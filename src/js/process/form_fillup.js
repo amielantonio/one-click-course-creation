@@ -134,11 +134,12 @@ function datePicker(data, excludedKeywords) {
  * @param currentDate
  * @param dateIndex
  * @param dateData
+ * @param startDate
  * @param pickerType
  */
-function dripDatePicker(currentDate = null, dateIndex, dateData, pickerType = null) {
+function dripDatePicker(currentDate = null, dateIndex, dateData, startDate = null, pickerType = null) {
 
-    var startDate;
+    // var startDate;
     var startDateChecker;
 
     if (currentDate == null) {
@@ -167,6 +168,8 @@ function dripDatePicker(currentDate = null, dateIndex, dateData, pickerType = nu
       if(! inArraySubstr($('#module-title-' + _x).val(), $_keywordsMatch) ) {
 
         startDate.add(dayInterval, 'day');
+
+
 
         $('#start-' + _x).datepicker().data('datepicker').selectDate(startDate.toDate());
       }
