@@ -166,8 +166,8 @@ table.oc-table-striped {
   min-height: 25px; }
   .toolbox .tool {
     display: block;
-    padding: 0.25em 0.5em;
-    border-right: 1px solid #f3f3f3;
+    padding: 0 0.5em;
+    border-right: 1px solid #C4C4C4;
     text-decoration: none; }
     .toolbox .tool:last-child {
       border-right: none; }
