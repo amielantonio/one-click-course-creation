@@ -114,6 +114,9 @@ class ClassroomController extends CoreController
             //Save the relationship as post meta
             add_post_meta($course_id, 'created-from-one-click', true);
 
+            //Save Course certificate
+            add_post_meta($course_id, 'course-cert',$request->input('oc-course-cert'),true);
+
         } else {
             echo "what just happened?";
         }
