@@ -24,12 +24,6 @@ class ClassroomController extends CoreController
         parent::__construct();
     }
 
-    public function view(Posts $posts)
-    {
-        var_dump($posts);
-        return (new View('steps/steps'))->render();
-    }
-
     /**
      *
      *
@@ -119,5 +113,117 @@ class ClassroomController extends CoreController
         }
 
 
+    }
+
+    /**
+     *
+     *
+     * @param Posts $posts
+     * @throws \Exception
+     */
+    public function edit(Posts $posts)
+    {
+        global $wpdb;
+
+        $courseContent = [];
+        $getOptions = get_option('the-course-content');
+
+        //Fill up the information that will be used for editing
+        $course = [
+            'course-template' => get_post_meta($posts->ID, 'one-click-template' )[0],
+            'course-title' => $posts->post_title,
+            'author' => $posts->post_author
+        ];
+
+        $courseModules = learndash_get_course_lessons_list($posts->ID);
+
+        foreach($courseModules as $courseModule) {
+            $date = get_post_meta($courseModule['post']->ID, '_sfwd-lessons' )[0]['sfwd-lessons_visible_after_specific_date'] <> ""
+                ? get_post_meta($courseModule['post']->ID, '_sfwd-lessons' )[0]['sfwd-lessons_visible_after_specific_date']
+                : "";
+            $course['lessons'][] = [
+                'lesson-id' => $courseModule['post']->ID,
+                'lesson-title' => $courseModule['post']->post_title,
+                'date' => $date
+            ];
+        }
+
+
+        // Get course content data
+        // This courseContent will serve as the course template for one-click
+        if(!empty($getOptions)) {
+            foreach($getOptions as $getOption) {
+                $courseSelected = get_post($getOption);
+                $courseContent[$courseSelected->ID]['course_name'] = $courseSelected->post_title;
+
+                $lessons = learndash_get_course_lessons_list($getOption);
+
+                foreach($lessons as $lesson) {
+                    $courseContent[$courseSelected->ID]['lessons'][] = [
+                        'lesson-id' => $lesson['post']->ID,
+                        'lesson-title' => $lesson['post']->post_title,
+                    ];
+
+                    $courseContent[$courseSelected->ID]['post_meta'] = [
+                        'awc_active_course' => get_post_meta($getOption, 'awc_active_course')[0],
+                        'collapse_replies_for_course' => get_post_meta($getOption, 'collapse_replies_for_course')[0],
+                        'awc_private_comments' => get_post_meta($getOption, 'awc_private_comments')[0],
+                        'email_daily_comment_digest' => get_post_meta($getOption, 'email_daily_comment_digest')[0],
+                        'cc_recipients' => get_post_meta($getOption, 'cc_recipients'),
+                        'tag_ids' => explode(', ',get_post_meta($getOption, '_is4wp_access_tags')[0]),
+                        'certificate' => get_post_meta($getOption, '_sfwd-courses')[0]['sfwd-courses_certificate'],
+                        'excluded_keywords' => get_option('exclude-module-keywords'),
+                    ];
+                }
+            }
+        }
+
+        // Get memberships
+        $memberium = get_option('memberium');
+        $memberships = [];
+        if(isset($memberium['memberships'])){
+            // GET THE TAG LIST
+            $tags = [];
+            $table = 'memberium_tags';
+            $appname = "lf159"; # memberium_tags table appname field
+
+            $sql = "SELECT id, name FROM {$table} WHERE `appname` = '{$appname}' ORDER BY category, name ";
+            $result = $wpdb->get_results($sql, ARRAY_A);
+            foreach ($result as $data) {
+                $tags['mc'][$data['id']] = $data['name'];
+            }
+
+            $tags = $tags['mc'];
+            // INCLUDE TAG ON LIST
+            foreach ($memberium['memberships'] as $key => $data) {
+                $tag = !empty($tags[$key]) ? $tags[$key]." ({$key})" : '(Missing Tag)';
+                $memberium['memberships'][$key]['tag_name']  =  $tag;
+            }
+
+            $memberships = $memberium['memberships'];
+        }
+
+
+        // Online Tutor
+        $onlineTutor =  get_users([
+            'role__in' => [ 'Administrator', 'group_leader'],
+            'fields'   => ['ID','user_email','display_name'],
+            'orderby'  => 'display_name'
+        ]);
+
+
+        // Course Certificate
+        $courseCertificates = $posts->select(['ID, post_title'])->where('post_type', 'sfwd-certificates')->orderBy('post_title')->results();
+
+
+
+
+        (new View('steps/steps'))
+            ->with('course', $course)
+            ->with('courseContent', $courseContent)
+            ->with('onlineTutor',$onlineTutor)
+            ->with('courseCertificates',$courseCertificates)
+            ->with('memberships',$memberships)
+            ->render();
     }
 }

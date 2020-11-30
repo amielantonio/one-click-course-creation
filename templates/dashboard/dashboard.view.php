@@ -31,9 +31,9 @@
                             <a href='<?= get_site_url()."/wp-admin/post.php?post=".$key."&action=edit"?>' target='_blank'><?= $value['course_name'] ?></a>
                             <div class="toolbox _m-t--30">
                                 <a class="tool" href='<?php echo site_url()."/courses/{$value['course_slug']}"?>' target='_blank'>View Course</a>
-                                <a class="tool" href='<?= get_site_url()."/wp-admin/post.php?post=".$key."&action=edit"?>' target='_blank'>Edit in Learndash</a>
-                                <a class="tool" href='<?php echo _channel('classroom-view', ['posts'=>$key], 'course-setup')?>' target='_blank'>Edit in One-click Classroom</a>
-                                <a class="tool delete_one_click_data _text-red" href="#" data-id="<?php echo $key;?>" >Delete</a>
+                                <a class="tool" href='<?= get_site_url()."/wp-admin/post.php?post=".$key."&action=edit"?>'>Edit in Learndash</a>
+                                <a class="tool" href='<?php echo _channel('classroom_edit', ['posts'=>$key], 'course-setup')?>'>Edit in One-click Classroom</a>
+                                <a class="tool delete_one_click_data _text-red" href="#" data-id="<?php echo $key;?>">Delete</a>
                             </div>
                         </td>
                         <!--AUTHOR NAME-->

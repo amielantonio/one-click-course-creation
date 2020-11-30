@@ -20,7 +20,28 @@
     </tr>
     </thead>
     <tbody>
+        <?php if( isset($course) ) : $x = 0?>
+            <?php foreach( $course['lessons'] as $lesson ):?>
+            <tr>
+                <td>
+                    <input type="hidden" name="lesson-id[]" class="oc-form-control module-id" value="<?php echo $lesson['lesson-id']?>">
+                    <input type="text" name="lesson-name[]" class="oc-form-control module-name"
+                           value="<?php echo  $lesson['lesson-title'] ?>"
+                           id="module-title-<?php echo $x ?>">
+                </td>
+                <td>
+                    <input type="text" name="topic-date[]" class="oc-form-control module-date-picker"
+                           id="start-<?php echo $x ?>"
 
+                           autocomplete="off">
+                </td>
+                <td class="_text-center">
+                    <input type="checkbox" name="add-original[]" class="" id="original-<?php echo $x ?>">
+                </td>
+            </tr>
+
+            <?php  $x++; endforeach;?>
+        <?php endif; ?>
     </tbody>
     <tfoot>
     <tr>
@@ -41,5 +62,23 @@
     });
 
     $('.start-date-interval').datepicker().data('datepicker').selectDate(new Date());
+
+    <?php if( isset($course['lessons'])) : ?>
+    let date;
+        <?php $ctr = 0; foreach($course['lessons'] as $lesson) : ?>
+            $('#start-<?php echo $ctr;?>').datepicker({
+                language: "en",
+                dateFormat: 'dd MM, yyyy',
+                timepicker: true,
+                todayButton: new Date(),
+                autoClose: true,
+            });
+
+            <?php if( $lesson['date'] <> "" ) : ?>
+                date = moment("<?php echo $lesson['date'] ?>", "YYYY-MM-DD HH:mm" ).toDate();
+                $('#start-<?php echo $ctr;?>').datepicker().data('datepicker').selectDate(date);
+            <?php endif; ?>
+        <?php $ctr++; endforeach;?>
+    <?php endif; ?>
 
 </script>

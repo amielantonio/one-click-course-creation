@@ -27,8 +27,6 @@ class MainController extends CoreController{
     public function index()
     {
 
-//        var_dump(get_post_meta(89262,'_fl_builder_draft'));
-
         global $wpdb;
       
         $author = isset($_GET['author']) ? $_GET['author'] : "";
@@ -162,46 +160,12 @@ class MainController extends CoreController{
         // Course Certificate
         $courseCertificates = $posts->select(['ID, post_title'])->where('post_type', 'sfwd-certificates')->orderBy('post_title')->results();
    
-        // FOR EDIT
-        $course_info = [];
-        if(isset($_GET['p_id']) && !empty($_GET['p_id'])){
-            $sql = "SELECT * FROM wp_posts WHERE ID = {$_GET['p_id']} LIMIT 1;";
-            $classroom = $wpdb->get_results($sql);
-           
-            if(count($classroom) > 0){
-                foreach($classroom as $post){
-                   
-                    $course_info[$post->ID]['post_author'] = $post->post_author;
-                    $course_info[$post->ID]['course_name'] = $post->post_title;
-                    $lessons = learndash_get_course_lessons_list($post->ID);
-        
-                    foreach($lessons as $lesson) {
-                        $course_info[$post->ID]['lessons'][] = [
-                            'lesson-id' => $lesson['post']->ID,
-                            'lesson-title' => $lesson['post']->post_title,
-                        ];
-                        $course_info[$post->ID]['post_meta'] = [
-                            'awc_active_course' => get_post_meta($post->ID, 'awc_active_course')[0],
-                            'collapse_replies_for_course' => get_post_meta($post->ID, 'collapse_replies_for_course')[0],
-                            'awc_private_comments' => get_post_meta($post->ID, 'awc_private_comments')[0],
-                            'email_daily_comment_digest' => get_post_meta($post->ID, 'email_daily_comment_digest')[0],
-                            'cc_recipients' => get_post_meta($post->ID, 'cc_recipients'),
-                            'tag_ids' => explode(', ',get_post_meta($post->ID, '_is4wp_access_tags')[0]),
-                            'certificate' => get_post_meta($post->ID, '_sfwd-courses')[0]['sfwd-courses_certificate'],
-                            'excluded_keywords' => get_option('exclude-module-keywords')
-                        ];
-                    }
-                }
-            }
-        }
-
 
         return (new View('steps/steps'))
             ->with('memberships',$memberships)
             ->with('courseContent', $courseContent )
             ->with('onlineTutor',$onlineTutor)
             ->with('courseCertificates',$courseCertificates)
-            ->with('course_info',$course_info)
             ->render();
 
     }

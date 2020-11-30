@@ -5,19 +5,15 @@
     <select name="course-content" class="oc-form-control select2" id="course-content" required="required">
         <option>Select Course</option>
         <?php if(isset($courseContent)) : ?>
-            <?php foreach( $courseContent as $key => $value) : 
-                if(!empty($course_info)){
-                    $c = ($key == $_GET['p_id']) == true ? 'selected' :'';
-                } else {
-                    $c = "";
-                }
-                ?>
+            <?php foreach( $courseContent as $key => $value) : ?>
+
+                <?php $selected = (isset($course) && $key==$course['course-template']) ? "selected='selected'" : "" ?>
+
                 <option id="option-<?php echo $key?>" value="<?php echo $key?>"
                         data-lessons='<?php echo json_encode($value['lessons']);?>'
                         data-course-meta='<?php echo json_encode($value['post_meta']);?>'
                         data-course-title="<?php echo $value['course_name']?>"
-                        <?php echo $c;?>
-                        >
+                        <?php echo $selected ?>>
                     <?php echo $key . " - " . $value['course_name']?>
                 </option>
             <?php endforeach;?>
@@ -35,15 +31,11 @@
 
 
 <div class="oc-form-group">
-    <label>Course Title</label>
-    <?php 
-       if(!empty($course_info)){
-            $ct = "value='{$course_info[$_GET['p_id']]['course_name']}'";
-        } else {
-            $ct = "";
-        }
+    <label for="course-title">Course Title</label>
+    <?php
+    $courseTitle = isset($course['course-title']) ? $course['course-title'] : "";
     ?>
-    <input type="text" class="oc-form-control" name="course-title" id="course-title" <?= $ct; ?>  placeholder="Add New Course Title">
+    <input type="text" class="oc-form-control" name="course-title" id="course-title" value="<?php echo $courseTitle?>"  placeholder="Add New Course Title">
     
 </div>
 
@@ -54,16 +46,11 @@
     <pre>
         <option value="">Select Tutor</option>
         <?php if(isset($onlineTutor)) : ?>
-        
             <?php foreach($onlineTutor as $data): ?>
-                <?php
-                    if(!empty($course_info)){
-                        $selected = ($data->ID == $course_info[$_GET['p_id']]['post_author']) == true ? 'selected' : '';
-                    } else {
-                        $selected = "";
-                    }
-                ?>
-            <?php   echo "<option value='{$data->ID}' {$selected}>{$data->display_name} ({$data->user_email})</option> ";?>
+
+                <?php $selectedAuthor = (isset($course) && $data->ID==$course['author']) ? "selected='selected'" : "" ?>
+
+            <?php   echo "<option value='{$data->ID}' {$selectedAuthor}>{$data->display_name} ({$data->user_email})</option> ";?>
             <?php endforeach; ?>
         <?php endif; ?>
     </select>
