@@ -31,7 +31,6 @@ class MainController extends CoreController{
       
         $author = isset($_GET['author']) ? $_GET['author'] : "";
 
-
         $args = array(
             'posts_per_page'=> -1,
             'post_type' => 'sfwd-courses',
@@ -160,6 +159,7 @@ class MainController extends CoreController{
         // Course Certificate
         $courseCertificates = $posts->select(['ID, post_title'])->where('post_type', 'sfwd-certificates')->orderBy('post_title')->results();
    
+        
 
         return (new View('steps/steps'))
             ->with('memberships',$memberships)
@@ -254,17 +254,6 @@ class MainController extends CoreController{
                     ->with('courseCertificates',$courseCertificates)
                     ->with('post_info',$post_info)
                     ->render();
-    }
-
-    /**
-     * Update Classroom
-     *
-     * @param Request $request
-     * @throws \Exception
-     */
-    public function update(Request $request){
-        
-        
     }
 
     /**

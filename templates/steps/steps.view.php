@@ -1,8 +1,13 @@
 <h1 class="_m-b--50">Setup Classroom</h1>
 
 <div class="cohort-tabs" data-last-selected="1">
-    <form action="<?php echo _route('classroom-store')?>" method="post" class="oc-form">
-
+    <?php if(isset($course)) : ?>
+        <form action="<?php echo _route('classroom-update')?>" method="post" class="oc-form">
+            <input type="hidden" name="post_id" value="<?php echo $_GET['posts'];?>" />
+    <?php else : ?>
+        <form action="<?php echo _route('classroom-store')?>" method="post" class="oc-form">
+    <?php endif; ?>
+    
     <div class="cohort-steps">
             <div class="cohort-step cohort-step1" id="cohort-step1">
                 <?php include_once "step1.view.php" ?>
@@ -23,7 +28,11 @@
     </div>
 
     <div class="cohort-buttons oc-button-group align-center">
-        <button id="btn-classroom" class="oc-btn oc-btn--primary" type="submit">Create Classroom</button>
+        <?php if(isset($course)) : ?>
+            <button id="btn-classroom" class="oc-btn oc-btn--primary" type="submit">Update Classroom</button>
+        <?php else : ?>
+            <button id="btn-classroom" class="oc-btn oc-btn--primary" type="submit">Create Classroom</button>
+        <?php endif; ?>
     </div>
     </form>
 

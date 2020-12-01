@@ -6,9 +6,9 @@
         <?php if(isset($memberships)) : ?>
             <?php foreach($memberships as $data): ?>
                 <?php
-                    if(!empty($course_info)){
-                        $selected = in_array($data['main_id'],$course_info[$_GET['p_id']]['post_meta']['tag_ids']) == true ? 'selected' : '';
-                    } else {
+                    if(isset($course_info)){
+                         $selected = in_array($data['main_id'],$course_info[$_GET['posts']]['post_meta']['tag_ids']) == true ? 'selected' : '';
+                     } else {
                         $selected = "";
                     }
                 ?>
@@ -18,11 +18,6 @@
     </select>
 </div>
 
-<!-- <pre> -->
-<?php
-//print_r($course_info[$_GET['p_id']]['post_meta']['tag_ids']);
-?>
-
 <div class="oc-form-group">
     <label>Course Certificate</label>
     <select name="oc-course-cert" id="oc-course-cert" class="oc-form-control select2">
@@ -31,7 +26,7 @@
             <?php foreach($courseCertificates as $data): ?>
                 <?php
                     if(!empty($course_info)){   
-                        $selected = ($data->ID == $course_info[$_GET['p_id']]['post_meta']['certificate']) == true ? 'selected' : '';
+                        $selected = ($data->ID == $course_info[$_GET['posts']]['course_cert']) == true ? 'selected' : '';
                     } else {
                         $selected = "";
                     }

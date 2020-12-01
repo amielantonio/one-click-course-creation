@@ -120,13 +120,14 @@ class ClassroomController extends CoreController
 
     /**
      *
-     *
+     * Edit View
      * @param Posts $posts
      * @throws \Exception
      */
     public function edit(Posts $posts)
     {
         global $wpdb;
+        $posts = new Posts;
 
         $courseContent = [];
         $getOptions = get_option('the-course-content');
@@ -150,8 +151,7 @@ class ClassroomController extends CoreController
                 'date' => $date
             ];
         }
-
-
+        
         // Get course content data
         // This courseContent will serve as the course template for one-click
         if(!empty($getOptions)) {
@@ -214,11 +214,44 @@ class ClassroomController extends CoreController
             'orderby'  => 'display_name'
         ]);
 
-
         // Course Certificate
         $courseCertificates = $posts->select(['ID, post_title'])->where('post_type', 'sfwd-certificates')->orderBy('post_title')->results();
 
 
+        // FOR EDIT
+        $course_info = [];
+        if(isset($_GET['posts']) && !empty($_GET['posts'])){
+            $sql = "SELECT * FROM wp_posts WHERE ID = {$_GET['posts']} LIMIT 1;";
+            $classroom = $wpdb->get_results($sql);
+            
+            if(count($classroom) > 0){
+                foreach($classroom as $post){
+                    
+                    $course_info[$post->ID]['post_author'] = $post->post_author;
+                    $course_info[$post->ID]['course_name'] = $post->post_title;
+                    $course_info[$post->ID]['course_cert'] = get_post_meta($post->ID, 'course-cert')[0];
+                    
+                    $lessons = learndash_get_course_lessons_list($post->ID);
+        
+                    foreach($lessons as $lesson) {
+                        $course_info[$post->ID]['lessons'][] = [
+                            'lesson-id' => $lesson['post']->ID,
+                            'lesson-title' => $lesson['post']->post_title,
+                        ];
+                        $course_info[$post->ID]['post_meta'] = [
+                            'awc_active_course' => get_post_meta($post->ID, 'awc_active_course')[0],
+                            'collapse_replies_for_course' => get_post_meta($post->ID, 'collapse_replies_for_course')[0],
+                            'awc_private_comments' => get_post_meta($post->ID, 'awc_private_comments')[0],
+                            'email_daily_comment_digest' => get_post_meta($post->ID, 'email_daily_comment_digest')[0],
+                            'cc_recipients' => get_post_meta($post->ID, 'cc_recipients'),
+                            'tag_ids' => explode(', ',get_post_meta($post->ID, '_is4wp_access_tags')[0]),
+                            'certificate' => get_post_meta($post->ID, '_sfwd-courses')[0]['sfwd-courses_certificate'],
+                            'excluded_keywords' => get_option('exclude-module-keywords')
+                        ];
+                    }
+                }
+            }
+        }
 
 
         (new View('steps/steps'))
@@ -227,6 +260,24 @@ class ClassroomController extends CoreController
             ->with('onlineTutor',$onlineTutor)
             ->with('courseCertificates',$courseCertificates)
             ->with('memberships',$memberships)
+            ->with('course_info',$course_info)
             ->render();
+    }
+
+    public function update(Request $request) {
+
+        $data = [
+            'ID'           => $request->input('post_id'),
+            'post_title'   => $request->input('course-title'),
+            'post_author'  => $request->input('online-tutor')
+        ];
+        wp_update_post($data);
+
+
+        update_field('course-cert', $request->input('oc-course-cert'), $request->input('post_id'));
+        
+        $url = get_site_url()."/wp-admin/admin.php?page=one-click-classroom-setup";
+        wp_redirect( $url );
+        
     }
 }

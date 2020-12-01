@@ -51,6 +51,7 @@
     </tr>
     </tfoot>
 </table>
+
 <script>
 
     $('.start-date-interval').datepicker({

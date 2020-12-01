@@ -21,6 +21,8 @@ Router::addSubMenu('One Click Classroom Setup', 'Course Setup', 'MainController@
 
 //Save
 Router::addChannel( 'post', 'classroom-store', 'ClassroomController@store' );
+//Update
+Router::addChannel( 'post', 'classroom-update', 'ClassroomController@update' );
 
 //Update
 Router::get('classroom_edit', 'ClassroomController@edit');
