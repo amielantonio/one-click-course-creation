@@ -7,13 +7,13 @@
         <?php if(isset($courseContent)) : ?>
             <?php foreach( $courseContent as $key => $value) : ?>
 
-                <?php $selected = (isset($course) && $key==$_GET['posts']) ? "selected='selected'" : "" ?>
+                <?php $selected = (isset($course) && $key==$course['course-template']) ? "selected='selected'" : "" ?>
 
                 <option id="option-<?php echo $key?>" value="<?php echo $key?>"
                         data-lessons='<?php echo json_encode($value['lessons']);?>'
                         data-course-meta='<?php echo json_encode($value['post_meta']);?>'
                         data-course-title="<?php echo $value['course_name']?>"
-                        <?php echo $selected ?>>
+                    <?php echo $selected ?>>
                     <?php echo $key . " - " . $value['course_name']?>
                 </option>
             <?php endforeach;?>
@@ -33,28 +33,27 @@
 <div class="oc-form-group">
     <label for="course-title">Course Title</label>
     <?php
-        $courseTitle = isset($course_info) ? $course_info[$_GET['posts']]['course_name'] : '';
+    $courseTitle = isset($course['course-title']) ? $course['course-title'] : "";
     ?>
     <input type="text" class="oc-form-control" name="course-title" id="course-title" value="<?php echo $courseTitle?>"  placeholder="Add New Course Title">
-</div>
 
+</div>
 
 
 <div class="oc-form-group">
     <label>Online Tutor</label>
     <select name="online-tutor" class="oc-form-control select2" id="online-tutor">
-
+    <pre>
         <option value="">Select Tutor</option>
         <?php if(isset($onlineTutor)) : ?>
             <?php foreach($onlineTutor as $data): ?>
-            
-                <?php $selectedAuthor = (isset($course_info) && $data->ID == $course_info[$_GET['posts']]['post_author']) ? "selected='selected'" : ""; ?>
 
-            <?php   echo "<option value='{$data->ID}' {$selectedAuthor}>{$data->display_name} ({$data->user_email})</option> ";?>
+                <?php $selectedAuthor = (isset($course) && $data->ID==$course['author']) ? "selected='selected'" : "" ?>
+
+                <?php   echo "<option value='{$data->ID}' {$selectedAuthor}>{$data->display_name} ({$data->user_email})</option> ";?>
             <?php endforeach; ?>
         <?php endif; ?>
     </select>
 </div>
-
 
 

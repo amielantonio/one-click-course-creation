@@ -6,6 +6,29 @@ trait LessonMeta
 {
 
     /**
+     * Course echo logger, renders whether the course was created or not.
+     *
+     * @param $course_name
+     * @param bool $is_created
+     */
+    private function lessonEchoLogger( $lesson_name, $is_created = true )
+    {
+        if( $is_created ){
+            echo "<div class='logger_lesson'>
+                    <p class='logger_lesson_text'>
+                        <span class='logger_lesson_name'>{$lesson_name}</span> lesson created
+                    </p>
+                  </div>";
+        } else {
+            echo "<div class='logger_lesson'>
+                    <p class='logger_lesson_text'>
+                        <span class='logger_lesson_name'>{$lesson_name}</span> lesson created
+                    </p>
+                  </div>";
+        }
+    }
+
+    /**
      * Save lesson meta
      *
      * @param $lesson_id
@@ -15,10 +38,7 @@ trait LessonMeta
      */
     public function save_lesson_meta($lesson_id, $course_id, $request, $dollyLesson)
     {
-
-        echo "save {$lesson_id} meta<br />";
         add_post_meta($lesson_id, 'ld_course_' . $course_id, $course_id);
-
 
         $this->duplicate_lesson_meta($lesson_id, $dollyLesson);
     }
