@@ -6,8 +6,8 @@
         <?php if(isset($memberships)) : ?>
             <?php foreach($memberships as $data): ?>
                 <?php
-                    if(isset($course_info)){
-                         $selected = in_array($data['main_id'],$course_info[$_GET['posts']]['post_meta']['tag_ids']) == true ? 'selected' : '';
+                    if(isset($course)){
+                         $selected = in_array($data['main_id'],$course['course-tags']) == true ? 'selected' : '';
                      } else {
                         $selected = "";
                     }
@@ -25,8 +25,8 @@
     <?php if(isset($courseCertificates)) : ?>
             <?php foreach($courseCertificates as $data): ?>
                 <?php
-                    if(!empty($course_info)){   
-                        $selected = ($data->ID == $course_info[$_GET['posts']]['course_cert']) == true ? 'selected' : '';
+                    if(isset($course)){   
+                        $selected = ($data->ID == $course['course-certificate']) == true ? 'selected' : '';
                     } else {
                         $selected = "";
                     }
