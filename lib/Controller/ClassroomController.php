@@ -11,6 +11,7 @@ use AWC\Traits\CourseMeta;
 use AWC\Traits\LessonMeta;
 use Carbon\Carbon;
 use WP_Query;
+use Exception;
 use AWC\Model\Posts;
 
 class ClassroomController extends CoreController
@@ -25,14 +26,13 @@ class ClassroomController extends CoreController
     }
 
     /**
-     *
+     * Store function for saving classrooms
      *
      * @param Request $request
-     * @throws \Exception
+     * @throws Exception
      */
     public function store(Request $request)
     {
-
         $arrLessons = [];
 
         $dates = $request->input('topic-date');
@@ -94,11 +94,11 @@ class ClassroomController extends CoreController
 
                     add_post_meta($lesson_id, '_sfwd-lessons', $this->create_sfwd_lesson($lesson_id, $dollyLesson, $new_lesson_meta));
 
-                    echo "{$lessonNames[$i]} lessons created<br />";
+                    $this->lessonEchoLogger($lessonNames[$i], true);
 
                     add_post_meta($lesson_id, 'ld_course_steps', $this->create_ld_course_steps($arrLessons));
                 } else {
-                    echo "{$lessonNames[$i]} was not created<br />";
+                    $this->lessonEchoLogger($lessonNames[$i], false);
                 }
             }
 
@@ -119,10 +119,10 @@ class ClassroomController extends CoreController
     }
 
     /**
-     *
+     * Edit post render function
      *
      * @param Posts $posts
-     * @throws \Exception
+     * @throws Exception
      */
     public function edit(Posts $posts)
     {
@@ -151,75 +151,19 @@ class ClassroomController extends CoreController
             ];
         }
 
-
         // Get course content data
         // This courseContent will serve as the course template for one-click
-        if(!empty($getOptions)) {
-            foreach($getOptions as $getOption) {
-                $courseSelected = get_post($getOption);
-                $courseContent[$courseSelected->ID]['course_name'] = $courseSelected->post_title;
+         $courseContent = $this->getCourseContents($getOptions);
 
-                $lessons = learndash_get_course_lessons_list($getOption);
-
-                foreach($lessons as $lesson) {
-                    $courseContent[$courseSelected->ID]['lessons'][] = [
-                        'lesson-id' => $lesson['post']->ID,
-                        'lesson-title' => $lesson['post']->post_title,
-                    ];
-
-                    $courseContent[$courseSelected->ID]['post_meta'] = [
-                        'awc_active_course' => get_post_meta($getOption, 'awc_active_course')[0],
-                        'collapse_replies_for_course' => get_post_meta($getOption, 'collapse_replies_for_course')[0],
-                        'awc_private_comments' => get_post_meta($getOption, 'awc_private_comments')[0],
-                        'email_daily_comment_digest' => get_post_meta($getOption, 'email_daily_comment_digest')[0],
-                        'cc_recipients' => get_post_meta($getOption, 'cc_recipients'),
-                        'tag_ids' => explode(', ',get_post_meta($getOption, '_is4wp_access_tags')[0]),
-                        'certificate' => get_post_meta($getOption, '_sfwd-courses')[0]['sfwd-courses_certificate'],
-                        'excluded_keywords' => get_option('exclude-module-keywords'),
-                    ];
-                }
-            }
-        }
 
         // Get memberships
-        $memberium = get_option('memberium');
-        $memberships = [];
-        if(isset($memberium['memberships'])){
-            // GET THE TAG LIST
-            $tags = [];
-            $table = 'memberium_tags';
-            $appname = "lf159"; # memberium_tags table appname field
-
-            $sql = "SELECT id, name FROM {$table} WHERE `appname` = '{$appname}' ORDER BY category, name ";
-            $result = $wpdb->get_results($sql, ARRAY_A);
-            foreach ($result as $data) {
-                $tags['mc'][$data['id']] = $data['name'];
-            }
-
-            $tags = $tags['mc'];
-            // INCLUDE TAG ON LIST
-            foreach ($memberium['memberships'] as $key => $data) {
-                $tag = !empty($tags[$key]) ? $tags[$key]." ({$key})" : '(Missing Tag)';
-                $memberium['memberships'][$key]['tag_name']  =  $tag;
-            }
-
-            $memberships = $memberium['memberships'];
-        }
-
+        $memberships = $this->getCourseMemberships();
 
         // Online Tutor
-        $onlineTutor =  get_users([
-            'role__in' => [ 'Administrator', 'group_leader'],
-            'fields'   => ['ID','user_email','display_name'],
-            'orderby'  => 'display_name'
-        ]);
-
+        $onlineTutor =  $this->getTutors();
 
         // Course Certificate
-        $courseCertificates = $posts->select(['ID, post_title'])->where('post_type', 'sfwd-certificates')->orderBy('post_title')->results();
-
-
-
+        $courseCertificates = $this->getCertificates();
 
         (new View('steps/steps'))
             ->with('course', $course)
@@ -228,5 +172,15 @@ class ClassroomController extends CoreController
             ->with('courseCertificates',$courseCertificates)
             ->with('memberships',$memberships)
             ->render();
+    }
+
+    /**
+     * Updates the classroom with the new values sent via the edit page.
+     *
+     * @param Request $request
+     */
+    public function update(Request $request)
+    {
+
     }
 }
