@@ -1,24 +1,23 @@
 <h3 class="cohort-title">Course Settings</h3>
 <?php
-    if(!empty($course_info)){
-        $aac = $course_info[$_GET['p_id']]['post_meta']['awc_active_course'] == 1 ? 'checked' : '';
-        $apc = $course_info[$_GET['p_id']]['post_meta']['awc_private_comments'] == 1 ? 'checked' : '';
-        $edcd = $course_info[$_GET['p_id']]['post_meta']['email_daily_comment_digest'] == 1 ? 'checked' : '';
-        $cc = $course_info[$_GET['p_id']]['post_meta']['cc_recipients'][0];
-
-        $crfc = !empty($course_info[$_GET['p_id']]['post_meta']['collapse_replies_for_course']) ? 'checked' : '';
+    if(isset($course)){
+        $aac = $course['awc_active_course'] == 'on' ? 'checked' : '';
+        $apc = $course['awc_private_comments'] == 'Allow private comments' ? 'checked' : '';
+        $edcd = $course['email_daily_comment_digest'] == 'on' ? 'checked' : '';
+        $cc = $course['cc_recipients'][0];
+        $crfc = !empty($course['collapse_replies_for_course']) ? 'checked' : '';
        
     } else {
-        $crfc = '';
-        $cc = '';
         $aac = '';
         $apc = '';
         $edcd = '';
+        $cc = '';
+        $crfc = '';
     }
 ?>
 <div class="oc-checkbox-row">
     <div class="oc-checkbox-row--left">
-        <input type="checkbox" id="awc_active_course" name="awc_active_course" <?= $acc; ?>>
+        <input type="checkbox" id="awc_active_course" name="awc_active_course" <?= $aac; ?>>
     </div>
     <div class="oc-checkbox-row--right">
         <label for="">Active Course</label>
