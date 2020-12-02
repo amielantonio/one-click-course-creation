@@ -32,9 +32,11 @@
 
 <div class="oc-form-group">
     <label for="course-title">Course Title</label>
+
     <?php
     $courseTitle = isset($course['course-title']) ? $course['course-title'] : "";
     ?>
+
     <input type="text" class="oc-form-control" name="course-title" id="course-title" value="<?php echo $courseTitle?>"  placeholder="Add New Course Title">
 
 </div>
@@ -51,6 +53,7 @@
                 <?php $selectedAuthor = (isset($course) && $data->ID==$course['author']) ? "selected='selected'" : "" ?>
 
                 <?php   echo "<option value='{$data->ID}' {$selectedAuthor}>{$data->display_name} ({$data->user_email})</option> ";?>
+
             <?php endforeach; ?>
         <?php endif; ?>
     </select>
