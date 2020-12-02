@@ -126,17 +126,35 @@ class ClassroomController extends CoreController
      */
     public function edit(Posts $posts)
     {
-        global $wpdb;
-        $posts = new Posts;
-
-        $courseContent = [];
         $getOptions = get_option('the-course-content');
+
+        // Get course content data
+        // This courseContent will serve as the course template for one-click
+        $courseContent = $this->getCourseContents($getOptions);
+
+        // Get memberships
+        $memberships = $this->getCourseMemberships();
+
+        // Online Tutor
+
+        $onlineTutor = $this->getTutors();
+
+        // Course Certificate
+        $courseCertificates = $this->getCertificates();
+
 
         //Fill up the information that will be used for editing
         $course = [
             'course-template' => get_post_meta($posts->ID, 'one-click-template')[0],
             'course-title' => $posts->post_title,
-            'author' => $posts->post_author
+            'author' => $posts->post_author,
+            'course-tags' => explode(', ',get_post_meta($posts->ID, '_is4wp_access_tags')[0]),
+            'course-certificate' => get_post_meta($posts->ID,'course-cert')[0],
+            'awc_active_course' => get_post_meta($posts->ID, 'awc_active_course')[0],
+            'collapse_replies_for_course' => get_post_meta($posts->ID, 'collapse_replies_for_course')[0],
+            'awc_private_comments' => get_post_meta($posts->ID, 'awc_private_comments')[0],
+            'email_daily_comment_digest' => get_post_meta($posts->ID, 'email_daily_comment_digest')[0],
+            'cc_recipients' => get_post_meta($posts->ID, 'cc_recipients'),
         ];
 
         $courseModules = learndash_get_course_lessons_list($posts->ID);
@@ -151,19 +169,7 @@ class ClassroomController extends CoreController
                 'date' => $date
             ];
         }
-        // Get course content data
-        // This courseContent will serve as the course template for one-click
-        $courseContent = $this->getCourseContents($getOptions);
 
-        // Get memberships
-        $memberships = $this->getCourseMemberships();
-
-        // Online Tutor
-
-        $onlineTutor = $this->getTutors();
-
-        // Course Certificate
-        $courseCertificates = $this->getCertificates();
 
         (new View('steps/steps'))
             ->with('course', $course)

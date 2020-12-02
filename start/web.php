@@ -22,11 +22,8 @@ Router::addSubMenu('One Click Classroom Setup', 'Course Setup', 'MainController@
 //Save
 Router::addChannel( 'post', 'classroom-store', 'ClassroomController@store' );
 //Update
+Router::get('classroom-edit', 'ClassroomController@edit');
 Router::addChannel( 'post', 'classroom-update', 'ClassroomController@update' );
-
-//Update
-Router::get('classroom_edit', 'ClassroomController@edit');
-Router::get('classroom_update', 'MainController@classroom_update_page');
 
 // Delete 
 Router::post('classroom-delete', 'MainController@delete' );
