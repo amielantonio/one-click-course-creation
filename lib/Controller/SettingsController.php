@@ -50,9 +50,11 @@ class SettingsController extends CoreController{
     }
 
     /**
-     * Requests
+     * Store request
      *
      * @param Request $request
+     * @return mixed|string
+     * @throws \Exception
      */
     public function store(Request $request)
     {
@@ -74,12 +76,32 @@ class SettingsController extends CoreController{
             } else {
                 add_option($key, $option['val']);
             }
-
         }
 
-        header('Location: https://coursesstaging3.writerscentre.com.au/wp-admin/admin.php?page=course-setup');
 
-//        Router::redirect('Plugin Settings');
+
+        $course = new Posts;
+
+        $courses = $course->select(['ID, post_title'])->where('post_type', 'sfwd-courses')->results();
+
+        $getOptions = get_option('the-course-content');
+
+        $excludeKeywords = implode(',', get_option('exclude-module-keywords'));
+
+        $option = [];
+        if(!empty($getOptions)) {
+
+            foreach($getOptions as $getOption) {
+                $courseSelected = get_post($getOption);
+                $option[$courseSelected->ID] = $courseSelected->post_title;
+            }
+        }
+
+        return (new View('pages/settings'))
+            ->with('courses', $courses)
+            ->with('excludeKeywords', $excludeKeywords)
+            ->with('option', $option)
+            ->render();
     }
 
 }
