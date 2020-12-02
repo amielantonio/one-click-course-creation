@@ -126,11 +126,24 @@ class ClassroomController extends CoreController
      */
     public function edit(Posts $posts)
     {
-        global $wpdb;
 
-        $courseContent = [];
         $getOptions = get_option('the-course-content');
-        
+
+        // Get course content data
+        // This courseContent will serve as the course template for one-click
+        $courseContent = $this->getCourseContents($getOptions);
+
+        // Get memberships
+        $memberships = $this->getCourseMemberships();
+
+        // Online Tutor
+
+        $onlineTutor = $this->getTutors();
+
+        // Course Certificate
+        $courseCertificates = $this->getCertificates();
+
+
         //Fill up the information that will be used for editing
         $course = [
             'course-template' => get_post_meta($posts->ID, 'one-click-template')[0],
@@ -157,20 +170,6 @@ class ClassroomController extends CoreController
                 'date' => $date
             ];
         }
-        // Get course content data
-        // This courseContent will serve as the course template for one-click
-        $courseContent = $this->getCourseContents($getOptions);
-
-        // Get memberships
-        $memberships = $this->getCourseMemberships();
-
-        // Online Tutor
-
-        $onlineTutor = $this->getTutors();
-
-        // Course Certificate
-        $courseCertificates = $this->getCertificates();
-
 
         (new View('steps/steps'))
             ->with('course', $course)
