@@ -158,6 +158,8 @@ class ClassroomController extends CoreController
             'cc_recipients' => get_post_meta($posts->ID, 'cc_recipients'),
         ];
 
+
+
         $courseModules = learndash_get_course_lessons_list($posts->ID);
 
         foreach ($courseModules as $courseModule) {

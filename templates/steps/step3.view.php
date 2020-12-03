@@ -1,11 +1,11 @@
 <h3 class="cohort-title">Course Settings</h3>
 <?php
     if(isset($course)){
-        $aac = $course['awc_active_course'] == 'on' ? 'checked' : '';
-        $apc = $course['awc_private_comments'] == 'Allow private comments' ? 'checked' : '';
-        $edcd = $course['email_daily_comment_digest'] == 'on' ? 'checked' : '';
+        $aac = $course['awc_active_course'] == 1 ? 'checked' : '';
+        $apc = $course['awc_private_comments'] != "" ? 'checked' : '';
+        $edcd = $course['email_daily_comment_digest'] == 1 ? 'checked' : '';
         $cc = $course['cc_recipients'][0];
-        $crfc = !empty($course['collapse_replies_for_course']) ? 'checked' : '';
+        $crfc = $course['collapse_replies_for_course'] != "" ? 'checked' : '';
        
     } else {
         $aac = '';

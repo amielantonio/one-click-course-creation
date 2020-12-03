@@ -103,6 +103,7 @@ label + .oc-form-control-select {
   padding: 10px 25px;
   border: 1px solid #f3f3f3;
   font-weight: 600;
+  text-decoration: none;
   transition: 0.3s all; }
   .oc-btn.oc-btn--primary {
     background-color: #00B1CD;
@@ -550,6 +551,9 @@ table.oc-table-striped {
 
 ._p-l--120 {
   padding-left: 120px !important; }
+
+._float-right {
+  float: right !important; }
 
 ._text-right {
   text-align: right !important; }

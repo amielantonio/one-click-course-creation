@@ -1,4 +1,9 @@
-<h1 class="_m-b--50">Setup Classroom</h1>
+<div style="display: flex;align-items: center" class="_m-b--50">
+    <h1 class="_m-r--10"> Setup Classroom</h1>
+    <?php if(isset($course)): ?>
+        <a href="<?php echo  get_site_url()."/wp-admin/admin.php?page=course-setup" ?>" class="oc-btn oc-btn--primary oc-btn--small">Create Classroom</a>
+    <?php endif; ?>
+</div>
 
 <div class="cohort-tabs" data-last-selected="1">
     <?php if(isset($course)) : ?>

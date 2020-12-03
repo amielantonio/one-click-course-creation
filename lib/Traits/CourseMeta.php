@@ -31,7 +31,6 @@ trait CourseMeta
         }
     }
 
-
     /**
      * Duplicate course_meta value from Dolly Course
      *
@@ -122,6 +121,7 @@ trait CourseMeta
         add_post_meta($course_id, 'cc_recipients', $request->input('cc_recipients'));
         add_post_meta($course_id, 'awc_private_comments', $private_commenting);
         add_post_meta($course_id, 'collapse_replies_for_course', $collapse_replies);
+        add_post_meta($course_id, 'one-click-template', $dolly->ID);
         $this->duplicate_course_meta($course_id, $dolly);
     }
 
@@ -195,13 +195,6 @@ trait CourseMeta
     {
 
         $courseContent = [];
-        if(!is_array($courses)) {
-            $courses[] = $courses;
-        }
-
-        if(!empty($courses)) {
-            return false;
-        }
 
         foreach($courses as $course) {
             $courseSelected = get_post($course);
