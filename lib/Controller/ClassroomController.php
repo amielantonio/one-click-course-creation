@@ -38,8 +38,13 @@ class ClassroomController extends CoreController
         $dates = $request->input('topic-date');
         $lessonNames = $request->input('lesson-name');
         $lessonIds = $request->input('lesson-id');
+        $templated = $request->input('use-template-val');
+
+//        var_dump($request->all());
 
         $author = $request->input('online-tutor') <> "" ? $request->input('online-tutor') : get_current_user_id();
+
+
 
         //Get Dolly
         $dolly = new Posts;
@@ -56,7 +61,7 @@ class ClassroomController extends CoreController
 
         //Save to database
         if ($course_id = wp_insert_post($course->get_columns())) {
-            echo "{$request->input('course-title')} course created<br />";
+            $this->courseEchoLogger($request->input('course-title'), true);
 
             // Post meta for the course
             $this->save_course_meta($course_id, $request, $dolly);
@@ -109,10 +114,10 @@ class ClassroomController extends CoreController
             add_post_meta($course_id, 'created-from-one-click', true);
 
             //Save Course certificate
-            add_post_meta($course_id, 'course-cert', $request->input('oc-course-cert'), true);
+            add_post_meta($course_id, 'learndash_certificate_options', $request->input('oc-course-cert'), true);
 
         } else {
-            echo "what just happened?";
+            $this->courseEchoLogger($request->input('course-title'), false);
         }
 
 

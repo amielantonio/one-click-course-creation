@@ -39,7 +39,10 @@ function onChangeCourseSelection() {
                 '<input type="text" name="lesson-name[]" class="oc-form-control module-name" id="module-title-' + index + '" value="' + item['lesson-title'] + '" autocomplete="off">' +
                 '</td>' +
                 '<td><input type="text" name="topic-date[]" class="oc-form-control module-date-picker" id="start-' + index + '"></td>' +
-                '<td class="_text-center"><input type="checkbox" name="add-original[]" class="" id="original-' + index + '"></td>' +
+                '<td class="_text-center">' +
+                    '<input type="checkbox" name="use-template[]" class="cb-use-template" id="template-' + index + '">' +
+                    '<input type="hidden" value="" name="use-template-val[]" class="txt-use-template" id="val-use-template-' + index + '">' +
+                '</td>' +
                 '</tr>');
 
         });
@@ -57,6 +60,7 @@ function onChangeCourseSelection() {
         datePicker(selectionData, excludedKeywords);
         settingsFill(courseMeta);
         applyIntervalButton(selectionData);
+        onClickTemplate();
 
         $_keywordsMatch = excludedKeywords;
         $_selectionData = selectionData;
@@ -75,7 +79,6 @@ function applyIntervalButton(data) {
     let btnApplyInterval = $('#btn-apply-interval');
 
     // resetDripDates();
-
     btnApplyInterval.on('click', function () {
         dripDatePicker(null, 0, data);
 
@@ -83,7 +86,21 @@ function applyIntervalButton(data) {
 
         // console.log(resetDripDates())
     });
+}
 
+function onClickTemplate() {
+
+    $('.cb-use-template').on('click', function(){
+
+        if($(this).prop("checked") == true){
+            $(this).siblings('[type="hidden"]').val('true');
+        }
+        else if($(this).prop("checked") == false){
+            $(this).siblings('[type="hidden"]').val('false');
+        }
+
+
+    });
 
 }
 

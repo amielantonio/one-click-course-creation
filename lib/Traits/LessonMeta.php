@@ -14,15 +14,15 @@ trait LessonMeta
     private function lessonEchoLogger( $lesson_name, $is_created = true )
     {
         if( $is_created ){
-            echo "<div class='logger_lesson'>
-                    <p class='logger_lesson_text'>
-                        <span class='logger_lesson_name'>{$lesson_name}</span> lesson created
+            echo "<div class='echo-logger logger_lesson'>
+                    <p class='echo-logger-text logger_lesson_text'>
+                        <span class='logger_lesson_name success'>{$lesson_name}</span> - lesson created
                     </p>
                   </div>";
         } else {
-            echo "<div class='logger_lesson'>
-                    <p class='logger_lesson_text'>
-                        <span class='logger_lesson_name'>{$lesson_name}</span> lesson created
+            echo "<div class='echo-logger logger_lesson'>
+                    <p class='echo-logger-text logger_lesson_text'>
+                        <span class='logger_lesson_name danger'>{$lesson_name}</span> - lesson created
                     </p>
                   </div>";
         }
@@ -66,11 +66,11 @@ trait LessonMeta
 
         foreach ($lessons_meta as $lesson_meta) {
 
-            $post_meta = get_post_meta($dollyLesson->ID, $lesson_meta);
+            $id = $dollyLesson->ID;
 
-            add_post_meta($lesson_id, $lesson_meta, $post_meta);
+            add_post_meta($lesson_id, $lesson_meta, get_post_meta($id, $lesson_meta));
 
-            $return[$lesson_meta] = $post_meta;
+            $return[$lesson_meta] = get_post_meta($id, $lesson_meta);
         }
 
         return $return;
@@ -120,7 +120,6 @@ trait LessonMeta
 
         // Combine result of the new lesson meta with values to the lesson meta then return everything.
         if (count($new_lesson_meta) > 0) {
-            echo "test enter new lesson";
             foreach ($lesson_meta as $key => $meta) {
                 $lesson_meta[$key] = (isset($new_lesson_meta[$key])) ? $new_lesson_meta[$key] : $lesson_meta[$key];
             }

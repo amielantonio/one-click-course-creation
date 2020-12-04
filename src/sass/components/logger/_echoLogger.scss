@@ -1,0 +1,22 @@
+.echo-logger {
+  display: block;
+  margin-bottom: 5px;
+  background: white;
+  padding: 5px;
+  width: 50%;
+  border-left: $blue 5px solid;
+
+  .echo-logger-text {
+
+    margin: 0 !important;
+
+    span.success {
+      color: $blue;
+    }
+
+    span.danger {
+      color: $red;
+    }
+  }
+
+}

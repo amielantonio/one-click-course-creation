@@ -36,7 +36,7 @@
                            autocomplete="off">
                 </td>
                 <td class="_text-center">
-                    <input type="checkbox" name="add-original[]" class="" id="original-<?php echo $x ?>">
+                    <input type="checkbox" name="use-template[]" class="" id="template-<?php echo $x ?>">
                 </td>
             </tr>
 

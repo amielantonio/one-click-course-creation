@@ -236,6 +236,20 @@ table.oc-table-striped {
   .cohort-tabs .cohort-buttons {
     margin-top: 20px; }
 
+.echo-logger {
+  display: block;
+  margin-bottom: 5px;
+  background: white;
+  padding: 5px;
+  width: 50%;
+  border-left: #00B1CD 5px solid; }
+  .echo-logger .echo-logger-text {
+    margin: 0 !important; }
+    .echo-logger .echo-logger-text span.success {
+      color: #00B1CD; }
+    .echo-logger .echo-logger-text span.danger {
+      color: #FE2F4B; }
+
 /*
  * OVERRIDES and UTILITIES
  * Helper classes that overrides a certain css property

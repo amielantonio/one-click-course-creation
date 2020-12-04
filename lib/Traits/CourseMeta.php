@@ -17,15 +17,15 @@ trait CourseMeta
     private function courseEchoLogger( $course_name, $is_created = true )
     {
         if( $is_created ){
-            echo "<div class='logger_course'>
-                    <p class='logger_course_text'>
-                        <span class='logger_course_name'>{$course_name}</span> course created
+            echo "<div class='echo-logger logger_course'>
+                    <p class='echo-logger-text logger_course_text'>
+                        <span class='logger_course_name success'>{$course_name}</span> - course created
                     </p>
                   </div>";
         } else {
-            echo "<div class='logger_course'>
-                    <p class='logger_course_text'>
-                        <span class='logger_course_name'>{$course_name}</span> course created
+            echo "<div class='echo-logger logger_course'>
+                    <p class='echo-logger-text logger_course_text'>
+                        <span class='logger_course_name danger'>{$course_name}</span> - course created
                     </p>
                   </div>";
         }
@@ -56,12 +56,13 @@ trait CourseMeta
         $return = [];
 
         foreach ($courses_meta as $course_meta) {
-            $post_meta = get_post_meta($dollyCourse->ID, $courses_meta);
+            $id = $dollyCourse->ID;
 
-            add_post_meta($course_id, $course_meta, $post_meta);
+            add_post_meta($course_id, $course_meta, get_post_meta($id, $course_meta)[0]);
 
-            $return[$course_meta] = $post_meta;
+            $return[$course_meta] = get_post_meta($id, $course_meta)[0];
         }
+
         return $return;
     }
 
