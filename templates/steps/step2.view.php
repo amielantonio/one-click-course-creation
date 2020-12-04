@@ -16,7 +16,7 @@
     <tr>
         <th style="width: 55%;">Module</th>
         <th>Start</th>
-        <th>Use Template</th>
+        <th>Use Original</th>
     </tr>
     </thead>
     <tbody>
@@ -47,7 +47,7 @@
     <tr>
         <th>Module</th>
         <th>Start</th>
-        <th>Use Template</th>
+        <th>Use Original</th>
     </tr>
     </tfoot>
 </table>

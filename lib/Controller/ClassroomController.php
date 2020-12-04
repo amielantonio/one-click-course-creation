@@ -38,12 +38,9 @@ class ClassroomController extends CoreController
         $dates = $request->input('topic-date');
         $lessonNames = $request->input('lesson-name');
         $lessonIds = $request->input('lesson-id');
-        $templated = $request->input('use-template-val');
-
-//        var_dump($request->all());
+        $original = $request->input('use-template-val');
 
         $author = $request->input('online-tutor') <> "" ? $request->input('online-tutor') : get_current_user_id();
-
 
 
         //Get Dolly
