@@ -98,6 +98,9 @@ label + .oc-form-control-select {
 .module-name {
   font-weight: bold; }
 
+.important {
+  color: #FE2F4B; }
+
 .oc-btn {
   cursor: pointer;
   padding: 10px 25px;
@@ -134,6 +137,8 @@ label + .oc-form-control-select {
   .oc-btn.oc-btn--small {
     font-size: 12px;
     padding: 6px 20px; }
+  .oc-btn:disabled {
+    opacity: 0.5; }
 
 table.oc-table {
   width: 100%;

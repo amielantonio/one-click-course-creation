@@ -4,6 +4,7 @@ moment().format();
 
 import form_fillup from './process/form_fillup';
 import private_or_digestive from './process/behaviours';
+import {form_validation} from './form/form_validation';
 
 
 /**
@@ -17,9 +18,10 @@ import private_or_digestive from './process/behaviours';
 
     form_fillup();
     private_or_digestive();
+    form_validation();
 
 
-    console.log( 'App Initialized' );
+    console.log( 'One Click JS Initialized' );
 
   });
 
