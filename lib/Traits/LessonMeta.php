@@ -8,7 +8,7 @@ trait LessonMeta
     /**
      * Course echo logger, renders whether the course was created or not.
      *
-     * @param $course_name
+     * @param $lesson_name
      * @param bool $is_created
      */
     private function lessonEchoLogger( $lesson_name, $is_created = true )
@@ -68,9 +68,9 @@ trait LessonMeta
 
             $id = $dollyLesson->ID;
 
-            add_post_meta($lesson_id, $lesson_meta, get_post_meta($id, $lesson_meta));
+            add_post_meta($lesson_id, $lesson_meta, get_post_meta($id, $lesson_meta)[0]);
 
-            $return[$lesson_meta] = get_post_meta($id, $lesson_meta);
+            $return[$lesson_meta] = get_post_meta($id, $lesson_meta)[0];
         }
 
         return $return;
