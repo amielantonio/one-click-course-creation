@@ -2,7 +2,8 @@
   display: block;
   margin-bottom: 10px;
   background: white;
-  padding: 5px;
+  padding: 10px;
+  padding-left: 20px;
   width: 50%;
   border-left: $blue 5px solid;
 
@@ -10,12 +11,14 @@
 
     margin: 0 !important;
 
-    span.success {
+    .success {
       color: $blue;
+      text-decoration: underline;
     }
 
-    span.danger {
+    .danger {
       color: $red;
+      text-decoration: underline;
     }
   }
 

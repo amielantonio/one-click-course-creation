@@ -240,15 +240,18 @@ table.oc-table-striped {
   display: block;
   margin-bottom: 10px;
   background: white;
-  padding: 5px;
+  padding: 10px;
+  padding-left: 20px;
   width: 50%;
   border-left: #00B1CD 5px solid; }
   .echo-logger .echo-logger-text {
     margin: 0 !important; }
-    .echo-logger .echo-logger-text span.success {
-      color: #00B1CD; }
-    .echo-logger .echo-logger-text span.danger {
-      color: #FE2F4B; }
+    .echo-logger .echo-logger-text .success {
+      color: #00B1CD;
+      text-decoration: underline; }
+    .echo-logger .echo-logger-text .danger {
+      color: #FE2F4B;
+      text-decoration: underline; }
 
 /*
  * OVERRIDES and UTILITIES

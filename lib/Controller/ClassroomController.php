@@ -120,6 +120,9 @@ class ClassroomController extends CoreController
             $this->courseEchoLogger($request->input('course-title'), false);
         }
 
+        (new View('templates/course-store'))
+            ->with('course', $course);
+
 
     }
 
@@ -216,7 +219,7 @@ class ClassroomController extends CoreController
         update_field('cc_recipients', $request->input('cc_recipients'), $request->input('post_id'));
         update_field('awc_private_comments', $private_commenting, $request->input('post_id'));
         update_field('collapse_replies_for_course', $collapse_replies, $request->input('post_id'));
-        
+
         $url = get_site_url()."/wp-admin/admin.php?page=one-click-classroom-setup";
         wp_redirect( $url );
 
