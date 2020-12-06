@@ -14,7 +14,6 @@ use Exception;
 
 class MainController extends CoreController
 {
-    use CourseMeta;
 
     public function __construct()
     {
@@ -74,63 +73,6 @@ class MainController extends CoreController
         return (new View('dashboard/dashboard'))
                 ->with('courseContent', $courseContent )
                 ->render();
-    }
-
-    /**
-     * Create entry
-     * Load the course setup page with course content, memberships,
-     * online tutor and course certificates
-     *
-     * @return array $courseContent
-     * @return array $memberships
-     * @return array $onlineTutor
-     * @return array $courseCertificates
-     * @return mixed|string
-     * @throws Exception
-     */
-
-    public function create()
-    {
-        $getOptions = get_option('the-course-content');
-
-        // This courseContent will serve as the course template for one-click
-        $courseContent = $this->getCourseContents($getOptions);
-
-        // Get memberships
-        $memberships = $this->getCourseMemberships();
-
-        // Online Tutor
-
-        $onlineTutor = $this->getTutors();
-
-        // Course Certificate
-        $courseCertificates = $this->getCertificates();
-   
-        
-        return (new View('steps/steps'))
-            ->with('memberships',$memberships)
-            ->with('courseContent', $courseContent )
-            ->with('onlineTutor',$onlineTutor)
-            ->with('courseCertificates',$courseCertificates)
-            ->render();
-
-    }
-
-    
-    /**
-     * Delete Classroom
-     *
-     * @param Request $request
-     * @throws \Exception
-     */
-    public function delete(Request $request){
-        $course = new Posts;
-        $id = $request->input('id');
-       
-        $data = $course->delete($id);
-        echo json_encode($data);
-        die();
-        
     }
 
     public function test(Request $request)

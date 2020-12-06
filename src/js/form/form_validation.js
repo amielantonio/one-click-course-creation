@@ -15,8 +15,6 @@ const initialize = () => {
     }
 
     courseContent.onchange = () => {
-
-      console.log(courseContent.value);
       if(courseContent.value === "" ) {
         btnSubmit.disabled = true;
       } else {
