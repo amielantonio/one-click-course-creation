@@ -232,6 +232,7 @@ class ClassroomController extends CoreController
      *
      * @param Request $request
      * @param Posts $posts
+     * @throws Exception
      */
     public function update(Request $request, Posts $posts)
     {
