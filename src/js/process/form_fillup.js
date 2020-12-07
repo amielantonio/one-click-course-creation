@@ -1,5 +1,11 @@
+/*
+ * Add javascript and jquery functions here
+ */
 import {inArray, inArraySubstr} from '../helpers/array';
 
+/*
+ * Require packages from node modules
+ */
 var moment = require('moment');
 
 export default function form_fillup() {
