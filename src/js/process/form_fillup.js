@@ -22,7 +22,6 @@ export default function form_fillup() {
 let $_keywordsMatch = [];
 let $_selectionData = [];
 let $_dripdates = [];
-let $_initialDate = "";
 let $_dates = [];
 
 /**
@@ -48,7 +47,7 @@ function onChangeCourseSelection() {
         '<input type="hidden" name="lesson-id[]" class="oc-form-control module-id" value="' + item['lesson-id'] + '">' +
         '<input type="text" name="lesson-name[]" class="oc-form-control module-name" id="module-title-' + index + '" value="' + item['lesson-title'] + '" autocomplete="off">' +
         '</td>' +
-        '<td><input type="text" name="topic-date[]" class="oc-form-control module-date-picker" id="start-' + index + '" autocomplete="off"></td>' +
+        '<td><input type="text" name="topic-date[]" class="oc-form-control module-date-picker" id="start-' + index + '" autocomplete="off" data-index="'+index+'"></td>' +
         '<td class="_text-center">' +
         '<input type="checkbox" name="use-template[]" class="cb-use-template" id="template-' + index + '">' +
         '<input type="hidden" value="" name="use-template-val[]" class="txt-use-template" id="val-use-template-' + index + '">' +
@@ -65,8 +64,6 @@ function onChangeCourseSelection() {
     instantiateDatePicker();
     $_dates = dripData(selectionData, excludedKeywords, $('#day-interval').val());
     applyDatesToPicker();
-
-
 
     addOnSelectToPicker();
 
@@ -100,15 +97,12 @@ function applyIntervalButton(data) {
     applyDatesToPicker();
 
   });
-
-
 }
 
 /**
  * bind value to hidden to the checkboxes
  */
 function onClickTemplate() {
-
   $('.cb-use-template').on('click', function () {
 
     if ($(this).prop("checked") == true) {
@@ -118,7 +112,6 @@ function onClickTemplate() {
       $(this).siblings('[type="hidden"]').val('false');
     }
   });
-
 }
 
 /**
@@ -134,96 +127,25 @@ function applyDatesToPicker() {
 
 }
 
+/**
+ * Add onSelect event to the date picker.
+ */
 function addOnSelectToPicker() {
   let datePicker = $('.module-date-picker').datepicker().data('datepicker');
 
-  datePicker.onSelect((fd, d, inst)=> {
+  datePicker.onchange = ((fd, d, inst)=> {
     console.log(d);
   });
 
-
-}
-
-/**
- * Drip Date picker process
- *
- * @param currentDate
- * @param dateIndex
- * @param dateData
- * @param startDate
- * @param pickerType
- */
-function dripDatePicker(currentDate = null, dateIndex, dateData, startDate = null, pickerType = null) {
-
-  // var startDate;
-  var startDateChecker;
-
-  if (currentDate == null) {
-    startDate = moment();
-  } else {
-    startDate = moment(currentDate);
-  }
-
-  startDate.hour(24);
-  startDate.minute(1);
-  startDate.add(-1, 'day');
-
-  var dayInterval = $('#day-interval').val();
-
-  // If date picker type is not null, then process them first before going inside the loop
-  if (pickerType !== null && dateIndex !== null) {
-    if (pickerType == 'start') {
-      dateIndex = dateIndex + 1;
-    }
-  }
+  datePicker.change((fd, d ,inst) =>{
+    console.log('test: ' + d)
+    console.log(inst);
+    let index = $(this).data('index');
+    let dayInterval = $('#day-interval').val();
 
 
-  //Loop in the date indexes to add the selection
-  for (var _x = dateIndex; _x < $_dripdates.length; _x++) {
-
-    if (!inArraySubstr($('#module-title-' + _x).val(), $_keywordsMatch)) {
-
-      startDate.add(dayInterval, 'day');
-
-
-      $('#start-' + _x).datepicker().data('datepicker').selectDate(startDate.toDate());
-    }
-
-    console.log('#start-' + _x);
-
-  }
-
-  // var prevValue = "";
-  // var initialDate = "";
-  //
-  // $_dripdates.forEach(function (value, index) {
-  //
-  //     if (prevValue == "" && value.date != "") {
-  //         initialDate = value.date;
-  //     }
-  //
-  //     if (initialDate != "" && value.has_passed == false) {
-  //
-  //         $_dripdates[index].has_passed = true;
-  //
-  //         startDate = moment(initialDate, 'DD MMMM, YYYY hh:mm a');
-  //
-  //         startDate.add(dayInterval, 'day');
-  //
-  //         $('#start-' + index).datepicker().data('datepicker').selectDate(startDate.toDate());
-  //
-  //
-  //     }
-  //
-  //     initialDate = "";
-  //
-  //     prevValue = value.date;
-  //
-  //
-  //     console.log("prev: " + prevValue);
-  //     console.log("init: " + initialDate);
-  //
-  // });
+    adjustDripData(d, index, dayInterval);
+  })
 }
 
 /**
@@ -290,6 +212,4 @@ function settingsFill(data) {
 
     $('#oc-course-cert').trigger("change");
   }
-
-
 }
