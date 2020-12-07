@@ -57,10 +57,10 @@ class ClassroomController extends CoreController
 
 
         return (new View('steps/steps'))
-            ->with('memberships',$memberships)
-            ->with('courseContent', $courseContent )
-            ->with('onlineTutor',$onlineTutor)
-            ->with('courseCertificates',$courseCertificates)
+            ->with('memberships', $memberships)
+            ->with('courseContent', $courseContent)
+            ->with('onlineTutor', $onlineTutor)
+            ->with('courseCertificates', $courseCertificates)
             ->render();
 
     }
@@ -78,7 +78,7 @@ class ClassroomController extends CoreController
         $dates = $request->input('topic-date');
         $lessonNames = $request->input('lesson-name');
         $lessonIds = $request->input('lesson-id');
-        $original = $request->input('use-template-val');
+        $originalTemps = $request->input('use-template-val');
 
         $author = $request->input('online-tutor') <> "" ? $request->input('online-tutor') : get_current_user_id();
 
@@ -114,7 +114,7 @@ class ClassroomController extends CoreController
                 //Populate Lesson Model with the info needed to insert the lesson in WP_Post
                 $lesson->post_title = $lessonNames[$i];
                 $lesson->post_author = get_current_user_id();
-                $lesson->post_content = $dollyLesson->post_content;
+                $lesson->post_content =  $dollyLesson->post_content;
                 $lesson->post_excerpt = $dollyLesson->post_excerpt;
                 $lesson->post_status = "publish";
                 $lesson->post_type = $dollyLesson->post_type;
@@ -150,6 +150,9 @@ class ClassroomController extends CoreController
             //Save the relationship as post meta
             add_post_meta($course_id, 'created-from-one-click', true);
 
+            //save template val
+            add_post_meta($course_id, 'save-template-val', $originalTemps);
+
             //Save Course certificate
             add_post_meta($course_id, 'learndash_certificate_options', $request->input('oc-course-cert'), true);
 
@@ -182,27 +185,24 @@ class ClassroomController extends CoreController
         $memberships = $this->getCourseMemberships();
 
         // Online Tutor
-
         $onlineTutor = $this->getTutors();
 
         // Course Certificate
         $courseCertificates = $this->getCertificates();
-
 
         //Fill up the information that will be used for editing
         $course = [
             'course-template' => get_post_meta($posts->ID, 'one-click-template')[0],
             'course-title' => $posts->post_title,
             'author' => $posts->post_author,
-            'course-tags' => explode(', ',get_post_meta($posts->ID, '_is4wp_access_tags')[0]),
-            'course-certificate' => get_post_meta($posts->ID,'course-cert')[0],
+            'course-tags' => explode(', ', get_post_meta($posts->ID, '_is4wp_access_tags')[0]),
+            'course-certificate' => get_post_meta($posts->ID, 'course-cert')[0],
             'awc_active_course' => get_post_meta($posts->ID, 'awc_active_course')[0],
             'collapse_replies_for_course' => get_post_meta($posts->ID, 'collapse_replies_for_course')[0],
             'awc_private_comments' => get_post_meta($posts->ID, 'awc_private_comments')[0],
             'email_daily_comment_digest' => get_post_meta($posts->ID, 'email_daily_comment_digest')[0],
             'cc_recipients' => get_post_meta($posts->ID, 'cc_recipients'),
         ];
-
 
 
         $courseModules = learndash_get_course_lessons_list($posts->ID);
@@ -231,34 +231,74 @@ class ClassroomController extends CoreController
      * Updates the classroom with the new values sent via the edit page.
      *
      * @param Request $request
+     * @param Posts $posts
      */
-    public function update(Request $request)
+    public function update(Request $request, Posts $posts)
     {
+        $dates = $request->input('topic-date');
+        $lessonNames = $request->input('lesson-name');
+        $lessonIds = $request->input('lesson-id');
+        $originalTemps = $request->input('use-template-val');
 
-        $data = [
+        $courseData = [
             'ID' => $request->input('post_id'),
             'post_title' => $request->input('course-title'),
             'post_author' => $request->input('online-tutor')
         ];
-        wp_update_post($data);
+        if ($courseID = wp_update_post($courseData)) {
+            $this->courseEchoLogger($request->input('course-title'), true);
 
-        update_field('course-cert', $request->input('oc-course-cert'), $request->input('post_id'));
+            for($i = 0; $i < count($lessonNames); $i++) {
 
-        update_field('_is4wp_access_tags', implode(', ', $request->input('oc-tag-id')), $request->input('post_id') );
+                $lesson = new Posts;
+
+                $lesson->find($lessonIds[$i]);
+
+                $lessonData = [
+                    'ID' => $lessonIds[$i],
+                    'post_title' => $lessonNames[$i],
+                    'post_name' => sanitize_title($lessonNames[$i]),
+                ];
+
+                if( $lessonID = wp_update_post($lessonData)){
+                    //Check if there is a date available for the current array node.
+                    $lessonDate = $dates[$i] <> "" ? Carbon::createFromFormat('d F, Y g:i a', $dates[$i])->format('Y-m-d g:i a') : "";
+
+                    //Add new leson meta
+                    $new_lesson_meta = [
+                        "sfwd-lessons_visible_after_specific_date" => $lessonDate
+                    ];
+
+                    update_post_meta($lessonID, '_sfwd-lessons', $this->create_sfwd_lesson($lessonID, $lesson, $new_lesson_meta));
+
+                    $this->lessonEchoLogger($lessonNames[$i], true);
+                }
+            }
+
+            /*
+             * Save the course meta
+             */
+
+            update_field('course-cert', $request->input('oc-course-cert'), $request->input('post_id'));
+
+            update_field('_is4wp_access_tags', implode(', ', $request->input('oc-tag-id')), $request->input('post_id'));
 
 
-        // Update Course Settings
-        $private_commenting = ($request->input('awc_private_comments') <> "") ? "Allow private comments" : "";
-        $collapse_replies = ($request->input('collapse_replies_for_course') <> "") ? "Collapse replies for this course" : "";
+            // Update Course Settings
+            $private_commenting = ($request->input('awc_private_comments') <> "") ? "Allow private comments" : "";
+            $collapse_replies = ($request->input('collapse_replies_for_course') <> "") ? "Collapse replies for this course" : "";
 
-        update_field('awc_active_course', $request->input('awc_active_course'), $request->input('post_id'));
-        update_field('email_daily_comment_digest', $request->input('email_daily_comment_digest'), $request->input('post_id'));
-        update_field('cc_recipients', $request->input('cc_recipients'), $request->input('post_id'));
-        update_field('awc_private_comments', $private_commenting, $request->input('post_id'));
-        update_field('collapse_replies_for_course', $collapse_replies, $request->input('post_id'));
+            update_field('awc_active_course', $request->input('awc_active_course'), $request->input('post_id'));
+            update_field('email_daily_comment_digest', $request->input('email_daily_comment_digest'), $request->input('post_id'));
+            update_field('cc_recipients', $request->input('cc_recipients'), $request->input('post_id'));
+            update_field('awc_private_comments', $private_commenting, $request->input('post_id'));
+            update_field('collapse_replies_for_course', $collapse_replies, $request->input('post_id'));
 
-        $url = get_site_url()."/wp-admin/admin.php?page=one-click-classroom-setup";
-        wp_redirect( $url );
+
+        }
+
+        $url = get_site_url() . "/wp-admin/admin.php?page=one-click-classroom-setup";
+        wp_redirect($url);
 
     }
 
@@ -268,13 +308,13 @@ class ClassroomController extends CoreController
      * @param Request $request
      * @throws Exception
      */
-    public function delete(Request $request){
+    public function delete(Request $request)
+    {
         $course = new Posts;
         $id = $request->input('id');
 
         $data = $course->delete($id);
         echo json_encode($data);
         die();
-
     }
 }

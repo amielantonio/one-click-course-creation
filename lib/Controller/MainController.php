@@ -75,9 +75,4 @@ class MainController extends CoreController
                 ->render();
     }
 
-    public function test(Request $request)
-    {
-        var_dump($request);
-    }
-
 }

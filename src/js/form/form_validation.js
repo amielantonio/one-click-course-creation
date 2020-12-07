@@ -10,7 +10,7 @@ const initialize = () => {
   const btnSubmit = document.getElementById('btn-classroom');
 
   if( courseContent !== null ){
-    if (courseContent.value === "" || courseContent.value !== undefined) {
+    if ( courseContent.value === "" ) {
       btnSubmit.setAttribute('disabled', 'disabled');
     }
 
