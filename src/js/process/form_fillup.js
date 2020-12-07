@@ -1,7 +1,12 @@
 /*
  * Add javascript and jquery functions here
  */
-import {inArray, inArraySubstr} from '../helpers/array';
+import {inArraySubstr} from '../helpers/array';
+import {
+  instantiateDatePicker,
+  createDripData,
+} from "../dripdates/dripdates";
+
 
 /*
  * Require packages from node modules
@@ -9,7 +14,8 @@ import {inArray, inArraySubstr} from '../helpers/array';
 var moment = require('moment');
 
 export default function form_fillup() {
-    onChangeCourseSelection();
+  onChangeCourseSelection();
+
 }
 
 let $_keywordsMatch = [];
@@ -22,57 +28,53 @@ let $_initialDate = "";
  */
 function onChangeCourseSelection() {
 
-    let selection = $('#course-content');
+  let selection = $('#course-content');
 
-    selection.change(function () {
-        let selectionID = $(this).val();
-        let table = $('#tbl-module-schedule');
-        let $courseTitle = $('#course-title');
-        let selectionData = $('#option-' + selectionID).data('lessons');
-        let courseMeta = $('#option-' + selectionID).data('course-meta');
-        let excludedKeywords = courseMeta.excluded_keywords;
+  selection.change(function () {
+    let selectionID = $(this).val();
+    let table = $('#tbl-module-schedule');
+    let $courseTitle = $('#course-title');
+    let selectionData = $('#option-' + selectionID).data('lessons');
+    let courseMeta = $('#option-' + selectionID).data('course-meta');
+    let excludedKeywords = courseMeta.excluded_keywords;
 
-        table.find('tbody tr').remove();
+    table.find('tbody tr').remove();
 
-        var x = 0;
-
-        console.log(selectionData);
-
-        selectionData.forEach(function (item, index) {
-            table.find('tbody').append('<tr>' +
-                '<td>' +
-                '<input type="hidden" name="lesson-id[]" class="oc-form-control module-id" value="' + item['lesson-id'] + '">' +
-                '<input type="text" name="lesson-name[]" class="oc-form-control module-name" id="module-title-' + index + '" value="' + item['lesson-title'] + '" autocomplete="off">' +
-                '</td>' +
-                '<td><input type="text" name="topic-date[]" class="oc-form-control module-date-picker" id="start-' + index + '"></td>' +
-                '<td class="_text-center">' +
-                    '<input type="checkbox" name="use-template[]" class="cb-use-template" id="template-' + index + '">' +
-                    '<input type="hidden" value="" name="use-template-val[]" class="txt-use-template" id="val-use-template-' + index + '">' +
-                '</td>' +
-                '</tr>');
-
-        });
-
-        $courseTitle.val($('#option-' + selectionID).data('course-title'));
-
-        $('.module-date-picker').datepicker({
-            language: "en",
-            dateFormat: 'dd MM, yyyy',
-            timepicker: true,
-            todayButton: new Date(),
-            autoClose: true
-        });
-
-        datePicker(selectionData, excludedKeywords);
-        settingsFill(courseMeta);
-        applyIntervalButton(selectionData);
-        onClickTemplate();
-
-        $_keywordsMatch = excludedKeywords;
-        $_selectionData = selectionData;
-
+    selectionData.forEach(function (item, index) {
+      table.find('tbody').append('<tr>' +
+        '<td>' +
+        '<input type="hidden" name="lesson-id[]" class="oc-form-control module-id" value="' + item['lesson-id'] + '">' +
+        '<input type="text" name="lesson-name[]" class="oc-form-control module-name" id="module-title-' + index + '" value="' + item['lesson-title'] + '" autocomplete="off">' +
+        '</td>' +
+        '<td><input type="text" name="topic-date[]" class="oc-form-control module-date-picker" id="start-' + index + '" autocomplete="off"></td>' +
+        '<td class="_text-center">' +
+        '<input type="checkbox" name="use-template[]" class="cb-use-template" id="template-' + index + '">' +
+        '<input type="hidden" value="" name="use-template-val[]" class="txt-use-template" id="val-use-template-' + index + '">' +
+        '</td>' +
+        '</tr>');
 
     });
+    //add values to hidden fields in the checkbox
+    onClickTemplate();
+    $courseTitle.val($('#option-' + selectionID).data('course-title'));
+    settingsFill(courseMeta);
+
+    //See drip process below;
+    instantiateDatePicker();
+    createDripData(selectionData, excludedKeywords, $('#day-interval').val());
+
+    // datePicker(selectionData, excludedKeywords);
+
+    // applyIntervalButton(selectionData);
+
+
+
+    //Add values to global variables
+    $_keywordsMatch = excludedKeywords;
+    $_selectionData = selectionData;
+
+
+  });
 }
 
 /**
@@ -82,31 +84,29 @@ function onChangeCourseSelection() {
  */
 function applyIntervalButton(data) {
 
-    let btnApplyInterval = $('#btn-apply-interval');
+  let btnApplyInterval = $('#btn-apply-interval');
 
-    // resetDripDates();
-    btnApplyInterval.on('click', function () {
-        dripDatePicker(null, 0, data);
+  // resetDripDates();
+  btnApplyInterval.on('click', function () {
+    dripDatePicker(null, 0, data);
 
-        console.log($_dripdates);
+    console.log($_dripdates);
 
-        // console.log(resetDripDates())
-    });
+    // console.log(resetDripDates())
+  });
 }
 
 function onClickTemplate() {
 
-    $('.cb-use-template').on('click', function(){
+  $('.cb-use-template').on('click', function () {
 
-        if($(this).prop("checked") == true){
-            $(this).siblings('[type="hidden"]').val('true');
-        }
-        else if($(this).prop("checked") == false){
-            $(this).siblings('[type="hidden"]').val('false');
-        }
-
-
-    });
+    if ($(this).prop("checked") == true) {
+      $(this).siblings('[type="hidden"]').val('true');
+    }
+    else if ($(this).prop("checked") == false) {
+      $(this).siblings('[type="hidden"]').val('false');
+    }
+  });
 
 }
 
@@ -118,36 +118,36 @@ function onClickTemplate() {
  */
 function datePicker(data, excludedKeywords) {
 
-    var startDate = moment();
-    startDate.hour(24);
-    startDate.minute(1);
-    startDate.add(-1, 'day');
+  var startDate = moment();
+  startDate.hour(24);
+  startDate.minute(1);
+  startDate.add(-1, 'day');
 
-    var dayInterval = $('#day-interval').val();
+  var dayInterval = $('#day-interval').val();
 
 
-    //Loop thru all data to add the value inside the air-datepicker.
-    data.forEach(function (item, index) {
+  //Loop thru all data to add the value inside the air-datepicker.
+  data.forEach(function (item, index) {
 
-        if (!inArraySubstr($('#module-title-' + index).val(), excludedKeywords)) {
+    if (!inArraySubstr($('#module-title-' + index).val(), excludedKeywords)) {
 
-            $('#start-' + index).datepicker().data('datepicker').selectDate(startDate.toDate());
+      $('#start-' + index).datepicker().data('datepicker').selectDate(startDate.toDate());
 
-            startDate.add(dayInterval, 'day');
+      startDate.add(dayInterval, 'day');
 
-            $('#start-' + index).datepicker().data('datepicker').update('onSelect', function (fd, d, inst) {
-                // Do nothing if selection was cleared
-                if (!d) return;
+      $('#start-' + index).datepicker().data('datepicker').update('onSelect', function (fd, d, inst) {
+        // Do nothing if selection was cleared
+        if (!d) return;
 
-                dripDatePicker(d, index, data, 'start');
-            });
-        }
+        dripDatePicker(d, index, data, 'start');
+      });
+    }
 
-        $_dripdates.push({
-            date: $('#start-' + index).val(),
-            has_passed: false
-        });
+    $_dripdates.push({
+      date: $('#start-' + index).val(),
+      has_passed: false
     });
+  });
 }
 
 /**
@@ -161,76 +161,75 @@ function datePicker(data, excludedKeywords) {
  */
 function dripDatePicker(currentDate = null, dateIndex, dateData, startDate = null, pickerType = null) {
 
-    // var startDate;
-    var startDateChecker;
+  // var startDate;
+  var startDateChecker;
 
-    if (currentDate == null) {
-        startDate = moment();
-    } else {
-        startDate = moment(currentDate);
+  if (currentDate == null) {
+    startDate = moment();
+  } else {
+    startDate = moment(currentDate);
+  }
+
+  startDate.hour(24);
+  startDate.minute(1);
+  startDate.add(-1, 'day');
+
+  var dayInterval = $('#day-interval').val();
+
+  // If date picker type is not null, then process them first before going inside the loop
+  if (pickerType !== null && dateIndex !== null) {
+    if (pickerType == 'start') {
+      dateIndex = dateIndex + 1;
+    }
+  }
+
+
+  //Loop in the date indexes to add the selection
+  for (var _x = dateIndex; _x < $_dripdates.length; _x++) {
+
+    if (!inArraySubstr($('#module-title-' + _x).val(), $_keywordsMatch)) {
+
+      startDate.add(dayInterval, 'day');
+
+
+      $('#start-' + _x).datepicker().data('datepicker').selectDate(startDate.toDate());
     }
 
-    startDate.hour(24);
-    startDate.minute(1);
-    startDate.add(-1, 'day');
+    console.log('#start-' + _x);
 
-    var dayInterval = $('#day-interval').val();
+  }
 
-    // If date picker type is not null, then process them first before going inside the loop
-    if (pickerType !== null && dateIndex !== null) {
-        if (pickerType == 'start') {
-            dateIndex = dateIndex + 1;
-        }
-    }
-
-
-    //Loop in the date indexes to add the selection
-    for( var _x = dateIndex; _x < $_dripdates.length; _x++ ) {
-
-      if(! inArraySubstr($('#module-title-' + _x).val(), $_keywordsMatch) ) {
-
-        startDate.add(dayInterval, 'day');
-
-
-
-        $('#start-' + _x).datepicker().data('datepicker').selectDate(startDate.toDate());
-      }
-
-        console.log('#start-' + _x);
-
-    }
-
-    // var prevValue = "";
-    // var initialDate = "";
-    //
-    // $_dripdates.forEach(function (value, index) {
-    //
-    //     if (prevValue == "" && value.date != "") {
-    //         initialDate = value.date;
-    //     }
-    //
-    //     if (initialDate != "" && value.has_passed == false) {
-    //
-    //         $_dripdates[index].has_passed = true;
-    //
-    //         startDate = moment(initialDate, 'DD MMMM, YYYY hh:mm a');
-    //
-    //         startDate.add(dayInterval, 'day');
-    //
-    //         $('#start-' + index).datepicker().data('datepicker').selectDate(startDate.toDate());
-    //
-    //
-    //     }
-    //
-    //     initialDate = "";
-    //
-    //     prevValue = value.date;
-    //
-    //
-    //     console.log("prev: " + prevValue);
-    //     console.log("init: " + initialDate);
-    //
-    // });
+  // var prevValue = "";
+  // var initialDate = "";
+  //
+  // $_dripdates.forEach(function (value, index) {
+  //
+  //     if (prevValue == "" && value.date != "") {
+  //         initialDate = value.date;
+  //     }
+  //
+  //     if (initialDate != "" && value.has_passed == false) {
+  //
+  //         $_dripdates[index].has_passed = true;
+  //
+  //         startDate = moment(initialDate, 'DD MMMM, YYYY hh:mm a');
+  //
+  //         startDate.add(dayInterval, 'day');
+  //
+  //         $('#start-' + index).datepicker().data('datepicker').selectDate(startDate.toDate());
+  //
+  //
+  //     }
+  //
+  //     initialDate = "";
+  //
+  //     prevValue = value.date;
+  //
+  //
+  //     console.log("prev: " + prevValue);
+  //     console.log("init: " + initialDate);
+  //
+  // });
 }
 
 /**
@@ -239,64 +238,64 @@ function dripDatePicker(currentDate = null, dateIndex, dateData, startDate = nul
  * @param data
  */
 function settingsFill(data) {
-    let cbActiveCourse = $('#awc_active_course');
-    let cbCollapseReplies = $('#collapse_replies_for_course');
-    let cbDailyDigests = $('#email_daily_comment_digest');
-    let cbPrivateComments = $('#awc_private_comments');
-    let ccRecipients = $('#cc_recipients');
-    let ddTags = $('#oc-tag-id');
-    let ddCertificate = $('#oc-course-cert');
+  let cbActiveCourse = $('#awc_active_course');
+  let cbCollapseReplies = $('#collapse_replies_for_course');
+  let cbDailyDigests = $('#email_daily_comment_digest');
+  let cbPrivateComments = $('#awc_private_comments');
+  let ccRecipients = $('#cc_recipients');
+  let ddTags = $('#oc-tag-id');
+  let ddCertificate = $('#oc-course-cert');
 
-    if (data['awc_active_course'] == 1) {
-        cbActiveCourse.prop('checked', true);
-    } else {
-        cbActiveCourse.prop('checked', false);
-    }
+  if (data['awc_active_course'] == 1) {
+    cbActiveCourse.prop('checked', true);
+  } else {
+    cbActiveCourse.prop('checked', false);
+  }
 
-    if (data['collapse_replies_for_course'] != "") {
-        cbCollapseReplies.prop('checked', true);
-    } else {
-        cbCollapseReplies.prop('checked', false);
-    }
+  if (data['collapse_replies_for_course'] != "") {
+    cbCollapseReplies.prop('checked', true);
+  } else {
+    cbCollapseReplies.prop('checked', false);
+  }
 
-    if (data['email_daily_comment_digest'] == 1) {
-        cbDailyDigests.prop('checked', true);
-    } else {
-        cbDailyDigests.prop('checked', false)
-    }
+  if (data['email_daily_comment_digest'] == 1) {
+    cbDailyDigests.prop('checked', true);
+  } else {
+    cbDailyDigests.prop('checked', false)
+  }
 
-    if (data['awc_private_comments'] != "") {
-        cbPrivateComments.prop('checked', true);
-    } else {
-        cbPrivateComments.prop('checked', false);
-    }
+  if (data['awc_private_comments'] != "") {
+    cbPrivateComments.prop('checked', true);
+  } else {
+    cbPrivateComments.prop('checked', false);
+  }
 
-    if (data['cc_recipients'][0] !== "") {
-        ccRecipients.val(data['cc_recipients']);
-    } else {
-        ccRecipients.val();
-    }
+  if (data['cc_recipients'][0] !== "") {
+    ccRecipients.val(data['cc_recipients']);
+  } else {
+    ccRecipients.val();
+  }
 
-    if (data['tag_ids'][0] !== "") {
-        var tags = data['tag_ids'][0];
+  if (data['tag_ids'][0] !== "") {
+    var tags = data['tag_ids'][0];
 
-        tags = tags.split(",");
+    tags = tags.split(",");
 
-        tags.forEach(function (val, index) {
-            $('#oc-tag-id').val(tags);
-        });
+    tags.forEach(function (val, index) {
+      $('#oc-tag-id').val(tags);
+    });
 
-        $('#oc-tag-id').trigger("change");
+    $('#oc-tag-id').trigger("change");
 
-    }
+  }
 
-    if (data['certificate'] !== "") {
-        var cert = data['certificate'];
+  if (data['certificate'] !== "") {
+    var cert = data['certificate'];
 
-        $('#oc-course-cert').val(cert);
+    $('#oc-course-cert').val(cert);
 
-        $('#oc-course-cert').trigger("change");
-    }
+    $('#oc-course-cert').trigger("change");
+  }
 
 
 }
@@ -304,8 +303,8 @@ function settingsFill(data) {
 
 function resetDripDates() {
 
-    $_dripdates.forEach(function (value, index) {
-        value.has_passed = false;
-    });
+  $_dripdates.forEach(function (value, index) {
+    value.has_passed = false;
+  });
 
 }
