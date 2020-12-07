@@ -24,17 +24,21 @@ export const instantiateDatePicker = () => {
  * @param lessonData
  * @param excludedKeywords
  * @param dayInterval
+ * @param startDate
  * @returns {Array} - returns the global state data of the drip dates
  */
-export const createDripData = (lessonData, excludedKeywords, dayInterval = 7) => {
+export const dripData = (lessonData, excludedKeywords, dayInterval = 7, startDate = "") => {
   let passedDate = "";
   let $date = "";
-  let startDate = $_moment();
+  startDate = startDate === "" ? $_moment() : $_moment(startDate);
   let is_startDate = false;
   let has_startDate = false;
 
+  $_dates = []; //reset the global $_dates variable
+
   startDate.hour(24);
   startDate.minute(1);
+  startDate.add(-1, 'day'); // subtract 1 day to get the date today, the date was adjusted due to the increase in hrs
 
   lessonData.forEach((item, index) => {
 
@@ -47,7 +51,7 @@ export const createDripData = (lessonData, excludedKeywords, dayInterval = 7) =>
       //
       // has_startDate - is an identifier whether a startDate has been found
       // is_startDate  - is a variable to identify whether the array is a startDate or not
-      if(has_startDate){
+      if (has_startDate) {
         startDate.add(dayInterval, 'day');
         is_startDate = false;
       } else {
@@ -58,7 +62,9 @@ export const createDripData = (lessonData, excludedKeywords, dayInterval = 7) =>
       passedDate = "";
     }
 
-    $date = (passedDate !== "" ) ? passedDate.toDate() : "";
+    $date = (passedDate !== "") ? passedDate.toDate() : "";
+
+    // Push data to $_dates global variable
 
     $_dates.push({
       lesson_id: item['lesson-id'],
@@ -68,22 +74,12 @@ export const createDripData = (lessonData, excludedKeywords, dayInterval = 7) =>
       is_start_date: is_startDate
     })
 
+
   });
 
   return $_dates;
 };
 
-export const adjustDates = (startDate, formData) => {
+export const adjustDripData = (startDate, formData) => {
 
 };
-
-
-export const setDates = (dates) => {
-  $_dates = dates;
-};
-
-export const getDates = () => {
-  return $_dates;
-};
-
-

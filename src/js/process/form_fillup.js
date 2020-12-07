@@ -4,7 +4,8 @@
 import {inArraySubstr} from '../helpers/array';
 import {
   instantiateDatePicker,
-  createDripData,
+  dripData,
+  adjustDripData,
 } from "../dripdates/dripdates";
 
 
@@ -22,6 +23,7 @@ let $_keywordsMatch = [];
 let $_selectionData = [];
 let $_dripdates = [];
 let $_initialDate = "";
+let $_dates = [];
 
 /**
  * on Change Course selection
@@ -61,13 +63,14 @@ function onChangeCourseSelection() {
 
     //See drip process below;
     instantiateDatePicker();
-    createDripData(selectionData, excludedKeywords, $('#day-interval').val());
-
-    // datePicker(selectionData, excludedKeywords);
-
-    // applyIntervalButton(selectionData);
+    $_dates = dripData(selectionData, excludedKeywords, $('#day-interval').val());
+    addDatesToPicker();
 
 
+
+    addOnSelectToPicker();
+
+    applyIntervalButton(selectionData);
 
     //Add values to global variables
     $_keywordsMatch = excludedKeywords;
@@ -86,16 +89,20 @@ function applyIntervalButton(data) {
 
   let btnApplyInterval = $('#btn-apply-interval');
 
-  // resetDripDates();
   btnApplyInterval.on('click', function () {
-    dripDatePicker(null, 0, data);
 
-    console.log($_dripdates);
+    let startDate = $('.start-date-interval').datepicker().data('datepicker');
+    $_dates = dripData(data, $_keywordsMatch, 7, startDate.selectedDates[0]);
+    addDatesToPicker();
 
-    // console.log(resetDripDates())
   });
+
+
 }
 
+/**
+ * bind value to hidden to the checkboxes
+ */
 function onClickTemplate() {
 
   $('.cb-use-template').on('click', function () {
@@ -111,43 +118,32 @@ function onClickTemplate() {
 }
 
 /**
- * Initial Drip behaviour and adding of onSelect property for air-datepicker modules.
- *
- * @param data
- * @param excludedKeywords
+ * Add dates to the date picker, the data came from the global $_dates which
  */
-function datePicker(data, excludedKeywords) {
+function addDatesToPicker() {
 
-  var startDate = moment();
-  startDate.hour(24);
-  startDate.minute(1);
-  startDate.add(-1, 'day');
+  $_dates.forEach((item, index)=> {
 
-  var dayInterval = $('#day-interval').val();
+    $('#start-' + index).datepicker().data('datepicker').selectDate(item['date']);
 
-
-  //Loop thru all data to add the value inside the air-datepicker.
-  data.forEach(function (item, index) {
-
-    if (!inArraySubstr($('#module-title-' + index).val(), excludedKeywords)) {
-
-      $('#start-' + index).datepicker().data('datepicker').selectDate(startDate.toDate());
-
-      startDate.add(dayInterval, 'day');
-
-      $('#start-' + index).datepicker().data('datepicker').update('onSelect', function (fd, d, inst) {
-        // Do nothing if selection was cleared
-        if (!d) return;
-
-        dripDatePicker(d, index, data, 'start');
-      });
-    }
-
-    $_dripdates.push({
-      date: $('#start-' + index).val(),
-      has_passed: false
-    });
   });
+
+}
+
+function addOnSelectToPicker() {
+  let datePicker = document.querySelector('.module-date-picker');
+
+  datePicker.onchange = () => {
+    console.log(this);
+
+    console.log('test');
+  }
+
+  $('.module-date-picker').change(()=> {
+    console.log('test');
+    console.log($(this).val());
+  })
+
 }
 
 /**
@@ -297,14 +293,5 @@ function settingsFill(data) {
     $('#oc-course-cert').trigger("change");
   }
 
-
-}
-
-
-function resetDripDates() {
-
-  $_dripdates.forEach(function (value, index) {
-    value.has_passed = false;
-  });
 
 }
