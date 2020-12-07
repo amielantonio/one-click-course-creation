@@ -64,7 +64,7 @@ function onChangeCourseSelection() {
     //See drip process below;
     instantiateDatePicker();
     $_dates = dripData(selectionData, excludedKeywords, $('#day-interval').val());
-    addDatesToPicker();
+    applyDatesToPicker();
 
 
 
@@ -92,8 +92,12 @@ function applyIntervalButton(data) {
   btnApplyInterval.on('click', function () {
 
     let startDate = $('.start-date-interval').datepicker().data('datepicker');
-    $_dates = dripData(data, $_keywordsMatch, 7, startDate.selectedDates[0]);
-    addDatesToPicker();
+    let dayInterval = $('#day-interval').val();
+
+    $_dates = dripData(data, $_keywordsMatch, dayInterval, startDate.selectedDates[0]);
+
+    //Apply the global variable $_dates' dates to the date picker
+    applyDatesToPicker();
 
   });
 
@@ -120,7 +124,7 @@ function onClickTemplate() {
 /**
  * Add dates to the date picker, the data came from the global $_dates which
  */
-function addDatesToPicker() {
+function applyDatesToPicker() {
 
   $_dates.forEach((item, index)=> {
 
@@ -131,18 +135,12 @@ function addDatesToPicker() {
 }
 
 function addOnSelectToPicker() {
-  let datePicker = document.querySelector('.module-date-picker');
+  let datePicker = $('.module-date-picker').datepicker().data('datepicker');
 
-  datePicker.onchange = () => {
-    console.log(this);
+  datePicker.onSelect((fd, d, inst)=> {
+    console.log(d);
+  });
 
-    console.log('test');
-  }
-
-  $('.module-date-picker').change(()=> {
-    console.log('test');
-    console.log($(this).val());
-  })
 
 }
 
