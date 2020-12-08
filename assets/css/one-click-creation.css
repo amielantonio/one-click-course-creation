@@ -252,11 +252,9 @@ table.oc-table-striped {
   .echo-logger .echo-logger-text {
     margin: 0 !important; }
     .echo-logger .echo-logger-text .success {
-      color: #00B1CD;
-      text-decoration: underline; }
+      color: #00B1CD; }
     .echo-logger .echo-logger-text .danger {
-      color: #FE2F4B;
-      text-decoration: underline; }
+      color: #FE2F4B; }
 
 /*
  * OVERRIDES and UTILITIES

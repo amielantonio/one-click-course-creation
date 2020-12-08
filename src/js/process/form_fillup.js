@@ -145,8 +145,6 @@ function addOnSelectToPicker() {
 
     if($_checker) {
       $_dates = adjustDripData(date.selectedDates[0], index, dayInterval);
-      console.log($_dates);
-      console.log($_checker);
 
       applyDatesToPicker();
     }

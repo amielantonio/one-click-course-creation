@@ -33,6 +33,7 @@
                                 <a class="tool" href='<?php echo site_url()."/courses/{$value['course_slug']}"?>' target='_blank'>View Course</a>
                                 <a class="tool" href='<?= get_site_url()."/wp-admin/post.php?post=".$key."&action=edit"?>'>Edit in Learndash</a>
                                 <a class="tool" href='<?php echo _channel('classroom-edit', ['posts'=>$key], 'course-setup')?>'>Edit in One-click Classroom</a>
+                                <a class="tool" href="#" data-id="<?php echo $key;?>">Trash</a>
                                 <a class="tool delete_one_click_data _text-red" href="#" data-id="<?php echo $key;?>">Delete</a>
                             </div>
                         </td>
@@ -113,18 +114,19 @@
             id: id
         };
         $.post(ajaxurl, data, function (response) {
-            console.log(response);
             me.closest('tr').remove();
         });
     }
   });
 
   //For the toolbox hover effect
-  $('tbody tr').hover( function(){
+  $('tbody tr').hover(function(){
+      $(this).find('.toolbox .tool').addClass('show');
+  }, function(){
+      $(this).find('.toolbox .tool').removeClass('show');
+  });
 
-      $(this).find('.toolbox .tool').toggleClass('show');
 
-  })
 
 
 </script>

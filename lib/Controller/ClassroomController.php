@@ -66,9 +66,10 @@ class ClassroomController extends CoreController
     }
 
     /**
-     * Store function for saving classrooms
+     *  Store function for saving classrooms
      *
      * @param Request $request
+     * @return View
      * @throws Exception
      */
     public function store(Request $request)
@@ -121,7 +122,7 @@ class ClassroomController extends CoreController
 
                 //Populate Lesson Model with the info needed to insert the lesson in WP_Post
                 $lesson->post_title = $lessonNames[$i];
-                $lesson->post_author = get_current_user_id();
+                $lesson->post_author = $request->input('online-tutor') <> "" ? $request->input('online-tutor') : get_current_user_id();
                 $lesson->post_content =  $dollyLesson->post_content;
                 $lesson->post_excerpt = $dollyLesson->post_excerpt;
                 $lesson->post_status = "publish";
@@ -228,14 +229,13 @@ class ClassroomController extends CoreController
             'course-title' => $posts->post_title,
             'author' => $posts->post_author,
             'course-tags' => explode(', ', get_post_meta($posts->ID, '_is4wp_access_tags')[0]),
-            'course-certificate' => get_post_meta($posts->ID, 'course-cert')[0],
+            'course-certificate' => get_post_meta($posts->ID, '_sfwd-courses')[0]['sfwd-courses_certificate'],
             'awc_active_course' => get_post_meta($posts->ID, 'awc_active_course')[0],
             'collapse_replies_for_course' => get_post_meta($posts->ID, 'collapse_replies_for_course')[0],
             'awc_private_comments' => get_post_meta($posts->ID, 'awc_private_comments')[0],
             'email_daily_comment_digest' => get_post_meta($posts->ID, 'email_daily_comment_digest')[0],
             'cc_recipients' => get_post_meta($posts->ID, 'cc_recipients'),
         ];
-
 
         $courseModules = learndash_get_course_lessons_list($posts->ID);
 
