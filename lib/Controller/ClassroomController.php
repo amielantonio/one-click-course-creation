@@ -75,6 +75,8 @@ class ClassroomController extends CoreController
     {
         $arrLessons = [];
 
+        $logger = [];
+
         $dates = $request->input('topic-date');
         $lessonNames = $request->input('lesson-name');
         $lessonIds = $request->input('lesson-id');
@@ -99,6 +101,12 @@ class ClassroomController extends CoreController
         //Save to database
         if ($course_id = wp_insert_post($course->get_columns())) {
             $this->courseEchoLogger($request->input('course-title'), true);
+            $logger[$course_id] = [
+                'type' => 'course',
+                'id' => $course_id,
+                'logger_type' => 'success',
+                'message' => "course was created"
+            ];
 
             // Post meta for the course
             $this->save_course_meta($course_id, $request, $dolly);
@@ -136,11 +144,23 @@ class ClassroomController extends CoreController
 
                     add_post_meta($lesson_id, '_sfwd-lessons', $this->create_sfwd_lesson($lesson_id, $dollyLesson, $new_lesson_meta));
 
-                    $this->lessonEchoLogger($lessonNames[$i], true);
+//                    $this->lessonEchoLogger($lessonNames[$i], true);
+                    $logger[$lesson_id] = [
+                        'type' => 'lesson',
+                        'id' => $lesson_id,
+                        'logger_type' => 'success',
+                        'message' => "lesson was created"
+                    ];
 
                     add_post_meta($lesson_id, 'ld_course_steps', $this->create_ld_course_steps($arrLessons));
                 } else {
                     $this->lessonEchoLogger($lessonNames[$i], false);
+                    $logger[$lesson_id] = [
+                        'type' => '',
+                        'id' => '',
+                        'logger_type' => 'fail',
+                        'message' => 'lesson was not created',
+                    ];
                 }
             }
 
@@ -157,19 +177,31 @@ class ClassroomController extends CoreController
             add_post_meta($course_id, 'learndash_certificate_options', $request->input('oc-course-cert'), true);
 
         } else {
-            $this->courseEchoLogger($request->input('course-title'), false);
+            $logger[$course_id] = [
+                'type' => 'course',
+                'id' => $course_id,
+                'logger_type' => 'fail',
+                'message' => "course was not created"
+            ];
         }
 
-        (new View('templates/course-store'))
-            ->with('course', $course);
+        return (new View('templates/course-store'))
+            ->with('course_id', $course_id)
+            ->with('lessons', $arrLessons)
+            ->with('logger', $logger);
+
+        ?>
+
+    <?php
 
 
     }
 
     /**
-     * Edit post render function
+     *  Edit post render function
      *
      * @param Posts $posts
+     * @return mixed|string
      * @throws Exception
      */
     public function edit(Posts $posts)
@@ -218,7 +250,7 @@ class ClassroomController extends CoreController
             ];
         }
 
-        (new View('steps/steps'))
+        return (new View('steps/steps'))
             ->with('course', $course)
             ->with('courseContent', $courseContent)
             ->with('onlineTutor', $onlineTutor)

@@ -11,21 +11,29 @@ trait CourseMeta
     /**
      * Course echo logger, renders whether the course was created or not.
      *
-     * @param $course_name
+     * @param $course
+     * @param $message
      * @param bool $is_created
      */
-    private function courseEchoLogger( $course_name, $is_created = true )
+    private function courseEchoLogger( $course, $message = "", $is_created = true )
     {
+        $url = site_url() . "/courses/" .$course->post_name;
+
         if( $is_created ){
+
+            $posMessage = $message == "" ? "- course created" : $message;
+
             echo "<div class='echo-logger logger_course'>
                     <p class='echo-logger-text logger_course_text'>
-                        <span class='logger_course_name success'>{$course_name}</span> - course created
+                        <span target='_blank' class='logger_course_name success'>{$course}</span> - course created
                     </p>
                   </div>";
         } else {
+            $negMessage = $message == "" ? "- not course created" : $message;
+
             echo "<div class='echo-logger logger_course'>
                     <p class='echo-logger-text logger_course_text'>
-                        <span class='logger_course_name danger'>{$course_name}</span> - course created
+                        <span class='logger_course_name danger'>{$course->post_title}</span> - not course created
                     </p>
                   </div>";
         }
