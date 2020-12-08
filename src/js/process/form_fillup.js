@@ -1,28 +1,25 @@
 /*
  * Add javascript and jquery functions here
  */
-import {inArraySubstr} from '../helpers/array';
 import {
   instantiateDatePicker,
   dripData,
   adjustDripData,
+  $_checker, // variable for checking the loop
 } from "../dripdates/dripdates";
-
 
 /*
  * Require packages from node modules
  */
 var moment = require('moment');
 
-export default function form_fillup() {
-  onChangeCourseSelection();
-
-}
-
 let $_keywordsMatch = [];
 let $_selectionData = [];
-let $_dripdates = [];
 let $_dates = [];
+
+export default function form_fillup() {
+  onChangeCourseSelection();
+}
 
 /**
  * on Change Course selection
@@ -62,18 +59,22 @@ function onChangeCourseSelection() {
 
     //See drip process below;
     instantiateDatePicker();
+
     $_dates = dripData(selectionData, excludedKeywords, $('#day-interval').val());
+
+    // Apply the $_dates to the datepicker
     applyDatesToPicker();
 
+
+    // Add the onSelect event listener to the datepicker
     addOnSelectToPicker();
 
+    //
     applyIntervalButton(selectionData);
 
     //Add values to global variables
     $_keywordsMatch = excludedKeywords;
     $_selectionData = selectionData;
-
-
   });
 }
 
@@ -87,6 +88,7 @@ function applyIntervalButton(data) {
   let btnApplyInterval = $('#btn-apply-interval');
 
   btnApplyInterval.on('click', function () {
+
 
     let startDate = $('.start-date-interval').datepicker().data('datepicker');
     let dayInterval = $('#day-interval').val();
@@ -131,20 +133,23 @@ function applyDatesToPicker() {
  * Add onSelect event to the date picker.
  */
 function addOnSelectToPicker() {
-  let datePicker = $('.module-date-picker').datepicker().data('datepicker');
 
-  datePicker.onchange = ((fd, d, inst)=> {
-    console.log(d);
-  });
+  $('.module-date-picker').change((e) =>{
 
-  datePicker.change((fd, d ,inst) =>{
-    console.log('test: ' + d)
-    console.log(inst);
-    let index = $(this).data('index');
+    let identifier  = $(e.target);
+
+    let date = $(identifier).datepicker().data('datepicker');
+
+    let index = $(identifier).data('index');
     let dayInterval = $('#day-interval').val();
 
+    if($_checker) {
+      $_dates = adjustDripData(date.selectedDates[0], index, dayInterval);
+      console.log($_dates);
+      console.log($_checker);
 
-    adjustDripData(d, index, dayInterval);
+      applyDatesToPicker();
+    }
   })
 }
 

@@ -6,6 +6,8 @@ let $_dates = [];
 let $_formData = [];
 let $_excludedKeywords = [];
 
+export let $_checker = true;
+
 /**
  * Instantiate the date picker fields
  */
@@ -16,8 +18,11 @@ export const instantiateDatePicker = () => {
         timepicker: true,
         todayButton: new Date(),
         autoClose: true,
-        onSelect: function(fd, d ,inst) {
+        onSelect: function(formattedDate, date, inst) {
             $(inst.el).trigger('change');
+        },
+        onShow: function(dp, animation){
+            $_checker = true;
         }
     });
 };
@@ -93,12 +98,16 @@ export const adjustDripData = (date, index, dayInterval) => {
 
     for( let i = index; i < $_dates.length; i++) {
         if( !inArraySubstr( $_dates[i]['lesson_title'], $_excludedKeywords)) {
-            $_dates[i]['date'] = date; //push the value of the passed initial date
+            $_dates[i]['date'] = date.toDate(); //push the value of the passed initial date
+            $_dates[i]['has_passed'] = true;
 
             //Start drip process here
             date.add(dayInterval, 'day');
         }
     }
 
+    $_checker = false;
     return $_dates;
 };
+
+
