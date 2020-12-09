@@ -274,6 +274,7 @@ class ClassroomController extends CoreController
         $lessonNames = $request->input('lesson-name');
         $lessonIds = $request->input('lesson-id');
         $originalTemps = $request->input('use-template-val');
+        $allowComments = $request->input('allow-comments-val');
 
         $courseData = [
             'ID' => $request->input('post_id'),
@@ -293,6 +294,7 @@ class ClassroomController extends CoreController
                     'ID' => $lessonIds[$i],
                     'post_title' => $lessonNames[$i],
                     'post_name' => sanitize_title($lessonNames[$i]),
+                    'comment_status' => $allowComments[$i]
                 ];
 
                 if( $lessonID = wp_update_post($lessonData)){
