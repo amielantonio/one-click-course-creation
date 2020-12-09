@@ -82,6 +82,7 @@ class ClassroomController extends CoreController
         $lessonNames = $request->input('lesson-name');
         $lessonIds = $request->input('lesson-id');
         $originalTemps = $request->input('use-template-val');
+        $allowComments = $request->input('allow-comments-val');
 
         $author = $request->input('online-tutor') <> "" ? $request->input('online-tutor') : get_current_user_id();
 
@@ -127,6 +128,7 @@ class ClassroomController extends CoreController
                 $lesson->post_excerpt = $dollyLesson->post_excerpt;
                 $lesson->post_status = "publish";
                 $lesson->post_type = $dollyLesson->post_type;
+                $lesson->comment_status = $allowComments[$i];
 
                 //Save Lesson to database
                 if ($arrLessons[] = $lesson_id = wp_insert_post($lesson->get_columns())) {

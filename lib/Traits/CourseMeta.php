@@ -215,6 +215,7 @@ trait CourseMeta
                 $courseContent[$courseSelected->ID]['lessons'][] = [
                     'lesson-id' => $lesson['post']->ID,
                     'lesson-title' => $lesson['post']->post_title,
+                    'comment_status' => $lesson['post']->comment_status
                 ];
 
                 $courseContent[$courseSelected->ID]['post_meta'] = [

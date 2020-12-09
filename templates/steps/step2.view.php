@@ -7,8 +7,9 @@
     </div>
     <div id="day-interval-container" style="flex-basis:25%;display: flex;align-items: center;">
         <label for="day-interval" style="width: 55%;">Day interval: </label>
-        <input type="number" name="day-interval" class="_text-right _m-r--10 _m-l--10" id="day-interval" value="7"><button type="button" id="btn-apply-interval" class="oc-btn oc-btn--primary oc-btn--small">Apply</button>
+        <input type="number" name="day-interval" class="_text-right _m-r--10 _m-l--10" id="day-interval" value="7">
     </div>
+    <button type="button" id="btn-apply-interval" class="oc-btn oc-btn--primary oc-btn--small">Apply</button>
 </div>
 
 <table class="oc-table oc-table-striped" cellpadding="0" cellspacing="0" id="tbl-module-schedule">
@@ -17,11 +18,12 @@
         <th style="width: 55%;">Module</th>
         <th>Start</th>
         <th>Use Original</th>
+        <th>Allow Comments</th>
     </tr>
     </thead>
     <tbody>
         <?php if( isset($course) ) : $x = 0?>
-            <?php foreach( $course['lessons'] as $lesson ):?>
+            <?php foreach( $course['lessons'] as $lesson ) : ?>
             <tr>
                 <td>
                     <input type="hidden" name="lesson-id[]" class="oc-form-control module-id" value="<?php echo $lesson['lesson-id']?>">
@@ -32,11 +34,15 @@
                 <td>
                     <input type="text" name="topic-date[]" class="oc-form-control module-date-picker"
                            id="start-<?php echo $x ?>"
-
                            autocomplete="off">
                 </td>
                 <td class="_text-center">
                     <input type="checkbox" name="use-template[]" class="" id="template-<?php echo $x ?>">
+                    <input type="hidden" value="" name="use-template-val[]" class="txt-use-template" id="val-use-template-<?php echo $x ?>">
+                </td>
+                <td class="_text-center">
+                    <input type="checkbox" name="allow-comments[]" class="" id="allow-comments-<?php echo $x ?>">
+                    <input type="hidden" value="<?php echo $lesson['comment_status']?>" name="allow-comments-val[]" class="txt-allow-comments" id="val-allow-comments-<?php echo $x ?>">
                 </td>
             </tr>
 
@@ -48,6 +54,7 @@
         <th>Module</th>
         <th>Start</th>
         <th>Use Original</th>
+        <th>Allow Comments</th>
     </tr>
     </tfoot>
 </table>

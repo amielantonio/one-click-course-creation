@@ -39,6 +39,10 @@ function onChangeCourseSelection() {
     table.find('tbody tr').remove();
 
     selectionData.forEach(function (item, index) {
+
+      let checked = item['comment_status'] === "open" ? "checked='checked'" : "";
+      let checkedval = item['comment_status'] === "open" ? "open" : "close";
+
       table.find('tbody').append('<tr>' +
         '<td>' +
         '<input type="hidden" name="lesson-id[]" class="oc-form-control module-id" value="' + item['lesson-id'] + '">' +
@@ -48,6 +52,10 @@ function onChangeCourseSelection() {
         '<td class="_text-center">' +
         '<input type="checkbox" name="use-template[]" class="cb-use-template" id="template-' + index + '">' +
         '<input type="hidden" value="" name="use-template-val[]" class="txt-use-template" id="val-use-template-' + index + '">' +
+        '</td>' +
+        '<td class="_text-center">' +
+        '<input type="checkbox" name="allow-comments[]" class="allow-comments" id="allow-comments-' + index + '" '+checked+'>' +
+        '<input type="hidden" name="allow-comments-val[]" class="txt-allow-comments" id="val-allow-comments-' + index + '" value="'+checkedval+'">' +
         '</td>' +
         '</tr>');
 
@@ -64,7 +72,6 @@ function onChangeCourseSelection() {
 
     // Apply the $_dates to the datepicker
     applyDatesToPicker();
-
 
     // Add the onSelect event listener to the datepicker
     addOnSelectToPicker();
@@ -112,6 +119,15 @@ function onClickTemplate() {
     }
     else if ($(this).prop("checked") == false) {
       $(this).siblings('[type="hidden"]').val('false');
+    }
+  });
+
+  $('.allow-comments').on('click', function(){
+    if ($(this).prop("checked") == true) {
+      $(this).siblings('[type="hidden"]').val('open');
+    }
+    else if ($(this).prop("checked") == false) {
+      $(this).siblings('[type="hidden"]').val('close');
     }
   });
 }
