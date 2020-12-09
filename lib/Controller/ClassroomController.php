@@ -248,6 +248,7 @@ class ClassroomController extends CoreController
             $course['lessons'][] = [
                 'lesson-id' => $courseModule['post']->ID,
                 'lesson-title' => $courseModule['post']->post_title,
+                'comment_status' => $courseModule['post']->comment_status,
                 'date' => $date
             ];
         }

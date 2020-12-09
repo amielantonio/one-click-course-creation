@@ -41,7 +41,7 @@
                     <input type="hidden" value="" name="use-template-val[]" class="txt-use-template" id="val-use-template-<?php echo $x ?>">
                 </td>
                 <td class="_text-center">
-                    <input type="checkbox" name="allow-comments[]" class="" id="allow-comments-<?php echo $x ?>">
+                    <input type="checkbox" name="allow-comments[]" class="" id="allow-comments-<?php echo $x ?>" <?php echo $lesson['comment_status'] == "open" ? "checked='checked'" : "" ?>>
                     <input type="hidden" value="<?php echo $lesson['comment_status']?>" name="allow-comments-val[]" class="txt-allow-comments" id="val-allow-comments-<?php echo $x ?>">
                 </td>
             </tr>
