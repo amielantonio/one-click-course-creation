@@ -1,6 +1,9 @@
 <div class="oc-container">
 
-    <h1>One-Click Course</h1>
+    <div style="display: flex;align-items: center" class="_m-b--50">
+        <h1 class="_m-r--10">One-Click Course</h1>
+        <a href="<?php echo  get_site_url()."/wp-admin/admin.php?page=course-setup" ?>" class="oc-btn oc-btn--primary oc-btn--small">Create Classroom</a>
+    </div>
 
     <div class="oc-collection-container">
         <div class="container-head">

@@ -4,7 +4,7 @@
  * Plugin URI: http://writerscentre.com.au
  * Description: Lorem ipsum dolor sit amet
  * Author: AWC Debtim
- * Version 1.0.0
+ * Version 1.2.10
  * Text Domain: one-click-course-creation
  *
  * @package One_Click_Course_Creation
@@ -20,7 +20,7 @@ final class OneClickCourseCreation {
      *
      * @var string
      */
-    protected $version = "1.0.0";
+    protected $version = "1.2.10";
 
     /**
      * Minimum required PHP version
