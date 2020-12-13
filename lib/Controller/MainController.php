@@ -43,12 +43,13 @@ class MainController extends CoreController
                     'compare' => '='
                 )
             ),
+            'post_status' => 'any',
             'orderby' => 'date_created',
             'order' => 'DESC'
         );
 
         if($author <> "" ) {
-            $args['post_author'] = $author;
+            $args['author'] = $author;
         }
 
         $posts = get_posts( $args );
@@ -61,6 +62,7 @@ class MainController extends CoreController
                 'id' => $courseSelected->post_author,
                 'name' => get_user_by('id', $courseSelected->post_author)->data->display_name
             ];
+            $courseContent[$courseSelected->ID]['post_status'] = $courseSelected->post_status;
             $courseContent[$courseSelected->ID]['date_created'] = date("F j, Y, g:i a", strtotime($courseSelected->post_date));
             
             $tag_ids = implode(', ',get_post_meta($post->ID, '_is4wp_access_tags'));

@@ -20,3 +20,19 @@
 .container-body {
   padding: 25px;
 }
+
+
+.title-with-toolbox {
+  display: flex;
+
+  &._j_c--sb {
+    justify-content: space-between;
+  }
+
+  &._a_i--c {
+    align-items: center;
+  }
+  &.a_i--s {
+    align-items: flex-start;
+  }
+}

@@ -21,6 +21,15 @@
 .container-body {
   padding: 25px; }
 
+.title-with-toolbox {
+  display: flex; }
+  .title-with-toolbox._j_c--sb {
+    justify-content: space-between; }
+  .title-with-toolbox._a_i--c {
+    align-items: center; }
+  .title-with-toolbox.a_i--s {
+    align-items: flex-start; }
+
 /**
  * ELEMENTS
  * Basic HTML settings and css

@@ -1,4 +1,17 @@
-<h3 class="cohort-title">Select a Course</h3>
+<h3 class="cohort-title <?php echo isset($course) ? "title-with-toolbox _j_c--sb _a_i--c" : "" ?>">
+    <?php echo isset($course) ? "Course: " . $course['ID'] : "Select a Course"?>
+
+    <?php if(isset($course)) : ?>
+        <small class="oc-form-group form-row" style="width: 20%;">
+            <label for="course-post_status">Course Status</label>
+            <select name="course-post_status" id="course-post_status">
+                <option value="publish" <?php echo ($course['post_status'] == 'publish') ? "selected='selected'" : "" ?>>Publish</option>
+                <option value="draft" <?php echo ($course['post_status'] == 'draft') ? "selected='selected'" : "" ?>>Draft</option>
+            </select>
+
+        </small>
+    <?php endif; ?>
+</h3>
 
 <div class="oc-form-group">
     <label>Course Content  <span class="important">*</span></label>
@@ -59,14 +72,4 @@
     </select>
 </div>
 
-<?php if(isset($course)) : ?>
-    <div class="oc-form-group">
-        <label for="course-title">Course Title <span class="important">*</span></label>
 
-        <select>
-            <option>Publish</option>
-            <option>Draft</option>
-        </select>
-
-    </div>
-<?php endif; ?>

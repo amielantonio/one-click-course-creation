@@ -227,6 +227,8 @@ class ClassroomController extends CoreController
 
         //Fill up the information that will be used for editing
         $course = [
+            'ID' => $posts->ID,
+            'post_status' => $posts->post_status,
             'course-template' => get_post_meta($posts->ID, 'one-click-template')[0],
             'course-title' => $posts->post_title,
             'author' => $posts->post_author,
@@ -281,7 +283,8 @@ class ClassroomController extends CoreController
         $courseData = [
             'ID' => $id,
             'post_title' => $request->input('course-title'),
-            'post_author' => $request->input('online-tutor')
+            'post_author' => $request->input('online-tutor'),
+            'post_status' => $request->input('course-post_status')
         ];
         if ($courseID = wp_update_post($courseData)) {
             $this->courseEchoLogger($request->input('course-title'), true);
@@ -296,7 +299,7 @@ class ClassroomController extends CoreController
                     'ID' => $lessonIds[$i],
                     'post_title' => $lessonNames[$i],
                     'post_name' => sanitize_title($lessonNames[$i]),
-                    'comment_status' => $allowComments[$i]
+                    'comment_status' => $allowComments[$i],
                 ];
 
                 if( $lessonID = wp_update_post($lessonData)){

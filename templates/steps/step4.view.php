@@ -8,7 +8,7 @@
             <?php foreach ($memberships as $data): ;?>
                 <?php
                 if (isset($course)) {
-                    $selected = in_array($data['id'], $course['course-tags']) == true ? 'selected' : '';
+                    $selected = in_array($data['id'], array_values($course['course-tags'])) == true ? 'selected' : '';
                 } else {
                     $selected = "";
                 }

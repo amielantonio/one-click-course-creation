@@ -31,7 +31,7 @@
                         <td><?php echo $key ?></td>
                         <!--COURSE NAME-->
                         <td class="hover-toolbox">
-                            <a href='<?= get_site_url()."/wp-admin/post.php?post=".$key."&action=edit"?>' target='_blank'><?= $value['course_name'] ?></a>
+                            <a href='<?= get_site_url()."/wp-admin/post.php?post=".$key."&action=edit"?>' target='_blank'><?= $value['course_name'] ?></a> <?php echo ($value['post_status'] <> 'publish') ? "— {$value['post_status']}" : "" ?>
                             <div class="toolbox _m-t--30">
                                 <a class="tool" href='<?php echo site_url()."/courses/{$value['course_slug']}"?>' target='_blank'>View Course</a>
                                 <a class="tool" href='<?= get_site_url()."/wp-admin/post.php?post=".$key."&action=edit"?>'>Edit in Learndash</a>
