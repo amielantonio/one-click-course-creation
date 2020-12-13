@@ -355,4 +355,14 @@ class ClassroomController extends CoreController
         echo json_encode($data);
         die();
     }
+
+
+    public function ajaxTags($tags) {
+
+        var_dump($_GET);
+
+
+        echo json_encode($tags);
+        die();
+    }
 }

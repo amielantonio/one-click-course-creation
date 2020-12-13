@@ -59,4 +59,14 @@
     </select>
 </div>
 
+<?php if(isset($course)) : ?>
+    <div class="oc-form-group">
+        <label for="course-title">Course Title <span class="important">*</span></label>
 
+        <select>
+            <option>Publish</option>
+            <option>Draft</option>
+        </select>
+
+    </div>
+<?php endif; ?>

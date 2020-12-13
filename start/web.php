@@ -33,3 +33,7 @@ Router::post('classroom-delete', 'ClassroomController@delete' );
 Router::addSubMenu('One Click Classroom Setup', 'Plugin Settings', 'SettingsController@index');
 //Save - settings
 Router::post('save-settings', 'SettingsController@store' );
+
+
+//Tags
+Router::get('oc-tags','ClassroomController@ajaxTags');

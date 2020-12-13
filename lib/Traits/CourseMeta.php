@@ -167,6 +167,8 @@ trait CourseMeta
     {
         global $wpdb;
 
+
+
         $memberium = get_option('memberium');
         $memberships = [];
         if(isset($memberium['memberships'])){
@@ -177,18 +179,21 @@ trait CourseMeta
 
             $sql = "SELECT id, name FROM {$table} WHERE `appname` = '{$appname}' ORDER BY category, name ";
             $result = $wpdb->get_results($sql, ARRAY_A);
-            foreach ($result as $data) {
-                $tags['mc'][$data['id']] = $data['name'];
-            }
 
-            $tags = $tags['mc'];
-            // INCLUDE TAG ON LIST
-            foreach ($memberium['memberships'] as $key => $data) {
-                $tag = !empty($tags[$key]) ? $tags[$key]." ({$key})" : '(Missing Tag)';
-                $memberium['memberships'][$key]['tag_name']  =  $tag;
-            }
+//                var_dump($result);
+//            foreach ($result as $data) {
+//                $tags['mc'][$data['id']] = $data['name'];
+//            }
+//
+//            $tags = $tags['mc'];
+//            // INCLUDE TAG ON LIST
+//            foreach ($memberium['memberships'] as $key => $data) {
+//                $tag = !empty($tags[$key]) ? $tags[$key]." ({$key})" : '(Missing Tag)';
+//                $memberium['memberships'][$key]['tag_name']  =  $tag;
+//            }
 
-            $memberships = $memberium['memberships'];
+//            $memberships = $memberium['memberships'];
+            $memberships = $result;
         }
 
         return $memberships;
