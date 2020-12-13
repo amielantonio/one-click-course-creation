@@ -271,6 +271,7 @@ class ClassroomController extends CoreController
      */
     public function update(Request $request, Posts $posts)
     {
+        $id = $request->input('post_id');
         $dates = $request->input('topic-date');
         $lessonNames = $request->input('lesson-name');
         $lessonIds = $request->input('lesson-id');
@@ -278,7 +279,7 @@ class ClassroomController extends CoreController
         $allowComments = $request->input('allow-comments-val');
 
         $courseData = [
-            'ID' => $request->input('post_id'),
+            'ID' => $id,
             'post_title' => $request->input('course-title'),
             'post_author' => $request->input('online-tutor')
         ];
@@ -333,6 +334,14 @@ class ClassroomController extends CoreController
             update_field('collapse_replies_for_course', $collapse_replies, $request->input('post_id'));
 
 
+            $certificate = $request->input('oc-course-cert');
+            $sfwd_courses = get_post_meta($id, '_sfwd-courses')[0];
+            $sfwd_courses['sfwd-courses_certificate'] = $certificate;
+
+            update_post_meta($id, '_sfwd-courses', $sfwd_courses);
+
+
+
         }
 
         $url = get_site_url() . "/wp-admin/admin.php?page=one-click-classroom-setup";
@@ -358,9 +367,6 @@ class ClassroomController extends CoreController
 
 
     public function ajaxTags($tags) {
-
-        var_dump($_GET);
-
 
         echo json_encode($tags);
         die();

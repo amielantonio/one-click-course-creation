@@ -3,6 +3,7 @@
 <div class="oc-form-group">
     <label for="oc-tag-id">Select Tags</label>
     <select name="oc-tag-id[]" id="oc-tag-id" class="oc-form-control-select select2" multiple="multiple">
+        <option></option>
         <?php if (isset($memberships)) : ?>
             <?php foreach ($memberships as $data): ?>
                 <?php
@@ -44,21 +45,6 @@
         $('#oc-tag-id').select2({
             placeholder: "Select tag",
             allowClear: true,
-            ajax: {
-                url: (params) => {
-                    return "<?php echo site_url() . _route('oc-tags', '')?>" + params.term;
-                }
-            },
-            dataType: 'json',
-            delay: 250,
-            processResults: function (data) {
-                // Transforms the top-level key of the response object from 'items' to 'results'
-
-                console.log(data);
-                return {
-                    results: data.items
-                };
-            },
             minimumInputLength: 2
         });
     });

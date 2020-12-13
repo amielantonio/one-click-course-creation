@@ -167,34 +167,13 @@ trait CourseMeta
     {
         global $wpdb;
 
+        $table = 'memberium_tags';
+        $appname = "lf159"; # memberium_tags table appname field
 
+        $sql = "SELECT id, name FROM {$table} WHERE `appname` = '{$appname}' ORDER BY category, name ";
+        $result = $wpdb->get_results($sql, ARRAY_A);
 
-        $memberium = get_option('memberium');
-        $memberships = [];
-        if(isset($memberium['memberships'])){
-            // GET THE TAG LIST
-            $tags = [];
-            $table = 'memberium_tags';
-            $appname = "lf159"; # memberium_tags table appname field
-
-            $sql = "SELECT id, name FROM {$table} WHERE `appname` = '{$appname}' ORDER BY category, name ";
-            $result = $wpdb->get_results($sql, ARRAY_A);
-
-//                var_dump($result);
-//            foreach ($result as $data) {
-//                $tags['mc'][$data['id']] = $data['name'];
-//            }
-//
-//            $tags = $tags['mc'];
-//            // INCLUDE TAG ON LIST
-//            foreach ($memberium['memberships'] as $key => $data) {
-//                $tag = !empty($tags[$key]) ? $tags[$key]." ({$key})" : '(Missing Tag)';
-//                $memberium['memberships'][$key]['tag_name']  =  $tag;
-//            }
-
-//            $memberships = $memberium['memberships'];
-            $memberships = $result;
-        }
+        $memberships = $result;
 
         return $memberships;
     }

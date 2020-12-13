@@ -180,6 +180,10 @@ table.oc-table-striped {
     .toolbox .tool:hover {
       text-decoration: underline; }
 
+.hover-toolbox .toolbox {
+  margin-left: -0.5em;
+  margin-right: -0.5em; }
+
 .hover-toolbox .toolbox .tool {
   opacity: 0;
   visibility: hidden;
