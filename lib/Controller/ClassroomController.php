@@ -379,9 +379,10 @@ class ClassroomController extends CoreController
 
             $url = get_site_url() . "/wp-admin/admin.php?page=one-click-classroom-setup";
 
-            echo "<div class='_m-b--40'>{$posts->post_title} was sent to the trash!</div>";
-            echo "<a href='{$url}' class='oc-btn oc-btn--primary'>Back</a>";
+            wp_redirect($url);
+            exit(0);
         }
+
     }
 
 

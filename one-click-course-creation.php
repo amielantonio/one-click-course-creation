@@ -12,7 +12,8 @@
 
 
 if( ! defined( 'WPINC' ) ) die;
-
+ob_clean();
+ob_start();
 final class OneClickCourseCreation {
 
     /**

@@ -107,7 +107,9 @@ class PageCreator {
             $method = Router::getMethod();
 
             return function() use ($controller, $method){
-                return RouteModel::bind( $controller, $method );
+                ob_start();
+                RouteModel::bind( $controller, $method );
+                return ob_get_contents();
             };
         }
 
