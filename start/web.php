@@ -27,7 +27,7 @@ Router::addChannel( 'post', 'classroom-update', 'ClassroomController@update' );
 
 // Delete 
 Router::post('classroom-delete', 'ClassroomController@delete' );
-
+Router::post('classroom-trash', 'ClassroomController@trash');
 
 //Settings
 Router::addSubMenu('One Click Classroom Setup', 'Plugin Settings', 'SettingsController@index');

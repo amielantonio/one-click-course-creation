@@ -368,6 +368,22 @@ class ClassroomController extends CoreController
         die();
     }
 
+    public function trash(Posts $posts)
+    {
+        $courseData = [
+            'ID' => $posts->ID,
+            'post_status' => 'trash'
+        ];
+
+        if( $courseID = wp_update_post($courseData)){
+
+            $url = get_site_url() . "/wp-admin/admin.php?page=one-click-classroom-setup";
+
+            echo "<div class='_m-b--40'>{$posts->post_title} was sent to the trash!</div>";
+            echo "<a href='{$url}' class='oc-btn oc-btn--primary'>Back</a>";
+        }
+    }
+
 
     public function ajaxTags($tags) {
 
