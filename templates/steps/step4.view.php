@@ -5,10 +5,10 @@
     <select name="oc-tag-id[]" id="oc-tag-id" class="oc-form-control-select select2" multiple="multiple">
         <option></option>
         <?php if (isset($memberships)) : ?>
-            <?php foreach ($memberships as $data): ?>
+            <?php foreach ($memberships as $data): ;?>
                 <?php
                 if (isset($course)) {
-                    $selected = in_array($data['id'], $course['name']) == true ? 'selected' : '';
+                    $selected = in_array($data['id'], $course['course-tags']) == true ? 'selected' : '';
                 } else {
                     $selected = "";
                 }
