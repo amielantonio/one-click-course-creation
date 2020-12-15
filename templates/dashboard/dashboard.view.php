@@ -1,9 +1,21 @@
+
+
 <div class="oc-container">
 
     <div style="display: flex;align-items: center" class="_m-b--50">
         <h1 class="_m-r--10">One-Click Course</h1>
         <a href="<?php echo  get_site_url()."/wp-admin/admin.php?page=course-setup" ?>" class="oc-btn oc-btn--primary oc-btn--small">Create Classroom</a>
     </div>
+
+    <?php if(isset($_GET['trashnotif']) && $_GET['trashnotif'] == 'on') : ?>
+        <div class='echo-logger logger_course _m-b--30'>
+            <p class='echo-logger-text logger_course_text'>
+                <a class='logger_course_name success' href="<?php echo get_site_url() . '/wp-admin/edit.php?post_status=trash&post_type=sfwd-courses'?>">
+                    <?php echo ($_GET['trashid'])?>
+                </a> - This course has been moved to trash. you may view it on the Learndash Courses - Trash
+            </p>
+        </div>
+    <?php endif; ?>
 
     <div class="oc-collection-container">
         <div class="container-head">
@@ -37,7 +49,7 @@
                                 <a class="tool" href='<?= get_site_url()."/wp-admin/post.php?post=".$key."&action=edit"?>'>Edit in Learndash</a>
                                 <a class="tool" href='<?php echo _channel('classroom-edit', ['posts'=>$key], 'course-setup')?>'>Edit in One-click Classroom</a>
                                 <a class="tool" href="<?php echo _channel('classroom-trash', ['posts' => $key], 'course-setup')?>" data-id="<?php echo $key;?>">Trash</a>
-                                <a class="tool delete_one_click_data _text-red" href="#" data-id="<?php echo $key;?>">Delete</a>
+                                <a class="tool delete_one_click_data _text-red" href="#" data-id="<?php echo $key;?>">Delete permanently</a>
                             </div>
                         </td>
                         <!--AUTHOR NAME-->

@@ -368,6 +368,11 @@ class ClassroomController extends CoreController
         die();
     }
 
+    /**
+     * Put the classroom to the trash
+     *
+     * @param Posts $posts
+     */
     public function trash(Posts $posts)
     {
         $courseData = [
@@ -377,7 +382,7 @@ class ClassroomController extends CoreController
 
         if( $courseID = wp_update_post($courseData)){
 
-            $url = get_site_url() . "/wp-admin/admin.php?page=one-click-classroom-setup";
+            $url = get_site_url() . "/wp-admin/admin.php?page=one-click-classroom-setup&trashnotif=on&trashid={$posts->ID}";
 
             wp_redirect($url);
             exit(0);
