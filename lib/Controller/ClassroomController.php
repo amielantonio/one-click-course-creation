@@ -77,7 +77,7 @@ class ClassroomController extends CoreController
         $arrLessons = [];
 
         $logger = [];
-
+        $is_updated = false;
         $dates = $request->input('topic-date');
         $lessonNames = $request->input('lesson-name');
         $lessonIds = $request->input('lesson-id');
@@ -102,7 +102,6 @@ class ClassroomController extends CoreController
 
         //Save to database
         if ($course_id = wp_insert_post($course->get_columns())) {
-            $this->courseEchoLogger($request->input('course-title'), true);
             $logger[$course_id] = [
                 'type' => 'course',
                 'id' => $course_id,
@@ -147,7 +146,6 @@ class ClassroomController extends CoreController
 
                     add_post_meta($lesson_id, '_sfwd-lessons', $this->create_sfwd_lesson($lesson_id, $dollyLesson, $new_lesson_meta));
 
-//                    $this->lessonEchoLogger($lessonNames[$i], true);
                     $logger[$lesson_id] = [
                         'type' => 'lesson',
                         'id' => $lesson_id,
@@ -157,7 +155,6 @@ class ClassroomController extends CoreController
 
                     add_post_meta($lesson_id, 'ld_course_steps', $this->create_ld_course_steps($arrLessons));
                 } else {
-                    $this->lessonEchoLogger($lessonNames[$i], false);
                     $logger[$lesson_id] = [
                         'type' => '',
                         'id' => '',
@@ -188,16 +185,12 @@ class ClassroomController extends CoreController
             ];
         }
 
-        return (new View('templates/course-store'))
+        return (new View('templates/store'))
             ->with('course_id', $course_id)
             ->with('lessons', $arrLessons)
-            ->with('logger', $logger);
-
-        ?>
-
-    <?php
-
-
+            ->with('is_updated', $is_updated)
+            ->with('logger', $logger)
+            ->render();
     }
 
     /**
@@ -279,6 +272,7 @@ class ClassroomController extends CoreController
         $lessonIds = $request->input('lesson-id');
         $originalTemps = $request->input('use-template-val');
         $allowComments = $request->input('allow-comments-val');
+        $is_updated = true;
 
         $courseData = [
             'ID' => $id,
