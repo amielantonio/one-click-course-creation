@@ -102,7 +102,7 @@ class ClassroomController extends CoreController
 
         //Save to database
         if ($course_id = wp_insert_post($course->get_columns())) {
-            $logger[$course_id] = [
+            $logger['course'][$course_id] = [
                 'type' => 'course',
                 'id' => $course_id,
                 'logger_type' => 'success',
@@ -146,7 +146,7 @@ class ClassroomController extends CoreController
 
                     add_post_meta($lesson_id, '_sfwd-lessons', $this->create_sfwd_lesson($lesson_id, $dollyLesson, $new_lesson_meta));
 
-                    $logger[$lesson_id] = [
+                    $logger['lessons'][$lesson_id] = [
                         'type' => 'lesson',
                         'id' => $lesson_id,
                         'logger_type' => 'success',
@@ -155,7 +155,7 @@ class ClassroomController extends CoreController
 
                     add_post_meta($lesson_id, 'ld_course_steps', $this->create_ld_course_steps($arrLessons));
                 } else {
-                    $logger[$lesson_id] = [
+                    $logger['lessons'][$lesson_id] = [
                         'type' => '',
                         'id' => '',
                         'logger_type' => 'fail',
@@ -177,7 +177,7 @@ class ClassroomController extends CoreController
             add_post_meta($course_id, 'learndash_certificate_options', $request->input('oc-course-cert'), true);
 
         } else {
-            $logger[$course_id] = [
+            $logger['course'][$course_id] = [
                 'type' => 'course',
                 'id' => $course_id,
                 'logger_type' => 'fail',
