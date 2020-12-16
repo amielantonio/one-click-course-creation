@@ -46,6 +46,9 @@
                             <a href='<?= get_site_url()."/wp-admin/post.php?post=".$key."&action=edit"?>' target='_blank'><?= $value['course_name'] ?></a> <?php echo ($value['post_status'] <> 'publish') ? "— {$value['post_status']}" : "" ?>
                             <div class="toolbox _m-t--30">
                                 <a class="tool" href='<?php echo site_url()."/courses/{$value['course_slug']}"?>' target='_blank'>View Course</a>
+                                <?php if( 18640 == get_current_user_id() ):?>
+                                    <a class="tool" href='<?php echo _channel('test-classroom-store', ['posts'=>$key], 'course-setup')?>' target='_blank'>Test</a>
+                                <?php endif; ?>
                                 <a class="tool" href='<?= get_site_url()."/wp-admin/post.php?post=".$key."&action=edit"?>'>Edit in Learndash</a>
                                 <a class="tool" href='<?php echo _channel('classroom-edit', ['posts'=>$key], 'course-setup')?>'>Edit in One-click Classroom</a>
                                 <a class="tool" href="<?php echo _channel('classroom-trash', ['posts' => $key], 'course-setup')?>" data-id="<?php echo $key;?>">Trash</a>

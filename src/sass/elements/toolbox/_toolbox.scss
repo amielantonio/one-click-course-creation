@@ -41,7 +41,14 @@
       visibility: visible;
     }
   }
+}
+
+._with-toolbox {
+  display: flex !important;
+  align-items: center;
 
 
-
+  &._s_b {
+    justify-content: space-between;
+  }
 }

@@ -25,7 +25,7 @@ Router::addChannel( 'post', 'classroom-store', 'ClassroomController@store' );
 Router::get('classroom-edit', 'ClassroomController@edit');
 Router::addChannel( 'post', 'classroom-update', 'ClassroomController@update' );
 
-// Delete 
+// Delete
 Router::post('classroom-delete', 'ClassroomController@delete' );
 Router::post('classroom-trash', 'ClassroomController@trash');
 
@@ -37,3 +37,7 @@ Router::post('save-settings', 'SettingsController@store' );
 
 //Tags
 Router::get('oc-tags','ClassroomController@ajaxTags');
+
+//TESTS
+
+Router::get('test-classroom-store','TestController@classroomStore');

@@ -201,6 +201,12 @@ table.oc-table-striped {
     opacity: 1;
     visibility: visible; }
 
+._with-toolbox {
+  display: flex !important;
+  align-items: center; }
+  ._with-toolbox._s_b {
+    justify-content: space-between; }
+
 /* COMPONENTS
  * Rich design UI styles, popups, login interface, etc.
  */
