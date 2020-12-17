@@ -74,6 +74,9 @@ class ClassroomController extends CoreController
      */
     public function store(Request $request)
     {
+        if(empty($_POST)) wp_redirect( get_site_url() . "/wp-admin/admin.php?page=course-setup" );
+
+
         $arrLessons = [];
 
         $logger = [];
@@ -81,11 +84,10 @@ class ClassroomController extends CoreController
         $dates = $request->input('topic-date');
         $lessonNames = $request->input('lesson-name');
         $lessonIds = $request->input('lesson-id');
-        $originalTemps = $request->input('use-template-val');
+        $use_existing = $request->input('use-existing-val');
         $allowComments = $request->input('allow-comments-val');
 
         $author = $request->input('online-tutor') <> "" ? $request->input('online-tutor') : get_current_user_id();
-
 
         //Get Dolly
         $dolly = new Posts;
@@ -114,55 +116,81 @@ class ClassroomController extends CoreController
 
             // Once the main course is saved, process the lesson
             for ($i = 0; $i < count($lessonNames); $i++) {
-                // Save the lessons to swfd-lesson post type
-                $lesson = new Posts;
-                $dollyLesson = new Posts;
 
-                $dollyLesson->find($lessonIds[$i]);
+                //Save the template lesson
+                if( $use_existing[$i] && $use_existing[$i] <> "" ) {
+                    $lesson_id = $lessonIds[$i];
+                    $lesson = new Posts;
+                    $lesson->find($lessonIds[$i]);
 
-                //Populate Lesson Model with the info needed to insert the lesson in WP_Post
-                $lesson->post_title = $lessonNames[$i];
-                $lesson->post_author = $request->input('online-tutor') <> "" ? $request->input('online-tutor') : get_current_user_id();
-                $lesson->post_content =  $dollyLesson->post_content;
-                $lesson->post_excerpt = $dollyLesson->post_excerpt;
-                $lesson->post_status = "publish";
-                $lesson->post_type = $dollyLesson->post_type;
-                $lesson->comment_status = $allowComments[$i];
+                    $arrLessons[] = $lessonIds[$i];
 
-                //Save Lesson to database
-                if ($arrLessons[] = $lesson_id = wp_insert_post($lesson->get_columns())) {
-                    //Post meta
+                    add_post_meta($lessonIds[$i], '_sfwd-lessons', $this->create_sfwd_lesson($lessonIds[$i], $lesson));
 
-                    //Create ld_course_steps meta
-                    $this->save_lesson_meta($lesson_id, $course_id, $request, $dollyLesson);
-
-                    //Check if there is a date available for the current array node.
-                    $lessonDate = $dates[$i] <> "" ? Carbon::createFromFormat('d F, Y g:i a', $dates[$i])->format('Y-m-d g:i a') : "";
-
-                    //Add new leson meta
-                    $new_lesson_meta = [
-                        "sfwd-lessons_visible_after_specific_date" => $lessonDate
-                    ];
-
-                    add_post_meta($lesson_id, '_sfwd-lessons', $this->create_sfwd_lesson($lesson_id, $dollyLesson, $new_lesson_meta));
+                    add_post_meta($lesson_id, 'ld_course_steps', $this->create_ld_course_steps($arrLessons));
 
                     $logger['lessons'][$lesson_id] = [
                         'type' => 'lesson',
                         'id' => $lesson_id,
                         'logger_type' => 'success',
-                        'message' => "lesson was created"
+                        'message' => "lesson was added from template course"
                     ];
 
-                    add_post_meta($lesson_id, 'ld_course_steps', $this->create_ld_course_steps($arrLessons));
+
+
+                //Create a new lesson to be saved for the course settings
                 } else {
-                    $logger['lessons'][$lesson_id] = [
-                        'type' => '',
-                        'id' => '',
-                        'logger_type' => 'fail',
-                        'message' => 'lesson was not created',
-                    ];
-                }
-            }
+
+                    // Save the lessons to swfd-lesson post type
+                    $lesson = new Posts;
+                    $dollyLesson = new Posts;
+
+                    $dollyLesson->find($lessonIds[$i]);
+
+                    //Populate Lesson Model with the info needed to insert the lesson in WP_Post
+                    $lesson->post_title = $lessonNames[$i];
+                    $lesson->post_author = $request->input('online-tutor') <> "" ? $request->input('online-tutor') : get_current_user_id();
+                    $lesson->post_content =  $dollyLesson->post_content;
+                    $lesson->post_excerpt = $dollyLesson->post_excerpt;
+                    $lesson->post_status = "publish";
+                    $lesson->post_type = $dollyLesson->post_type;
+                    $lesson->comment_status = $allowComments[$i];
+
+                    //Save Lesson to database
+                    if ($arrLessons[] = $lesson_id = wp_insert_post($lesson->get_columns())) {
+                        //Post meta
+
+                        //Create ld_course_steps meta
+                        $this->save_lesson_meta($lesson_id, $course_id, $request, $dollyLesson);
+
+                        //Check if there is a date available for the current array node.
+                        $lessonDate = $dates[$i] <> "" ? Carbon::createFromFormat('d F, Y g:i a', $dates[$i])->format('Y-m-d g:i a') : "";
+
+                        //Add new leson meta
+                        $new_lesson_meta = [
+                            "sfwd-lessons_visible_after_specific_date" => $lessonDate
+                        ];
+
+                        add_post_meta($lesson_id, '_sfwd-lessons', $this->create_sfwd_lesson($lesson_id, $dollyLesson, $new_lesson_meta));
+
+                        $logger['lessons'][$lesson_id] = [
+                            'type' => 'lesson',
+                            'id' => $lesson_id,
+                            'logger_type' => 'success',
+                            'message' => "lesson was created"
+                        ];
+
+                        add_post_meta($lesson_id, 'ld_course_steps', $this->create_ld_course_steps($arrLessons));
+                    } else {
+                        $logger['lessons'][$lesson_id] = [
+                            'type' => '',
+                            'id' => '',
+                            'logger_type' => 'fail',
+                            'message' => 'lesson was not created',
+                        ];
+                    }
+                } // end if
+            } // end foreach
 
             //Create Course Steps post meta
             add_post_meta($course_id, 'ld_course_steps', $this->create_ld_course_steps($arrLessons));
@@ -171,7 +199,7 @@ class ClassroomController extends CoreController
             add_post_meta($course_id, 'created-from-one-click', true);
 
             //save template val
-            add_post_meta($course_id, 'save-template-val', $originalTemps);
+            add_post_meta($course_id, 'save-template-val', $use_existing);
 
             //Save Course certificate
             add_post_meta($course_id, 'learndash_certificate_options', $request->input('oc-course-cert'), true);
@@ -232,6 +260,7 @@ class ClassroomController extends CoreController
             'awc_private_comments' => get_post_meta($posts->ID, 'awc_private_comments')[0],
             'email_daily_comment_digest' => get_post_meta($posts->ID, 'email_daily_comment_digest')[0],
             'cc_recipients' => get_post_meta($posts->ID, 'cc_recipients'),
+            'existing-val' => get_post_meta($posts->ID, 'save-template-val')[0]
         ];
 
         $courseModules = learndash_get_course_lessons_list($posts->ID);
@@ -270,7 +299,7 @@ class ClassroomController extends CoreController
         $dates = $request->input('topic-date');
         $lessonNames = $request->input('lesson-name');
         $lessonIds = $request->input('lesson-id');
-        $originalTemps = $request->input('use-template-val');
+        $use_existing = $request->input('use-existing-val');
         $allowComments = $request->input('allow-comments-val');
         $is_updated = true;
 
@@ -329,6 +358,7 @@ class ClassroomController extends CoreController
             update_field('cc_recipients', $request->input('cc_recipients'), $request->input('post_id'));
             update_field('awc_private_comments', $private_commenting, $request->input('post_id'));
             update_field('collapse_replies_for_course', $collapse_replies, $request->input('post_id'));
+            update_post_meta($id, 'save-template-val', $use_existing);
 
 
             $certificate = $request->input('oc-course-cert');

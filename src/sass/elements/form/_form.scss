@@ -57,6 +57,11 @@ label + .oc-form-control-select{
   width: 100%;
   padding: 10px 15px;
   max-width: 100% !important;
+
+  &._readonly {
+    background: #f3f3f3;
+  }
+
 }
 
 .oc-form-control-select {

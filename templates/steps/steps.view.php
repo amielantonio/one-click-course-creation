@@ -6,13 +6,13 @@
 </div>
 
 <?php if( isset($course) ) : ?>
-    <input type="hidden" value="PATCH" name="_method">
+    <input type="hidden" value="PATCH" name="_method" id="_method">
 <?php endif; ?>
 
 <div class="cohort-tabs" data-last-selected="1">
     <?php if(isset($course)) : ?>
         <form action="<?php echo _route('classroom-update')?>" method="post" class="oc-form">
-            <input type="hidden" name="post_id" value="<?php echo $_GET['posts'];?>" />
+            <input type="hidden" name="post_id" value="<?php echo $_GET['posts'];?>"/>
     <?php else : ?>
         <form action="<?php echo _route('classroom-store')?>" method="post" class="oc-form">
     <?php endif; ?>

@@ -17,31 +17,49 @@
     <tr>
         <th style="width: 55%;">Module</th>
         <th>Start</th>
-        <th>Use Original</th>
+        <th>Use Existing</th>
         <th>Allow Comments</th>
     </tr>
     </thead>
     <tbody>
         <?php if( isset($course) ) : $x = 0?>
             <?php foreach( $course['lessons'] as $lesson ) : ?>
+                <?php
+
+                if($course['existing-val'][$x] == "true" && $course['existing-val'][$x] <> "" ) {
+                    $class = "_readonly";
+                    $readonly = "readonly='readonly'";
+                    $checked = "checked='checked'";
+                    $value = "true";
+                    $disabled = "disabled";
+                } else {
+                    $class="";
+                    $readonly = "";
+                    $checked = "";
+                    $value = "false";
+                    $disabled = "";
+                }
+                ?>
             <tr>
                 <td>
                     <input type="hidden" name="lesson-id[]" class="oc-form-control module-id" value="<?php echo $lesson['lesson-id']?>">
-                    <input type="text" name="lesson-name[]" class="oc-form-control module-name"
+                    <input type="text" name="lesson-name[]" class="oc-form-control module-name <?php echo $class?>"
                            value="<?php echo  $lesson['lesson-title'] ?>"
-                           id="module-title-<?php echo $x ?>">
+                           id="module-title-<?php echo $x ?>"
+                        <?php echo $readonly; ?>>
                 </td>
                 <td>
                     <input type="text" name="topic-date[]" class="oc-form-control module-date-picker"
                            id="start-<?php echo $x ?>"
-                           autocomplete="off">
+                           autocomplete="off"
+                        <?php echo $readonly; ?>>
                 </td>
                 <td class="_text-center">
-                    <input type="checkbox" name="use-template[]" class="" id="template-<?php echo $x ?>">
-                    <input type="hidden" value="" name="use-template-val[]" class="txt-use-template" id="val-use-template-<?php echo $x ?>">
+                    <input type="checkbox" name="use-existing[]" class="cb-use-existing <?php echo $class?>" id="existing-<?php echo $x ?>" <?php echo $checked; echo " " . $disabled?> >
+                    <input type="hidden" value="<?php echo $value?>" name="use-existing-val[]" class="txt-use-existing" id="val-use-existing-<?php echo $x ?>">
                 </td>
                 <td class="_text-center">
-                    <input type="checkbox" name="allow-comments[]" class="" id="allow-comments-<?php echo $x ?>" <?php echo $lesson['comment_status'] == "open" ? "checked='checked'" : "" ?>>
+                    <input type="checkbox" name="allow-comments[]" class="" id="allow-comments-<?php echo $x ?>" <?php echo $lesson['comment_status'] == "open" ? "checked='checked'" : ""; echo $disabled ?>>
                     <input type="hidden" value="<?php echo $lesson['comment_status']?>" name="allow-comments-val[]" class="txt-allow-comments" id="val-allow-comments-<?php echo $x ?>">
                 </td>
             </tr>
@@ -53,7 +71,7 @@
     <tr>
         <th>Module</th>
         <th>Start</th>
-        <th>Use Original</th>
+        <th>Use Existing</th>
         <th>Allow Comments</th>
     </tr>
     </tfoot>
@@ -73,20 +91,28 @@
 
     <?php if( isset($course['lessons'])) : ?>
     let date;
-        <?php $ctr = 0; foreach($course['lessons'] as $lesson) : ?>
-            $('#start-<?php echo $ctr;?>').datepicker({
-                language: "en",
-                dateFormat: 'dd MM, yyyy',
-                timepicker: true,
-                todayButton: new Date(),
-                autoClose: true,
-            });
+    $_checker = true;
+    <?php $ctr = 0; foreach($course['lessons'] as $lesson) : ?>
+        $('#start-<?php echo $ctr;?>').datepicker({
+            language: "en",
+            dateFormat: 'dd MM, yyyy',
+            timepicker: true,
+            todayButton: new Date(),
+            autoClose: true,
+            onSelect: function(formattedDate, date, inst) {
+                $(inst.el).trigger('change');
+            },
+            onShow: function(dp, animation){
+                $_checker = true;
+                console.log($_checker);
+            }
+        });
 
-            <?php if( $lesson['date'] <> "" ) : ?>
-                date = moment("<?php echo $lesson['date'] ?>", "YYYY-MM-DD HH:mm" ).toDate();
-                $('#start-<?php echo $ctr;?>').datepicker().data('datepicker').selectDate(date);
-            <?php endif; ?>
-        <?php $ctr++; endforeach;?>
+        <?php if( $lesson['date'] <> "" ) : ?>
+            date = moment("<?php echo $lesson['date'] ?>", "YYYY-MM-DD HH:mm" ).toDate();
+            $('#start-<?php echo $ctr;?>').datepicker().data('datepicker').selectDate(date);
+        <?php endif; ?>
+    <?php $ctr++; endforeach;?>
     <?php endif; ?>
 
 </script>
