@@ -153,29 +153,18 @@ function onClickTemplate() {
                 const jsonVal = JSON.parse(lessons);
                 const defaultValue = jsonVal[parentIndex];
 
-                if (element.type !== 'hidden' && element.name !== 'use-existing[]') {
+                if (element.type !== 'hidden' && element.name !== 'use-existing[]' && element.name !== "topic-date[]") {
                     $('#' + element.id).addClass('_readonly');
                     $('#' + element.id).attr('readonly', 'readonly');
                 }
 
-                if (element.name === "topic-date[]") {
-                    element.value = "";
-                }
-
                 if (element.name === "allow-comments[]") {
-                    if(defaultValue['comment_status'] === "closed") {
-                        element.checked = false;
-                    } else {
-                        element.checked = true;
-                    }
+                    element.checked = false;
+                    element.disabled = true;
                 }
 
                 if (element.name === "allow-comments-val[]") {
-                    if(defaultValue['comment_status'] === "closed") {
-                        element.value = "close";
-                    } else {
-                        element.value = "open"
-                    }
+                    element.value = "open"
                 }
 
                 if (element.name === "lesson-name[]") {
@@ -205,6 +194,9 @@ function onClickTemplate() {
                 if (element.type !== 'hidden' && element.name !== 'use-existing[]') {
                     $('#' + element.id).removeClass('_readonly');
                     $('#' + element.id).removeAttr('readonly');
+                }
+                if (element.name === "allow-comments[]") {
+                    element.disabled = false;
                 }
             });
         }

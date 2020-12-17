@@ -125,7 +125,17 @@ class ClassroomController extends CoreController
 
                     $arrLessons[] = $lessonIds[$i];
 
-                    add_post_meta($lessonIds[$i], '_sfwd-lessons', $this->create_sfwd_lesson($lessonIds[$i], $lesson));
+                    //Check if there is a date available for the current array node.
+                    $lessonDate = $dates[$i] <> "" ? Carbon::createFromFormat('d F, Y g:i a', $dates[$i])->format('Y-m-d g:i a') : "";
+
+                    //Add new leson meta
+                    $new_lesson_meta = [
+                        "sfwd-lessons_visible_after_specific_date" => $lessonDate
+                    ];
+
+                    add_post_meta($lesson_id, 'ld_course_' . $course_id, $course_id);
+
+                    add_post_meta($lessonIds[$i], '_sfwd-lessons', $this->create_sfwd_lesson($lessonIds[$i], $lesson,$new_lesson_meta));
 
                     add_post_meta($lesson_id, 'ld_course_steps', $this->create_ld_course_steps($arrLessons));
 
