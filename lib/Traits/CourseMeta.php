@@ -217,4 +217,6 @@ trait CourseMeta
 
         return $courseContent;
     }
+
+
 }

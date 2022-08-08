@@ -28,7 +28,6 @@ class MainController extends CoreController
      */
     public function index()
     {
-
         global $wpdb;
       
         $author = isset($_GET['author']) ? $_GET['author'] : "";

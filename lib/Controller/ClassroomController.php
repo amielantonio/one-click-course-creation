@@ -42,6 +42,10 @@ class ClassroomController extends CoreController
     {
         $getOptions = get_option('the-course-content');
 
+        [
+            '1234','12341'
+        ];
+
         // This courseContent will serve as the course template for one-click
         $courseContent = $this->getCourseContents($getOptions);
 

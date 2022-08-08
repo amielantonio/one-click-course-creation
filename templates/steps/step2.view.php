@@ -109,7 +109,7 @@
         });
 
         <?php if( $lesson['date'] <> "" ) : ?>
-            date = moment("<?php echo $lesson['date'] ?>", "YYYY-MM-DD HH:mm" ).toDate();
+            date = moment("<?php echo $lesson['date'] ?>", "YYYY-MM-DD HH:mm A" ).toDate();
             $('#start-<?php echo $ctr;?>').datepicker().data('datepicker').selectDate(date);
         <?php endif; ?>
     <?php $ctr++; endforeach;?>
